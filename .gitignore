@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+# Generated from root inputs by scripts/sync-assets.mjs (predev / prebuild)
+public/models/tigers-x.glb
+public/media/patch.png
+scripts/out
