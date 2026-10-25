@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { brand } from '../config/brand';
 import { envelope } from '../config/facts';
 import { explorerEntries } from '../config/explorer';
 import type { SubsystemId } from '../config/modelMap';
@@ -104,7 +103,7 @@ function buildGuides() {
   seg([W + o - tick, H, W + o], [W + o + tick, H, W + o]);
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-  const mat = new THREE.LineBasicMaterial({ color: brand.ink, transparent: true, opacity: 0, depthWrite: false });
+  const mat = new THREE.LineBasicMaterial({ color: '#1d1d1f', transparent: true, opacity: 0, depthWrite: false });
   const lines = new THREE.LineSegments(geo, mat);
   lines.renderOrder = 2;
   const anchors: Record<string, THREE.Vector3> = {
@@ -257,7 +256,6 @@ function Director({ payload, narrow, reducedMotion }: DirectorProps) {
         els.box.style.opacity = '0';
         els.box.style.visibility = 'hidden';
         els.line.style.opacity = '0';
-        els.dot.style.opacity = '0';
         continue;
       }
       const def = labels[id];
@@ -322,9 +320,6 @@ function Director({ payload, narrow, reducedMotion }: DirectorProps) {
       els.line.setAttribute('x2', lx.toFixed(1));
       els.line.setAttribute('y2', ly.toFixed(1));
       els.line.style.opacity = opacity.toFixed(3);
-      els.dot.setAttribute('cx', ax.toFixed(1));
-      els.dot.setAttribute('cy', ay.toFixed(1));
-      els.dot.style.opacity = opacity.toFixed(3);
     }
 
     // Guide labels: centred on their anchors.
@@ -429,7 +424,7 @@ export default function StageCanvas(props: StageCanvasProps) {
       camera={{ fov: 28, near: 1, far: 6000, position: [400, 300, 500] }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance', toneMapping: THREE.NeutralToneMapping }}
       onCreated={({ gl }) => {
-        gl.setClearColor(0x000000, 0);
+        gl.setClearColor(0xffffff, 1);
       }}
       aria-hidden="true"
     >

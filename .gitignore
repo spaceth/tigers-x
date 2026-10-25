@@ -4,4 +4,9 @@ dist
 # Generated from root inputs by scripts/sync-assets.mjs (predev / prebuild)
 public/models/tigers-x.glb
 public/media/patch.png
+public/media/parabolic-patch.png
+public/media/icons/medical.png
+public/media/icons/food.png
+public/media/icons/exploration.png
+public/media/partners/
 scripts/out

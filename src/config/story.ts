@@ -69,13 +69,13 @@ const range = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, k)
 export const labels: Record<LabelId, LabelDef> = {
   structure: { text: 'Aluminium 7075 structure', parts: [21], at: [0.82, 1, 0.82], normal: [0, 1, 0], mobile: true },
   pumps: { text: 'Eight peristaltic pumps', parts: [237], at: [0.62, 1, 0.9], normal: [0, 1, 0], mobile: true },
-  reservoir: { text: 'Fluid storage', parts: [95, 96], at: [1, 0.55, 0.9], normal: [1, 0, 0] },
+  reservoir: { text: 'Reservoir · eight fluid bags', parts: [95, 96], at: [1, 0.55, 0.9], normal: [1, 0, 0] },
   cameras: { text: 'Four cameras, 2 × 2', parts: [135, 157, 179, 201], at: [1, 1, 0.5], normal: [1, 0.4, 0], mobile: true },
-  chip: { text: 'Microfluidic chip', parts: [391], at: [1, 0.6, 0.35], normal: [1, 0, 0], mobile: true },
-  computer: { text: 'Orange Pi single-board computer', parts: [93], at: [0.25, 1, 0.35], normal: [0, 1, 0], mobile: true },
+  chip: { text: 'Lab-on-chip', parts: [391], at: [1, 0.6, 0.35], normal: [1, 0, 0], mobile: true },
+  computer: { text: 'Orange Pi 5 Pro computer', parts: [93], at: [0.25, 1, 0.35], normal: [0, 1, 0], mobile: true },
   mainBoard: { text: 'Main circuit board', parts: [41], at: [0.2, 1, 0.92], normal: [0, 1, 0] },
   hub: { text: 'Hub enclosure', parts: [76], at: [0.3, 1, 0.6], normal: [0, 1, 0] },
-  channelLayers: { text: 'Two channel layers', parts: [410], at: [0.97, 1, 0.12], normal: [0, 1, 0], mobile: true },
+  channelLayers: { text: 'Tesla-valve channel layers', parts: [410], at: [0.97, 1, 0.12], normal: [0, 1, 0], mobile: true },
   portLayer: { text: 'Port layer · 12 fluid ports', parts: [412], at: [1, 0.5, 0.8], normal: [1, 0, 0] },
   connector: { text: 'Facility connector', parts: range(1, 14), at: [0.5, 0, 0], normal: [0, -0.4, -1] },
 };
@@ -89,13 +89,13 @@ export interface Beat {
   /** Short explanatory paragraphs. */
   body: string[];
   /** Optional component rendered beneath the copy. */
-  extra?: 'envelope' | 'flow-deliver' | 'flow-mix' | 'flow-watch' | 'flow-time' | 'explore' | 'computing-roles';
+  extra?: 'envelope' | 'flow' | 'explore' | 'computing-roles';
   /** Chapter headline beats use display type. */
   headline?: boolean;
   pose: Pose;
 }
 
-const HERO: CameraKey = { target: [0, 46, 0], dir: [1.05, 0.62, 1.32], radius: 132, mobileRadius: 128 };
+const HERO: CameraKey = { target: [0, 50, 0], dir: [1.05, 0.72, 1.28], radius: 175, mobileRadius: 200 };
 
 export const beats: Beat[] = [
   /* --------------------------- Chapter 2: the payload --------------------------- */
@@ -106,7 +106,7 @@ export const beats: Beat[] = [
     title: 'All of that. Inside 4U.',
     headline: true,
     body: [
-      'Pumps, fluid storage, a microfluidic chip, four cameras and the computers that run them — a complete laboratory, built to fit a box twenty centimetres across.',
+      'Eight pumps, eight fluid bags, two lab-on-chip devices, four cameras and the computers that run them — a complete laboratory, built to fit a box twenty centimetres across.',
     ],
     pose: { camera: HERO },
   },
@@ -114,7 +114,7 @@ export const beats: Beat[] = [
     id: 'envelope',
     title: 'Twenty centimetres across. Ten centimetres tall.',
     body: [
-      'TIGERS-X occupies a 4U volume: 200 × 200 × 100 mm, the space of four 10 cm cubes side by side, described by the team as 2 × 2U. It is a hosted laboratory payload that plugs into a facility aboard the station, not a free-flying satellite.',
+      'TIGERS-X is an experiment cube built to the ICE Cubes interface standard: 200 × 200 × 100 mm, a 4U volume. At its pre-flight handover it weighed 2.32 kg. It plugs into a facility aboard the station for power and data; it is not a free-flying satellite.',
     ],
     extra: 'envelope',
     pose: {
@@ -130,7 +130,7 @@ export const beats: Beat[] = [
     eyebrow: 'Inside the payload',
     title: 'A compact structure holds it all together.',
     body: [
-      'The structure is built from Aluminium 7075, a high-strength aluminium alloy. Lift the panels away and a dense interior appears, with an internal panel dividing the electronics from the fluidic and imaging hardware.',
+      'The structure is built from Aluminium 7075, a high-strength aluminium alloy. Lift the panels away and three subsystems appear — fluidics, electronics and the structural frame — with an internal panel separating the experiment module from the electronics module.',
       'This exploded view illustrates how the parts relate. The payload does not open this way in flight.',
     ],
     pose: {
@@ -145,7 +145,8 @@ export const beats: Beat[] = [
     id: 'fluidics',
     title: 'Eight pumps decide where every drop goes.',
     body: [
-      'The experiment fluids are preloaded and held in a sealed circuit with double containment. Eight peristaltic pumps control their delivery to the experiment. A peristaltic pump moves fluid by progressively compressing flexible tubing.',
+      'Eight Takasago® RP-QIII peristaltic pumps move the fluids by progressively squeezing flexible tubing. Each of the four mixing channels has its own pair: one pump for the oil phase, one for the water phase.',
+      'The fluids sit in eight CryoStore® bags inside one reservoir container: two bags of oil-phase mixture (10 mL each), two of BFluid® (15 mL each), and four empty bags of up to 25 mL that collect each channel’s mixture. The circuit is sealed and double-contained.',
     ],
     pose: {
       camera: { target: [40, 58, 36], dir: [1.2, 0.72, 1.05], radius: 100, mobileRadius: 100 },
@@ -160,7 +161,8 @@ export const beats: Beat[] = [
     id: 'observation',
     title: 'Four cameras watch the experiment.',
     body: [
-      'Directly beneath the chip, four cameras in a 2 × 2 arrangement record the mixing process and the behaviour of the interfaces between fluids. Here the chip assembly is lifted to reveal them.',
+      'Directly beneath the chip, four See3CAM cameras in a 2 × 2 arrangement record the channels under white LED light. Each camera sees only part of a device, so pairs of synchronised views are stitched into one panorama. Here the chip assembly is lifted to reveal them.',
+      'Every frame also includes a four-colour reference swatch, used later to correct for changes in lighting.',
     ],
     pose: {
       camera: { target: [46, 86, -48], dir: [1.35, 0.5, -0.45], radius: 104, mobileRadius: 108 },
@@ -175,7 +177,8 @@ export const beats: Beat[] = [
     id: 'computing',
     title: 'Computing that runs the lab — and listens to Earth.',
     body: [
-      'An Orange Pi single-board computer runs the higher-level operations and commands an STM32 microcontroller, which controls the pumping system. An SSD stores the camera recordings onboard, including when the connection to the ground is unavailable.',
+      'An Orange Pi 5 Pro on-board computer decodes ground commands, sequences each experiment, stores images and telemetry, and runs its own YAMCS mission-control instance to buffer data between contacts. It hands pump and lighting commands to an STM32F746 microcontroller.',
+      'Everything runs from the facility’s single 12 V supply, regulated down to 5 V and 3.3 V on board.',
     ],
     extra: 'computing-roles',
     pose: {
@@ -191,7 +194,7 @@ export const beats: Beat[] = [
     id: 'core',
     title: 'Everything serves one small chip.',
     body: [
-      'Fluid handling, imaging and computing exist to run the experiment at the centre of the payload: a microfluidic chip where two fluid phases meet.',
+      'Fluid handling, imaging and computing exist to run the experiment at the centre of the payload: the lab-on-chip, two Tesla-valve devices — CH1 and CH2 — each with two parallel channel rows. Four independent mixing channels in all.',
     ],
     pose: {
       camera: { target: [46, 84, -50], dir: [0.85, 1.05, 0.75], radius: 95, mobileRadius: 100 },
@@ -208,12 +211,12 @@ export const beats: Beat[] = [
     id: 'deliver',
     chapter: 'chip',
     eyebrow: 'The lab-on-a-chip',
-    title: 'A small channel. A fundamental question.',
+    title: 'Two fluids. One channel.',
     headline: true,
     body: [
-      'First, deliver the phases. Under controlled pumping, the payload supplies an aqueous phase — a BFluid® glucose–electrolyte solution — and lipid phases to the chip. Twelve fittings on the chip’s underside connect it to the fluid circuit.',
+      'Each channel receives two immiscible fluids: Fluid A, an oil-phase mixture tinted orange with Oleoresin Paprika, and Fluid B, BFluid® glucose–electrolyte tinted with a food-grade blue dye that reads teal on camera. The colours are what make the phases measurable.',
     ],
-    extra: 'flow-deliver',
+    extra: 'flow',
     pose: {
       camera: { target: [44, 78, -6], dir: [1.05, 1.2, 0.35], radius: 112, mobileRadius: 112 },
       rigs: { enclosure: 1, pumpsLift: 0.35 },
@@ -225,12 +228,11 @@ export const beats: Beat[] = [
   },
   {
     id: 'mix',
-    title: 'Bring them together.',
+    title: 'The channel shape does the mixing.',
     body: [
-      'Inside the chip, the phases meet and travel through a chain of Tesla-valve units cut into two thin channel layers. A Tesla valve has no moving parts: its angled branches and rounded pockets make the stream split, turn back on itself and re-join the main flow at an angle.',
-      'Each unit stretches and folds the boundary between the phases, so they are brought into contact again and again. That is what makes the chip a static mixer: the channel shape does the mixing, while the flow itself is driven by the electrically powered pumps.',
+      'The Tesla-valve chain is a passive static mixer. There is no impeller and no high-shear homogenizer: the geometry supplies the mixing, and the pumps only keep the flow moving.',
+      'Twelve fittings on the chip’s underside connect it to the fluid circuit — two inlets and one outlet for each of the four channels.',
     ],
-    extra: 'flow-mix',
     pose: {
       camera: { target: [46, 94, -50], dir: [0.55, 1.25, 0.62], radius: 66, mobileRadius: 70 },
       rigs: { enclosure: 1, chipLayers: 1, chipLift: 0.25 },
@@ -245,9 +247,9 @@ export const beats: Beat[] = [
     id: 'watch',
     title: 'Watch the interface.',
     body: [
-      'The four cameras beneath the chip record the experiment as the phases meet. The footage supports investigation of mixing and of interfacial dynamics: how the boundaries between the phases move and deform during pumping.',
+      'The cameras beneath the chip record each run. After every experimental cycle the video is downlinked over a secure link, and analysis on the ground starts the same day.',
+      'On the ground, each frame is colour-corrected against its reference swatch and every pixel is scored by its hue: teal for water, orange for oil, and shades in between where the phases are mixed.',
     ],
-    extra: 'flow-watch',
     pose: {
       camera: { target: [46, 88, -48], dir: [1.4, 0.4, 0.25], radius: 100, mobileRadius: 104 },
       rigs: { enclosure: 1, chipLift: 1, chipLayers: 0.35 },
@@ -260,12 +262,11 @@ export const beats: Beat[] = [
   },
   {
     id: 'time',
-    title: 'Observe what changes with time.',
+    title: 'Watch two devices diverge.',
     body: [
-      'Forming a dispersion and keeping it are separate questions. Once droplets form, they may stay dispersed, merge, or begin to separate. Recording the mixture over time lets researchers compare that evolution with ground conditions.',
+      'In orbit, the recordings captured how the flow developed after the pumps started. At first both devices looked alike, with the oil phase leading into the channels. Then they parted ways: water spread through CH1, while CH2 stayed dominated by oil.',
       'Microgravity removes most buoyancy-driven separation, but viscosity and interfacial tension still act. The phases do not become miscible in orbit.',
     ],
-    extra: 'flow-time',
     pose: {
       camera: { target: [46, 86, -50], dir: [0.7, 1.15, 0.85], radius: 84, mobileRadius: 90 },
       rigs: { enclosure: 1 },

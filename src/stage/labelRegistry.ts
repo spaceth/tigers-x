@@ -6,7 +6,6 @@
 export interface LabelElements {
   box: HTMLElement;
   line: SVGLineElement;
-  dot: SVGCircleElement;
 }
 
 export const labelElements = new Map<string, LabelElements>();

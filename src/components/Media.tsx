@@ -1,10 +1,22 @@
+import { useEffect, useRef } from 'react';
 import { mediaSlots, type MediaItem, type MediaSlot } from '../config/media';
-import { useInView } from '../lib/hooks';
+import { useInView, useReducedMotion } from '../lib/hooks';
 
 function MediaFrame({ item, placeholder, sizes }: { item: MediaItem; placeholder: string; sizes?: string }) {
   // Heavy media only loads once the slot is near the viewport.
   const [ref, near] = useInView<HTMLDivElement>({ margin: '600px 0px' });
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const reduced = useReducedMotion();
+  const ambient = Boolean(item.ambient) && !reduced;
   const style = { aspectRatio: String(item.aspectRatio) };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !ambient) return;
+    video.muted = true;
+    const pending = video.play();
+    pending?.catch(() => {});
+  }, [ambient, near]);
 
   if (!item.src) {
     return (
@@ -20,11 +32,16 @@ function MediaFrame({ item, placeholder, sizes }: { item: MediaItem; placeholder
       {near &&
         (item.kind === 'video' ? (
           <video
-            controls
+            ref={videoRef}
+            controls={!ambient}
+            autoPlay={ambient}
+            muted={ambient}
+            loop={ambient}
             playsInline
-            preload="metadata"
+            preload={ambient ? 'auto' : 'metadata'}
             poster={item.poster ?? undefined}
             aria-label={item.alt}
+            className={ambient ? 'is-ambient' : undefined}
             style={{ objectPosition: item.focal }}
           >
             <source src={item.src} />
@@ -41,7 +58,9 @@ function Caption({ item }: { item: MediaItem }) {
   return (
     <figcaption>
       {item.caption}
-      {item.credit && <span className="media-credit"> {item.credit}</span>}
+      <span className={`media-credit${item.credit ? '' : ' media-credit--pending'}`}>
+        {item.credit ?? 'Credit to be added'}
+      </span>
     </figcaption>
   );
 }

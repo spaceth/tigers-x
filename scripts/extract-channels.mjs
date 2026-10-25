@@ -1,6 +1,11 @@
-// Extracts the chip's channel outlines (cut-outs in the two channel sheets, meshes
-// 410 and 411) from Cube.glb as plan-view polygons in millimetres, and writes
-// src/config/chip-channels.generated.json for the conceptual flow diagram.
+// Extracts the lab-on-chip channel geometry from the flight chip's STL
+// (source/chip-part-x.stl, "FM_Assembly - Fluidic part-1 Chip Part x-1") as
+// plan-view outlines in millimetres, and writes src/config/chip-channels.generated.json
+// for the flow diagrams.
+//
+// The chip is two 4 mm halves; the channels are 1 mm-deep pockets in the underside of
+// the upper half, so their ceilings are the downward faces 1 mm above the joint. The
+// ports are the through-holes in the bottom face.
 //
 //   node scripts/extract-channels.mjs
 import fs from 'node:fs';
@@ -8,63 +13,44 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const LAYERS = { 410: 'upper', 411: 'lower' };
+const SOURCE = 'source/chip-part-x.stl';
+const stl = fs.readFileSync(path.join(root, SOURCE));
 
-const glb = fs.readFileSync(path.join(root, 'Cube.glb'));
-const jsonLen = glb.readUInt32LE(12);
-const json = JSON.parse(glb.subarray(20, 20 + jsonLen).toString());
-const binStart = 20 + jsonLen + 8;
-
-function accessor(i) {
-  const a = json.accessors[i];
-  const bv = json.bufferViews[a.bufferView];
-  const off = binStart + (bv.byteOffset || 0) + (a.byteOffset || 0);
-  const n = a.count * (a.type === 'VEC3' ? 3 : 1);
-  const C = a.componentType === 5126 ? Float32Array : a.componentType === 5125 ? Uint32Array : Uint16Array;
-  return new C(glb.buffer.slice(glb.byteOffset + off, glb.byteOffset + off + n * C.BYTES_PER_ELEMENT));
+/** Horizontal triangles grouped by height and facing: "88.161dn" → [[x, z] × 3][]. */
+const levels = new Map();
+for (let i = 0, n = stl.readUInt32LE(80); i < n; i++) {
+  const o = 84 + 50 * i + 12;
+  const v = Array.from({ length: 9 }, (_, k) => stl.readFloatLE(o + 4 * k));
+  const ax = v[3] - v[0], ay = v[4] - v[1], az = v[5] - v[2];
+  const bx = v[6] - v[0], by = v[7] - v[1], bz = v[8] - v[2];
+  const ny = az * bx - ax * bz;
+  const len = Math.hypot(ay * bz - az * by, ny, ax * by - ay * bx);
+  if (!len || Math.abs(ny) / len < 0.999) continue;
+  const id = `${v[1].toFixed(3)}${ny > 0 ? 'up' : 'dn'}`;
+  if (!levels.has(id)) levels.set(id, []);
+  levels.get(id).push([[v[0], v[2]], [v[3], v[5]], [v[6], v[8]]]);
 }
+const heights = [...levels.keys()].map((k) => parseFloat(k));
+const bottom = Math.min(...heights);
+const joint = bottom + 4;
+const level = (y, facing) => levels.get(`${y.toFixed(3)}${facing}`) ?? [];
 
-const key = (x, z) => `${Math.round(x * 1000)},${Math.round(z * 1000)}`;
-const area = (loop) => loop.reduce((s, p, i) => {
-  const q = loop[(i + 1) % loop.length];
-  return s + p[0] * q[1] - q[0] * p[1];
-}, 0) / 2;
+const key = ([x, z]) => `${Math.round(x * 1000)},${Math.round(z * 1000)}`;
+const area = (loop) =>
+  loop.reduce((s, p, i) => {
+    const q = loop[(i + 1) % loop.length];
+    return s + p[0] * q[1] - q[0] * p[1];
+  }, 0) / 2;
 
-/** Drops points that lie on the straight line between their neighbours. */
-function simplify(loop, tol = 0.02) {
-  let pts = loop;
-  for (let pass = 0; pass < 3; pass++) {
-    const out = [];
-    for (let i = 0; i < pts.length; i++) {
-      const a = pts[(i - 1 + pts.length) % pts.length];
-      const b = pts[i];
-      const c = pts[(i + 1) % pts.length];
-      const cross = (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
-      const len = Math.hypot(c[0] - a[0], c[1] - a[1]) || 1;
-      if (Math.abs(cross) / len > tol) out.push(b);
-    }
-    pts = out;
-  }
-  return pts;
-}
-
-function holesOf(meshIndex) {
-  const prim = json.meshes[meshIndex].primitives[0];
-  const pos = accessor(prim.attributes.POSITION).map((v) => v * 1000);
-  const idx = accessor(prim.indices);
-  let topY = -Infinity;
-  for (let i = 1; i < pos.length; i += 3) topY = Math.max(topY, pos[i]);
-
-  // Boundary edges of the upward-facing top face: outer outline plus every cut-out.
+/** Boundary loops of a set of coplanar triangles (outer outlines and holes). */
+function loopsOf(tris) {
   const edges = new Map();
   const point = new Map();
-  for (let k = 0; k < idx.length; k += 3) {
-    const v = [0, 1, 2].map((o) => [pos[idx[k + o] * 3], pos[idx[k + o] * 3 + 1], pos[idx[k + o] * 3 + 2]]);
-    if (v.some((p) => Math.abs(p[1] - topY) > 1e-3)) continue;
-    const keys = v.map((p) => {
-      const kk = key(p[0], p[2]);
-      point.set(kk, [p[0], p[2]]);
-      return kk;
+  for (const t of tris) {
+    const keys = t.map((p) => {
+      const k = key(p);
+      point.set(k, p);
+      return k;
     });
     if (new Set(keys).size < 3) continue;
     for (let e = 0; e < 3; e++) {
@@ -100,44 +86,93 @@ function holesOf(meshIndex) {
     }
     if (loop.length > 2) loops.push(loop.map((k) => point.get(k)));
   }
-  loops.sort((p, q) => Math.abs(area(q)) - Math.abs(area(p)));
-  return { outline: loops[0], holes: loops.slice(1).map((l) => simplify(l)) };
+  return loops;
 }
 
+/**
+ * Drops points that lie on the straight line from the last kept point to the next
+ * one. Measuring from the last kept point stops smooth curves eroding away.
+ */
+function simplify(loop, tol = 0.005) {
+  const out = [loop[0]];
+  for (let i = 1; i < loop.length; i++) {
+    const a = out[out.length - 1];
+    const b = loop[i];
+    const c = loop[(i + 1) % loop.length];
+    const cross = (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+    const len = Math.hypot(c[0] - a[0], c[1] - a[1]) || 1;
+    if (Math.abs(cross) / len > tol) out.push(b);
+  }
+  return out;
+}
+
+const bbox = (loop) => {
+  const xs = loop.map((p) => p[0]);
+  const zs = loop.map((p) => p[1]);
+  return { minX: Math.min(...xs), maxX: Math.max(...xs), minZ: Math.min(...zs), maxZ: Math.max(...zs) };
+};
 const round = (n) => Math.round(n * 100) / 100;
-let bounds = null;
-const cutouts = [];
-for (const [mesh, layer] of Object.entries(LAYERS)) {
-  const { outline, holes } = holesOf(Number(mesh));
-  if (!bounds) {
-    const xs = outline.map((p) => p[0]);
-    const zs = outline.map((p) => p[1]);
-    bounds = { minX: Math.min(...xs), minZ: Math.min(...zs), maxX: Math.max(...xs), maxZ: Math.max(...zs) };
-  }
-  for (const h of holes) {
-    const pts = h.map(([x, z]) => [round(x - bounds.minX), round(z - bounds.minZ)]);
-    const zs = pts.map((p) => p[1]);
-    cutouts.push({ layer, zMin: Math.min(...zs), zMax: Math.max(...zs), d: `M${pts.map((p) => p.join(' ')).join('L')}Z` });
-  }
-  console.log(`mesh ${mesh} (${layer}): ${holes.length} cut-outs`);
-}
 
-// Each network is one cut-out per layer occupying the same band; together they form the fluid path.
-const networks = [];
-for (const c of cutouts.sort((a, b) => a.zMin - b.zMin)) {
-  const n = networks.find((g) => c.zMin < g.z[1] && c.zMax > g.z[0]);
-  if (n) {
-    n.z = [Math.min(n.z[0], c.zMin), Math.max(n.z[1], c.zMax)];
-    n.paths[c.layer] = c.d;
-  } else networks.push({ z: [c.zMin, c.zMax], paths: { [c.layer]: c.d } });
-}
+// Chip outline: the largest loop of the bottom face.
+const bottomLoops = loopsOf(level(bottom, 'dn')).sort((a, b) => Math.abs(area(b)) - Math.abs(area(a)));
+const chip = bbox(bottomLoops[0]);
+const local = ([x, z]) => [round(x - chip.minX), round(z - chip.minZ)];
+
+// Ports: round through-holes in the bottom face (engraved lettering is not round).
+const ports = bottomLoops
+  .slice(1)
+  .map((l) => {
+    const b = bbox(l);
+    const w = b.maxX - b.minX;
+    const h = b.maxZ - b.minZ;
+    const [x, z] = local([(b.minX + b.maxX) / 2, (b.minZ + b.maxZ) / 2]);
+    return { x, z, r: round((w + h) / 4), round: Math.abs(w - h) < 0.1 && Math.abs(area(l)) > 0.8 * Math.PI * (w / 2) ** 2 };
+  })
+  .filter((p) => p.round);
+
+// Channels: ceilings of the pockets cut 1 mm into the upper half.
+const channelLoops = loopsOf(level(joint + 1, 'dn'))
+  .map((l) => ({ pts: simplify(l), box: bbox(l), a: Math.abs(area(l)) }))
+  .filter((l) => l.pts.length >= 3 && l.a > 0.01);
+const outers = channelLoops.filter((l) => !channelLoops.some((o) => o !== l && o.a > l.a && o.box.minX <= l.box.minX && o.box.maxX >= l.box.maxX && o.box.minZ <= l.box.minZ && o.box.maxZ >= l.box.maxZ));
+outers.sort((a, b) => a.box.minZ - b.box.minZ);
+
+const toPath = (loop) => `M${loop.map((p) => local(p).join(' ')).join('L')}Z`;
+const rows = outers.map((o) => {
+  const inner = channelLoops.filter((l) => l !== o && l.box.minX >= o.box.minX && l.box.maxX <= o.box.maxX && l.box.minZ >= o.box.minZ && l.box.maxZ <= o.box.maxZ);
+  const [x0, z0] = local([o.box.minX, o.box.minZ]);
+  const [x1, z1] = local([o.box.maxX, o.box.maxZ]);
+  const mid = (z0 + z1) / 2;
+  // Three ports on the row's centreline: the two inlets sit together at one end,
+  // the outlet alone at the other.
+  const rowPorts = ports.filter((p) => Math.abs(p.z - mid) < 1).sort((a, b) => a.x - b.x);
+  if (rowPorts.length !== 3) throw new Error(`expected 3 ports on row at z ${mid}, found ${rowPorts.length}`);
+  const [a, b, c] = rowPorts;
+  const outlet = b.x - a.x > c.x - b.x ? a : c;
+  const inlets = (outlet === a ? [c, b] : [a, b]);
+  return {
+    x: [x0, x1],
+    z: [z0, z1],
+    /** Flow runs from the inlets toward the outlet. */
+    direction: outlet.x > inlets[0].x ? 'right' : 'left',
+    inlets: inlets.map(({ x, z, r }) => ({ x, z, r })),
+    outlet: { x: outlet.x, z: outlet.z, r: outlet.r },
+    /** Channel area: outline plus island holes; draw with fill-rule evenodd. */
+    d: [o, ...inner].map((l) => toPath(l.pts)).join(''),
+  };
+});
+
 const out = {
-  source: 'Cube.glb meshes 410 (upper channel sheet) and 411 (lower channel sheet), top-face cut-outs',
+  source: `${SOURCE} (flight chip, "FM_Assembly - Fluidic part-1 Chip Part x-1"): 1 mm-deep channel pockets at the joint of the two 4 mm halves`,
   units: 'mm',
   plane: 'plan view from above: x right, z down; origin at the chip corner',
-  size: [round(bounds.maxX - bounds.minX), round(bounds.maxZ - bounds.minZ)],
-  networks,
+  size: [round(chip.maxX - chip.minX), round(chip.maxZ - chip.minZ)],
+  channelDepth: 1,
+  rows,
 };
 const file = path.join(root, 'src/config/chip-channels.generated.json');
 fs.writeFileSync(file, JSON.stringify(out));
+for (const [i, r] of rows.entries()) {
+  console.log(`row ${i + 1}: x ${r.x.join('–')} z ${r.z.join('–')}, flow ${r.direction}, inlets ${r.inlets.map((p) => `(${p.x}, ${p.z}) r${p.r}`).join(' ')}, outlet (${r.outlet.x}, ${r.outlet.z}) r${r.outlet.r}, ${r.d.split('M').length - 1} loops`);
+}
 console.log(`wrote ${path.relative(root, file)} (${(fs.statSync(file).size / 1024).toFixed(1)} kB), chip ${out.size.join(' × ')} mm`);

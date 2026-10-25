@@ -18,10 +18,11 @@ git-ignored; the root inputs are never modified. Replace `Cube.glb` and the next
 After changing the CAD model, also run `npm run inspect-glb` (needs `Cube.STEP`) to
 regenerate `src/config/model-parts.generated.json`, then re-check the story
 mapping in `src/config/modelMap.ts` — subsystem rules partly use mesh indices.
-Also run `npm run extract-channels` to re-trace the chip's channel outlines used by the
-lab-on-a-chip flow diagram (`src/config/chip-channels.generated.json`); the inlet,
-junction and Tesla-valve positions in `src/components/FlowDiagram.tsx` were read off
-that outline and may need adjusting.
+The flow diagrams' channel outlines come from the flight chip's STL, not the GLB:
+`source/chip-part-x.stl`. If the chip changes, replace that file and run
+`npm run extract-channels` (writes `src/config/chip-channels.generated.json`); the
+junction, chamber and inset positions in `src/components/FlowDiagram.tsx` were read
+off that outline and may need adjusting.
 
 Development-only helpers in `scripts/`: `shoot.mjs` (headless Chrome screenshots
 of every story beat and a console report), `inspect-step.mjs`, `raster-top.mjs`.
@@ -46,14 +47,15 @@ GLB (detail in `docs/model-notes.md`):
 - Mesh names in the GLB are generic; part names were recovered from `Cube.STEP` by
   index alignment. If the GLB is re-exported without the matching STEP, the
   mapping must be re-verified.
-- The STM32 microcontroller and the SSD cannot be identified as separate parts, so
-  they are described in copy, not labelled in 3D.
-- Which pump drives which channel, and which camera sees which region, is not
-  recoverable from the CAD; the site makes no such claims.
-- The number of reservoirs is not determinable from the model; the copy says
-  "fluid storage".
-- "Dual emulsifier" is not shown as two chips: the model contains one chip with
-  two channel layers, and that is what is rendered.
+- The STM32F746 microcontroller cannot be identified as a separate part, so it is
+  described in copy, not labelled in 3D. (The paper mentions no SSD; the Orange Pi
+  stores images and telemetry, so the SSD was dropped from the copy.)
+- Per the paper, each of the four channels has its own pump pair (one per fluid)
+  and its own mixture bag; which physical pump in the CAD is which is still not
+  recoverable, so the 3D labels stay generic. Which camera sees which region is
+  not claimed.
+- The model's four channel networks are the paper's four channel rows: CH1
+  (rows 1–2) and CH2 (rows 3–4), two devices on one chip assembly.
 - Two loose base nuts are not attached to any subsystem (they stay with the base).
 - The CAD revision may differ from the flight unit.
 
@@ -62,15 +64,30 @@ Station schematic:
 - The ISS, Columbus and ICE Cubes views are simplified, not to scale, and labelled
   as such. Module placement follows public ESA material; the rack position inside
   Columbus and the slot used inside ICE Cubes are illustrative.
-- The network graphic shows the documented route (ICE Cubes Facility → Space
-  Applications Services, Belgium → mission control, Thailand) without latency or
-  bandwidth claims.
+- The network graphic shows the route described in the paper (ICE Cubes Facility
+  → ICE Cubes Mission Control Centre, Space Applications Services, Belgium → VPN
+  → CRA User Home Base, Bangkok, YAMCS) without latency or bandwidth claims.
+
+Sources:
+
+- Science, hardware, verification and results follow the paper: Seehanam et al.,
+  "On-board International Space Station Verification of Autonomous Emulsification
+  Lab-on-Chip Payload: TIGERS-X Project", Research Square preprint,
+  doi:10.21203/rs.3.rs-11156278/v1 (data: doi:10.5281/zenodo.22934189). Figures
+  live in `src/config/facts.ts`, tagged [paper] or [report].
+- The operation counts in the Record chapter (duration, files, GB, commands, pump
+  operations) come from the team's mission report in `tigers-x.md`, not the paper.
+- ISHA Lab appears in `tigers-x.md` but not in the paper's affiliations; it is kept
+  alongside the paper's three institutions.
+- The "events" flow schematic is drawn from the paper's text description of
+  Figure 7, not from the flight images; replace it with real frames from the
+  Zenodo videos if they are added.
 
 Other:
 
 - `patch.png` is a copy of `Flight-Patch-2048x2048.png`.
 - The flow diagram in the lab-on-a-chip chapter uses the real channel outline of
-  one of the chip's four networks (from the CAD model), but its colours are
+  one of the chip's four rows (from the flight chip's STL), but its colours are
   conceptual: no measured flow, and which inlet carries which phase is not
-  documented. The Tesla-valve description comes from the team, not from
-  `tigers-x.md`.
+  documented. Phase colours match the flight fluids (teal water, orange oil).
+  The mixing-index chart in the Results chapter plots the paper's Figure 9 values.

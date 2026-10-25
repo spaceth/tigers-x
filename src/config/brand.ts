@@ -2,17 +2,27 @@
  * Single source of truth for colour. CSS reads these through custom properties
  * (applied in main.tsx); the 3D scene imports them directly.
  *
- * PROVISIONAL ACCENTS: the brief supplied "#ed6d2" and "#173b7", which are
- * incomplete five-digit hex values, and apple.md defines no brand hex values.
- * The two accents below are temporary muted placeholders, not corrections of
- * those strings. Replace `accentWarm` / `accentDeep` here once the exact brand
- * values are confirmed; no component needs editing.
+ * Asset palette: orange #fa5f05, blue #173b72, white #fff.
  */
+const deepBlue = '#173b72';
+const assetOrange = '#fa5f05';
+
 export const brand = {
-  /** Provisional — muted warm orange. Hardware highlight and graphics only (3.45:1, never small text). */
-  accentWarm: '#c96a32',
-  /** Provisional — deep blue. Fluid paths, diagram lines, restrained controls (9.9:1). */
-  accentDeep: '#1f3d6e',
+  /** Asset orange. Hardware highlight, primary buttons, and the oil phase in the chip diagram. */
+  accentWarm: assetOrange,
+  /** Asset blue. Channel tint, secondary controls on light surfaces. */
+  accentDeep: deepBlue,
+  /** Background of the navy sections (science, results, footer). Section themes re-map `accentDeep`, so this stays fixed. */
+  navy: deepBlue,
+  /** Background of the dark sections (3D payload story, ISS). */
+  night: '#000000',
+  /** Primary text on `night` and `accentDeep` backgrounds. */
+  inkOnDark: '#ffffff',
+
+  // Camera hues for the results chart: Oleoresin Paprika reads orange, the blue dye reads teal.
+  // The chip diagram uses the asset orange and blue instead.
+  fluidOil: assetOrange,
+  fluidWater: '#2a9690',
 
   // Neutral foundation (~60%)
   canvas: '#f6f5f2',

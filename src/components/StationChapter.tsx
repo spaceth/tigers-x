@@ -27,7 +27,7 @@ const steps = [
   {
     title: 'TIGERS-X, twenty centimetres across.',
     body: [
-      'Crew install the payload and remove it at the end of operations. In between, the research team commands the experiment from Earth.',
+      'Crew install the payload and remove it at the end of operations. In between, no astronaut is needed: the research team commands the experiment from Earth.',
     ],
   },
 ];
@@ -50,7 +50,7 @@ export function StationChapter() {
   }, []);
 
   return (
-    <section id="station" className="chapter chapter--station" aria-labelledby="station-title">
+    <section id="station" className="chapter chapter--station theme-night" aria-labelledby="station-title">
       <div className="container scroller">
         <div className="scroller-figure">
           <StationSchematic active={active} />
@@ -90,12 +90,18 @@ export function StationChapter() {
         <Reveal className="network-intro">
           <h3 className="section-title">Commanded from Thailand</h3>
           <p>
-            Commands and experiment data travel through the facility and the station’s infrastructure — a hosted
-            service, not a dedicated payload radio link. Space Applications Services in Belgium connects the payload
-            to the research team’s mission control in Thailand.
+            Every experiment ran under ground control from the Chulabhorn Royal Academy User Home Base in Bangkok,
+            using YAMCS telecommand and telemetry. The traffic passes through the facility and the station’s
+            infrastructure — a hosted service, not a dedicated payload radio link — and the ICE Cubes Mission Control
+            Centre in Belgium relays it to Bangkok.
+          </p>
+          <p>
+            After each experiment cycle, video and logs were sent down over secure file transfer in near real time,
+            and analysis began the same day.
           </p>
           <p className="muted">
-            Ground contact is not continuous, so recordings are also stored onboard and returned when the link allows.
+            Ground contact is only possible in signal windows, so a YAMCS instance on the payload’s own computer
+            buffers data and keeps the experiment state in between.
           </p>
         </Reveal>
         <Reveal as="ol" className="network" delay={1}>
@@ -104,7 +110,7 @@ export function StationChapter() {
             <span className="network-sub">Experiment cube, Columbus</span>
           </li>
           <li className="network-link">
-            <span>Power and data</span>
+            <span>+12 V and Gigabit Ethernet</span>
           </li>
           <li className="network-node">
             <span className="network-title">ICE Cubes Facility</span>
@@ -114,15 +120,15 @@ export function StationChapter() {
             <span>Space-to-ground link</span>
           </li>
           <li className="network-node">
-            <span className="network-title">Space Applications Services</span>
-            <span className="network-sub">ICE Cubes mission control, Belgium</span>
+            <span className="network-title">ICE Cubes Mission Control Centre</span>
+            <span className="network-sub">Space Applications Services, Belgium</span>
           </li>
           <li className="network-link">
-            <span>Ground connection</span>
+            <span>VPN</span>
           </li>
           <li className="network-node">
-            <span className="network-title">TIGERS-X mission control</span>
-            <span className="network-sub">Research team, Thailand</span>
+            <span className="network-title">User Home Base</span>
+            <span className="network-sub">Chulabhorn Royal Academy, Bangkok · YAMCS</span>
           </li>
         </Reveal>
         <p className="network-legend">

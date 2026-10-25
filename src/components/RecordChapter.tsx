@@ -1,4 +1,4 @@
-import { fmt, operation } from '../config/facts';
+import { campaign, fmt, operation } from '../config/facts';
 import { Reveal } from './Reveal';
 
 export function RecordChapter() {
@@ -25,6 +25,11 @@ export function RecordChapter() {
             <span className="unit"> minutes </span>
             <span className="num">{d.seconds}</span>
             <span className="unit"> seconds</span>
+          </p>
+          <p className="record-note">
+            Experiments ran from {campaign.operationsStart} to {campaign.operationsEnd}, within the available signal
+            windows. A brief power interruption of about {campaign.powerInterruptionHours} hours did not compromise
+            the campaign.
           </p>
         </Reveal>
 
@@ -94,9 +99,9 @@ export function RecordChapter() {
         </div>
 
         <Reveal as="p" className="record-caveat">
-          These figures show that the payload operated, accepted commands, moved fluid, recorded imagery and returned
-          data. They support the scientific analysis that continues now; on their own they do not establish the
-          safety or stability of a clinical emulsion, or a final scientific result.
+          These figures come from the team’s mission report. They show that the payload operated autonomously,
+          accepted commands, moved fluid, recorded imagery and returned data with no crew involvement beyond
+          installation and removal. What the imagery showed about mixing follows below.
         </Reveal>
       </div>
     </section>

@@ -3,6 +3,10 @@
 // modified.
 //
 //   patch.png -> public/media/patch.png             (byte-for-byte copy, original artwork)
+//   parabolic.png -> public/media/parabolic-patch.png (parabolic-flight experiment patch)
+//   medical.png, food.png, exploration.png -> public/media/icons/
+//   cra.svg, mhesi.svg, tsri.svg -> public/media/partners/   (byte-for-byte)
+//   pim.webp, gistda.webp, tmec.webp -> public/media/partners/ (transparent padding trimmed)
 //   Cube.glb  -> public/models/tigers-x.glb         (meshopt-compressed web copy)
 //
 // The web copy keeps every mesh, in the original order, and stores the original
@@ -57,5 +61,57 @@ async function buildModel() {
   console.log(`built ${rel(dest)} (${mb(src)} MB -> ${mb(dest)} MB)`);
 }
 
+/** Drop fully transparent padding so a fixed CSS height matches the drawn mark. */
+function contentBounds(data, width, height) {
+  let minX = width;
+  let minY = height;
+  let maxX = 0;
+  let maxY = 0;
+  let n = 0;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const a = data[(y * width + x) * 4 + 3];
+      if (a > 8) {
+        n++;
+        if (x < minX) minX = x;
+        if (y < minY) minY = y;
+        if (x > maxX) maxX = x;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+  if (!n) return null;
+  const pad = 1;
+  const left = Math.max(0, minX - pad);
+  const top = Math.max(0, minY - pad);
+  const right = Math.min(width - 1, maxX + pad);
+  const bottom = Math.min(height - 1, maxY + pad);
+  return { left, top, width: right - left + 1, height: bottom - top + 1 };
+}
+
+async function copyTrimmedWebp(srcName, destRel) {
+  const src = path.join(root, srcName);
+  const dest = path.join(pub, destRel);
+  if (!fs.existsSync(src)) throw new Error(`Missing root input: ${srcName}`);
+  if (isFresh(src, dest)) return;
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  const sharp = (await import('sharp')).default;
+  const { data, info } = await sharp(src).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const box = contentBounds(data, info.width, info.height);
+  const image = box ? sharp(src).extract(box) : sharp(src);
+  await image.webp({ lossless: true }).toFile(dest);
+  console.log(`trimmed ${srcName} -> ${rel(dest)}${box ? ` ${box.width}x${box.height}` : ''}`);
+}
+
 copy('patch.png', 'media/patch.png');
+copy('parabolic.png', 'media/parabolic-patch.png');
+copy('medical.png', 'media/icons/medical.png');
+copy('food.png', 'media/icons/food.png');
+copy('exploration.png', 'media/icons/exploration.png');
+copy('cra.svg', 'media/partners/cra.svg');
+copy('mhesi.svg', 'media/partners/mhesi.svg');
+copy('tsri.svg', 'media/partners/tsri.svg');
+await copyTrimmedWebp('pim.webp', 'media/partners/pim.webp');
+await copyTrimmedWebp('gistda.webp', 'media/partners/gistda.webp');
+await copyTrimmedWebp('tmec.webp', 'media/partners/tmec.webp');
 await buildModel();

@@ -69,16 +69,16 @@ const roleLooks: Record<MaterialRole, RoleLook> = {
   polymer: { color: '#ecebe8', metalness: 0, roughness: 0.62 },
   pumpHead: { color: '#46494e', metalness: 0.2, roughness: 0.5 },
   cameraBody: { color: '#2b2c2f', metalness: 0.2, roughness: 0.42 },
-  chipCover: { color: '#eef2f5', metalness: 0, roughness: 0.08, opacity: 0.38, noHighlight: true },
-  chipChannelUpper: { color: '#cfd3d7', metalness: 0, roughness: 0.3, noHighlight: true },
-  chipChannelLower: { color: '#b4bac0', metalness: 0, roughness: 0.3, noHighlight: true },
-  chipBase: { color: '#f2f3f4', metalness: 0, roughness: 0.35, noHighlight: true },
+  chipCover: { color: '#ffffff', metalness: 0, roughness: 0.08, opacity: 0.38, noHighlight: true },
+  chipChannelUpper: { color: '#d5dbe3', metalness: 0, roughness: 0.3, noHighlight: true },
+  chipChannelLower: { color: '#c3cad3', metalness: 0, roughness: 0.3, noHighlight: true },
+  chipBase: { color: '#ffffff', metalness: 0, roughness: 0.35, noHighlight: true },
   gasket: { color: '#8e9093', metalness: 0, roughness: 0.8 },
 };
 
 const warm = new THREE.Color(brand.accentWarm);
 const deep = new THREE.Color(brand.accentDeep);
-const backdrop = new THREE.Color(brand.canvas);
+const backdrop = new THREE.Color('#ffffff');
 
 interface MaterialSlot {
   material: THREE.MeshStandardMaterial;
@@ -213,11 +213,11 @@ export function applyPose(payload: Payload, pose: ResolvedPose) {
     const m = slot.material;
     const noHighlight = roleLooks[slot.role].noHighlight;
     tmpColor.copy(slot.base);
-    if (slot.role === 'chipBase' && pose.channels > 0) tmpColor.lerp(deep, 0.85 * pose.channels);
-    if (!noHighlight && look.highlight > 0) tmpColor.lerp(warm, 0.62 * look.highlight);
+    if (slot.role === 'chipBase' && pose.channels > 0) tmpColor.lerp(deep, 0.92 * pose.channels);
+    if (!noHighlight && look.highlight > 0) tmpColor.lerp(warm, 0.88 * look.highlight);
     if (look.dim > 0) tmpColor.lerp(backdrop, 0.62 * look.dim);
     m.color.copy(tmpColor);
-    m.emissive.copy(warm).multiplyScalar(noHighlight ? 0 : 0.07 * look.highlight);
+    m.emissive.copy(warm).multiplyScalar(noHighlight ? 0 : 0.04 * look.highlight);
 
     const opacity = slot.baseOpacity * (1 - 0.94 * look.ghost);
     const wantsTransparent = opacity < 0.999;

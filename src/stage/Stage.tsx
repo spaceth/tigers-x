@@ -20,16 +20,14 @@ const guideLabels: { id: string; text: string }[] = [
 function Label({ id, text, guide }: { id: string; text: string; guide?: boolean }) {
   const box = useRef<HTMLDivElement>(null);
   const line = useRef<SVGLineElement>(null);
-  const dot = useRef<SVGCircleElement>(null);
   useEffect(() => {
-    if (box.current && line.current && dot.current) registerLabel(id, { box: box.current, line: line.current, dot: dot.current });
+    if (box.current && line.current) registerLabel(id, { box: box.current, line: line.current });
     return () => registerLabel(id, null);
   }, [id]);
   return (
     <>
       <svg className="stage-label-line" aria-hidden="true">
         <line ref={line} style={{ opacity: 0 }} />
-        <circle ref={dot} r="2.5" style={{ opacity: 0 }} />
       </svg>
       <div ref={box} className={guide ? 'stage-label stage-label--guide' : 'stage-label'} style={{ opacity: 0, visibility: 'hidden' }}>
         {text}
@@ -229,7 +227,7 @@ export function ExploreButton() {
   const ready = useStory((s) => s.stageReady);
   if (!ready) return <p className="beat-note">The interactive explorer becomes available once the 3D model has loaded.</p>;
   return (
-    <button type="button" className="button button--secondary" onClick={() => setStory({ exploring: true, selected: null })}>
+    <button type="button" className="button explore-open" onClick={() => setStory({ exploring: true, selected: null })}>
       Explore the hardware
     </button>
   );

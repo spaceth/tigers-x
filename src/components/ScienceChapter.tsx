@@ -1,108 +1,152 @@
-import { assets } from '../config/site';
+import { useRef, type CSSProperties } from 'react';
+import { goalCards } from '../config/science';
+import { stickyProgress, useNarrow, useReducedMotion, useScrollFrame } from '../lib/hooks';
+import { Hero } from './Hero';
+import { PlatformComparison } from './PlatformComparison';
 import { Reveal } from './Reveal';
 
-function PhaseIllustration() {
+type Dot = { size: number; x: string; y: string; opacity: number };
+
+/** Flat dots behind the opening copy. The near set rises faster as the page scrolls. */
+const farDots: Dot[] = [
+  { size: 8, x: '6%', y: '16%', opacity: 0.7 },
+  { size: 6, x: '14%', y: '58%', opacity: 0.55 },
+  { size: 10, x: '24%', y: '34%', opacity: 0.5 },
+  { size: 6, x: '37%', y: '78%', opacity: 0.55 },
+  { size: 8, x: '46%', y: '22%', opacity: 0.45 },
+  { size: 5, x: '55%', y: '66%', opacity: 0.5 },
+  { size: 7, x: '64%', y: '14%', opacity: 0.65 },
+  { size: 6, x: '73%', y: '48%', opacity: 0.55 },
+  { size: 8, x: '82%', y: '26%', opacity: 0.6 },
+  { size: 5, x: '91%', y: '70%', opacity: 0.55 },
+  { size: 7, x: '18%', y: '108%', opacity: 0.5 },
+  { size: 6, x: '68%', y: '102%', opacity: 0.55 },
+  { size: 9, x: '88%', y: '116%', opacity: 0.6 },
+];
+
+const nearDots: Dot[] = [
+  { size: 16, x: '78%', y: '24%', opacity: 0.85 },
+  { size: 12, x: '3%', y: '42%', opacity: 0.7 },
+  { size: 18, x: '92%', y: '52%', opacity: 0.8 },
+  { size: 11, x: '70%', y: '74%', opacity: 0.65 },
+  { size: 14, x: '12%', y: '92%', opacity: 0.6 },
+  { size: 9, x: '40%', y: '112%', opacity: 0.55 },
+  { size: 15, x: '84%', y: '108%', opacity: 0.75 },
+  { size: 8, x: '58%', y: '40%', opacity: 0.5 },
+];
+
+/** On a phone, vertical scroll slides the goal cards from right to left. */
+function GoalCards() {
+  const swipe = useNarrow() && !useReducedMotion();
+  const track = useRef<HTMLDivElement>(null);
+  const pin = useRef<HTMLDivElement>(null);
+  const list = useRef<HTMLUListElement>(null);
+
+  useScrollFrame(() => {
+    const trackEl = track.current;
+    const pinEl = pin.current;
+    const listEl = list.current;
+    if (!listEl) return;
+    if (!swipe || !trackEl || !pinEl) {
+      listEl.style.transform = '';
+      return;
+    }
+    const shift = Math.max(0, listEl.scrollWidth - pinEl.clientWidth);
+    const x = -stickyProgress(trackEl, pinEl) * shift;
+    listEl.style.transform = `translate3d(${x.toFixed(1)}px, 0, 0)`;
+  }, swipe);
+
   return (
-    <figure className="phase-figure">
-      <svg viewBox="0 0 560 250" role="img" aria-labelledby="phase-title phase-desc">
-        <title id="phase-title">Two fluid phases on Earth and in microgravity</title>
-        <desc id="phase-desc">
-          Left: on Earth, a lighter lipid phase rises and collects as a layer above the aqueous phase. Right: in
-          microgravity, buoyancy barely acts, so lipid droplets stay distributed through the aqueous phase, while
-          remaining a separate phase.
-        </desc>
-        <defs>
-          <marker id="pf-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M1 1 L8 5 L1 9" fill="none" stroke="var(--ink-secondary)" strokeWidth="1.5" />
-          </marker>
-        </defs>
-
-        <g transform="translate(20 20)">
-          <rect className="pf-vessel" x="0" y="0" width="200" height="170" rx="14" />
-          <rect className="pf-lipid-layer" x="6" y="6" width="188" height="44" rx="10" />
-          <g className="pf-drops">
-            <circle cx="60" cy="84" r="4" />
-            <circle cx="130" cy="72" r="3" />
-          </g>
-          <line className="pf-gravity" x1="232" y1="40" x2="232" y2="130" markerEnd="url(#pf-arrow)" />
-          <text className="pf-label" x="0" y="196">On Earth</text>
-          <text className="pf-label pf-label--sub" x="0" y="216">Buoyancy sorts the phases into layers</text>
-          <text className="pf-tag" x="214" y="150">gravity</text>
-        </g>
-
-        <g transform="translate(320 20)">
-          <rect className="pf-vessel" x="0" y="0" width="200" height="170" rx="14" />
-          <g className="pf-drops">
-            {[
-              [28, 30, 5], [74, 22, 4], [128, 36, 6], [168, 24, 4], [46, 72, 4], [98, 64, 5], [150, 82, 5],
-              [30, 118, 6], [80, 108, 4], [122, 126, 5], [172, 136, 4], [60, 150, 4], [104, 154, 3],
-            ].map(([x, y, r], i) => (
-              <circle key={i} cx={x} cy={y} r={r} />
-            ))}
-          </g>
-          <text className="pf-label" x="0" y="196">In microgravity</text>
-          <text className="pf-label pf-label--sub" x="0" y="216">Droplets stay spread out — still a separate phase</text>
-        </g>
-      </svg>
-      <figcaption>
-        <span className="legend-swatch legend-swatch--aqueous" aria-hidden="true" /> Aqueous phase
-        <span className="legend-swatch legend-swatch--lipid" aria-hidden="true" /> Lipid phase (outlined)
-        <span className="figure-note">Simplified illustration</span>
-      </figcaption>
-    </figure>
+    <div ref={track} className={swipe ? 'science-cards-track is-swipe' : 'science-cards-track'}>
+      <div ref={pin} className="science-cards-pin">
+        <ul ref={list} className="science-cards">
+          {goalCards.map((card) => (
+            <li key={card.id}>
+              <div className="science-card__art" aria-hidden="true">
+                <img src={card.icon} alt="" width={1600} height={1600} />
+              </div>
+              <div className="science-card__body">
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
 
+function DotField({ dots }: { dots: readonly Dot[] }) {
+  return dots.map((dot) => (
+    <span
+      key={`${dot.x}-${dot.y}`}
+      className="droplet"
+      style={{ width: dot.size, height: dot.size, left: dot.x, top: dot.y, opacity: dot.opacity } as CSSProperties}
+    />
+  ));
+}
+
+/**
+ * Opening chapter: black sky hero, then the navy science band
+ * (why the work exists, three goal cards, parabolic flight vs ISS).
+ */
 export function ScienceChapter() {
+  const reduced = useReducedMotion();
+  const band = useRef<HTMLDivElement>(null);
+  const far = useRef<HTMLDivElement>(null);
+  const near = useRef<HTMLDivElement>(null);
+
+  useScrollFrame(() => {
+    const bandEl = band.current;
+    const farEl = far.current;
+    const nearEl = near.current;
+    if (reduced || !bandEl || !farEl || !nearEl) return;
+    const entered = Math.max(0, window.innerHeight - bandEl.getBoundingClientRect().top);
+    farEl.style.transform = `translate3d(0, ${(entered * -0.16).toFixed(1)}px, 0)`;
+    nearEl.style.transform = `translate3d(0, ${(entered * -0.38).toFixed(1)}px, 0)`;
+  }, !reduced);
+
   return (
     <section id="question" className="chapter chapter--question" aria-labelledby="question-title">
-      <div className="container hero">
-        <div className="hero-copy">
-          <p className="eyebrow">TIGERS-X · Thailand Innovative G-force Varied Emulsification Research for Space Exploration</p>
-          <h1 id="question-title" className="display">
-            How do you mix medicine when gravity stops doing the sorting?
-          </h1>
-          <p className="lead">
-            TIGERS-X is a compact laboratory that flew aboard the International Space Station to study how medical
-            fluids mix and form emulsions in microgravity.
-          </p>
-        </div>
-        <figure className="hero-patch">
-          <img src={assets.patch} width={2048} height={2048} alt="TIGERS-X mission patch: an orange payload box above Earth, framed by the words Thailand Innovative G-force-Varied Emulsification Research for Space Exploration." />
-        </figure>
-      </div>
+      <Hero />
 
-      <div className="container science-grid">
-        <Reveal className="science-copy">
-          <h2 className="section-title">Nutrition that bypasses the gut</h2>
-          <p>
-            Some patients cannot obtain adequate nutrition through their digestive system. Total Parenteral Nutrition,
-            or TPN, supplies nutrients intravenously instead. Its formulations combine water-based solutions with
-            lipids — phases that do not dissolve into one another and must be dispersed with care.
-          </p>
-          <h2 className="section-title">Why take the question to orbit</h2>
-          <p>
-            On Earth, buoyancy constantly pulls lighter and heavier phases apart. That separation can obscure the
-            slower interactions at the boundary between fluids. In microgravity it largely falls away, so researchers
-            can watch mixing, droplet formation and interfacial behaviour without gravity doing the sorting.
-          </p>
-          <p>
-            Microgravity does not make oil and water miscible. Viscosity and interfacial tension still act; the phases
-            remain distinct.
-          </p>
-          <h2 className="section-title">The question</h2>
-          <p className="question-statement">
-            How do these phases mix, form a dispersion, and evolve over time — and can a compact static-mixing system
-            produce a sufficiently stable dispersion in microgravity?
-          </p>
-          <p className="muted">
-            TIGERS-X studied fluid behaviour relevant to formulation. It did not treat patients, and its flight results
-            are not a clinically validated formulation.
-          </p>
-        </Reveal>
-        <Reveal className="science-figure" delay={1}>
-          <PhaseIllustration />
-        </Reveal>
+      <div ref={band} id="overview" className="theme-navy science-band">
+        <div className="science-drift" aria-hidden="true">
+          <div ref={far} className="science-drift__layer">
+            <DotField dots={farDots} />
+          </div>
+          <div ref={near} className="science-drift__layer">
+            <DotField dots={nearDots} />
+          </div>
+        </div>
+        <div className="container science-grid">
+          <Reveal className="science-copy">
+            <h2 className="science-heading">When nothing falls</h2>
+            <p>
+              Long missions cannot restock medicines that expire in a year or two, so some nutrition — including the
+              oil-in-water emulsions used in Total Parenteral Nutrition — may have to be made on board. On Earth those
+              mixtures are beaten together by high-shear machines that lean on turbulence and buoyancy; in orbit nothing
+              settles, and a small mixer with no moving parts might do the job instead. TIGERS-X asked whether a passive
+              Tesla-valve chip can still redistribute oil and water over days on the station, not only in twenty-second
+              aircraft dips — a study of mixing behaviour, not a medicine.
+            </p>
+          </Reveal>
+
+          <div className="science-aims">
+            <Reveal delay={1}>
+              <h2 className="science-heading">The goal is not simply to mix fluids in space</h2>
+              <p>
+                It is to build datasets and models of nutrient systems in microgravity that can be translated into real
+                medical applications like TPN. This shifts the focus from demonstration to understanding the underlying
+                physics of how these fluids behave.
+              </p>
+            </Reveal>
+            <GoalCards />
+          </div>
+        </div>
+
+        <PlatformComparison />
       </div>
     </section>
   );

@@ -30,7 +30,7 @@ function EnvelopeFacts() {
         <dd>{envelope.formFactor}</dd>
       </div>
       <div>
-        <dt>Mass</dt>
+        <dt>Mass at handover</dt>
         <dd>{envelope.massKg} kg</dd>
       </div>
       <div>
@@ -46,19 +46,23 @@ function ComputingRoles() {
     <>
       <dl className="role-list">
         <div>
-          <dt>Orange Pi single-board computer</dt>
-          <dd>Higher-level operation and commanding</dd>
+          <dt>Orange Pi 5 Pro</dt>
+          <dd>Command decoding, experiment sequencing, image and telemetry storage, onboard YAMCS</dd>
         </div>
         <div>
-          <dt>STM32 microcontroller</dt>
-          <dd>Pump control</dd>
+          <dt>STM32F746 microcontroller</dt>
+          <dd>Drives the pumps (PWM) and the LED lighting</dd>
         </div>
         <div>
-          <dt>SSD</dt>
-          <dd>Onboard recording</dd>
+          <dt>Power module</dt>
+          <dd>12 V in; regulated 5 V and 3.3 V rails with overcurrent protection</dd>
+        </div>
+        <div>
+          <dt>USB hub</dt>
+          <dd>Dedicated 5 V supply for the four cameras</dd>
         </div>
       </dl>
-      <p className="beat-note">The microcontroller and the SSD are described here rather than labelled in the model.</p>
+      <p className="beat-note">The microcontroller is described here rather than labelled in the model.</p>
     </>
   );
 }
@@ -69,14 +73,8 @@ function BeatExtra({ extra }: { extra: Beat['extra'] }) {
       return <EnvelopeFacts />;
     case 'computing-roles':
       return <ComputingRoles />;
-    case 'flow-deliver':
-      return <FlowDiagram stage="deliver" />;
-    case 'flow-mix':
-      return <FlowDiagram stage="mix" />;
-    case 'flow-watch':
-      return <FlowDiagram stage="watch" />;
-    case 'flow-time':
-      return <FlowDiagram stage="time" />;
+    case 'flow':
+      return <FlowDiagram />;
     case 'explore':
       return <ExploreButton />;
     default:

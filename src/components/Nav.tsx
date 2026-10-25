@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { assets, chapters, type ChapterId } from '../config/site';
+import { useSectionTheme } from '../lib/hooks';
 
 export function Nav() {
   const [active, setActive] = useState<ChapterId>('question');
   const [open, setOpen] = useState(false);
+  const theme = useSectionTheme();
 
   useEffect(() => {
     const els = chapters.map((c) => document.getElementById(c.id)).filter(Boolean) as HTMLElement[];
@@ -27,7 +29,7 @@ export function Nav() {
   const activeLabel = chapters.find((c) => c.id === active)?.label;
 
   return (
-    <header className="site-nav">
+    <header className={theme ? `site-nav ${theme}` : 'site-nav'}>
       <a className="skip-link" href="#question">
         Skip to content
       </a>

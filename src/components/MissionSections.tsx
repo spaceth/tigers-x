@@ -1,5 +1,64 @@
+import { campaign, verification } from '../config/facts';
 import { MediaFigure, MediaGallery } from './Media';
 import { Reveal } from './Reveal';
+
+function Qualification() {
+  return (
+    <div className="qualify">
+      <Reveal className="qualify-intro">
+        <h3 className="section-title">Qualified for the station</h3>
+        <p>
+          Before flight, the cube had to meet the ICE Cubes interface requirements and the safety rules for
+          pressurised ISS payloads, across three independent checks.
+        </p>
+      </Reveal>
+      <div className="qualify-grid">
+        <Reveal as="section" className="qualify-item" aria-labelledby="qualify-structure" delay={1}>
+          <h4 id="qualify-structure">Structure</h4>
+          <p>
+            Mechanical loading and vibration along all three axes, at Thailand’s Electrical and Electronic Products
+            Testing Center (PTEC). Resonance searches before and after each run found no cracking, damage, loose
+            parts or change in structural signature.
+          </p>
+          <p className="qualify-result">Passed</p>
+        </Reveal>
+        <Reveal as="section" className="qualify-item" aria-labelledby="qualify-emc" delay={2}>
+          <h4 id="qualify-emc">Electromagnetic compatibility</h4>
+          <table className="qualify-table">
+            <caption className="visually-hidden">EMC test results</caption>
+            <thead>
+              <tr>
+                <th scope="col">Test</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {verification.emc.map((t) => (
+                <tr key={t.test}>
+                  <th scope="row">
+                    {t.test}
+                    <span>{t.what}</span>
+                  </th>
+                  <td>{t.final === 'pass' ? 'Pass' : 'Fail'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="qualify-result">Passed</p>
+        </Reveal>
+        <Reveal as="section" className="qualify-item" aria-labelledby="qualify-chem" delay={3}>
+          <h4 id="qualify-chem">Chemical safety</h4>
+          <p>
+            Assessed by NASA: every reagent, including the trace colourants, is non-corrosive, non-oxidising and
+            non-flammable at the quantities flown. Even if both containment layers failed at once, at most about 60 mL
+            could be released.
+          </p>
+          <p className="qualify-result">Approved</p>
+        </Reveal>
+      </div>
+    </div>
+  );
+}
 
 /** Chapter 6, part one: development on Earth, launch and arrival. Follows the chip chapter. */
 export function MissionJourney() {
@@ -12,23 +71,36 @@ export function MissionJourney() {
             Built and tested on Earth first.
           </h2>
           <p className="lead">
-            TIGERS-X was developed on the ground by Chulabhorn Royal Academy and ISHA Lab, with engineering and
-            institutional partners, before it was prepared for flight.
+            TIGERS-X was developed by the AIIM-X Center of Excellence at Chulabhorn Royal Academy with ISHA Lab,
+            Panyapiwat Institute of Management and the Thai Microelectronics Center (TMEC) of NSTDA. Fluids were
+            prepared in a biosafety cabinet before the cube was sealed for flight.
           </p>
         </Reveal>
         <MediaGallery slotId="development-earth" />
+        <Qualification />
       </div>
 
-      <div className="container journey">
-        <Reveal className="journey-copy">
+      <div className="container journey-launch">
+        <Reveal className="journey-launch__copy">
           <h3 className="section-title">The journey up</h3>
           <p>
-            Packed for launch, the payload travelled to the International Space Station, arriving with a Dragon
-            spacecraft before crew moved it to its place in Columbus.
+            Packed unpowered, TIGERS-X launched on {campaign.launch} aboard {campaign.vehicle}, a Dragon cargo flight
+            to the International Space Station, lifting off from {campaign.launchSite} in Florida.
+          </p>
+        </Reveal>
+      </div>
+      <div className="container container--wide">
+        <MediaFigure slotId="launch" className="media--full" />
+      </div>
+
+      <div className="container journey journey--after-launch">
+        <Reveal className="journey-copy">
+          <p>
+            After Dragon docked, a crew member installed the cube in the ICE Cubes Facility in Columbus, which connects
+            power, data and grounding in one step, and the team in Bangkok commissioned it remotely.
           </p>
         </Reveal>
         <div className="journey-media">
-          <MediaFigure slotId="launch" />
           <MediaFigure slotId="dragon-docking" />
         </div>
       </div>
@@ -56,8 +128,9 @@ export function ReturnToEarth() {
             Back to Earth
           </h2>
           <p>
-            After operations, the payload was removed by the crew and returned to Earth aboard Dragon. Its onboard
-            recordings came home with it, for the research team to retrieve after landing.
+            After operations, the crew removed the payload and it was deactivated for the return to Earth aboard a
+            cargo vehicle. On the ground the cube is recovered and powered on again, its hardware examined, and the
+            post-flight findings benchmarked against the data already sent down from orbit.
           </p>
         </Reveal>
         <div className="journey-media">

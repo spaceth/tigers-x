@@ -66,18 +66,26 @@ plain cover block. Plan-view rasters (`node scripts/raster-top.mjs out.png 411`)
 networks** in two mirrored pairs. Each network links two ports at one end with one port at the other,
 through a long, repeatedly folding channel split across both layers.
 
-Traced outlines (`node scripts/extract-channels.mjs` →
-`src/config/chip-channels.generated.json`, used by the lab-on-a-chip flow diagram) show, for each
-network with both layers overlaid:
+**The GLB chip is not the flight channel geometry.** The flow diagrams are traced instead from the
+flight chip's own STL, `source/chip-part-x.stl` (supplied by the team as
+`FM_forMedia/STL/FM_Assembly - Fluidic part-1 Chip Part x-1.STL`), by
+`node scripts/extract-channels.mjs` → `src/config/chip-channels.generated.json`. That part is two
+4 mm halves; the channels are **1 mm-deep pockets in the underside of the upper half**, in one
+layer, with the 12 ports as through-holes in the lower half. Each of the four rows (rows 1 and 3
+flow right to left, rows 2 and 4 left to right, matching the engraved arrows):
 
-- each of the two paired ports feeds **two parallel branches** (one route per sheet), so both
-  ports meet at a Y-junction at the start of each branch;
-- each branch is a chain of angled segments ending in rounded pockets;
-- the two branches re-merge before the single port.
+- the outer inlet feeds two angled channels; the inner inlet's two angled channels run between
+  them, and the four meet where the row splits into an upper and a lower arm;
+- each arm is a chain of Tesla-valve units: angled channels whose rounded loops wrap around
+  oval islands (ten islands per row);
+- the arms open into a **rectangular observation chamber** (two halves around a central island),
+  which narrows to the single outlet — the paper's "outlet modified into a rectangular chamber".
+
+The 3D model still renders the GLB chip (meshes 409–412), whose channel sheets differ in detail.
 
 **Tesla valve.** The project team identifies these segments as Tesla-valve units (stated by the
 team on 2026-10-21; `tigers-x.md` does not mention it). The site describes them as such and
-explains the general principle (split, turn around a pocket, re-join at an angle). It makes no claim
+explains the general principle (split, loop around an island, re-join at an angle). It makes no claim
 about flow direction, diodicity or measured mixing performance. Which port carries which phase is
 not established; the diagram says so.
 
