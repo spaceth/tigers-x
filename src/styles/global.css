@@ -438,13 +438,14 @@ a {
 
 .hero-sky {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   padding-top: var(--nav-h);
+  padding-bottom: clamp(1.25rem, 4vh, 2.5rem);
   background: #000;
 }
 .hero-sky__scene {
@@ -486,7 +487,8 @@ a {
 .hero-earth-track {
   position: absolute;
   left: 50%;
-  top: 76vh;
+  /* Same horizon as a 100vh sky (top: 76vh); stays on the bottom edge when the hero grows. */
+  top: calc(100% - 24vh);
   width: 96vh;
   height: 96vh;
   margin-left: -48vh;
@@ -1197,21 +1199,28 @@ html.is-exploring .story-stage {
   background: var(--stone);
 }
 .explore-chip[aria-pressed='true'] {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: #fff;
+  background: transparent;
+  border-color: #fff;
+  color: var(--ink);
 }
 .explore-chip[aria-pressed='true']::before {
-  background: var(--accent-warm);
+  content: none;
 }
 .explore-detail {
   min-height: 7.5rem;
   padding-top: 1rem;
   border-top: 1px solid var(--hairline);
 }
-.explore-return {
+.button.explore-return {
   margin-top: auto;
   align-self: flex-start;
+  background: #fff;
+  color: #000;
+  border-color: color-mix(in srgb, #000 18%, #fff);
+}
+.button.explore-return:hover {
+  background: color-mix(in srgb, #fff 88%, #000);
+  color: #000;
 }
 
 /* ------------------------------------------------- Flow diagram (chip) */

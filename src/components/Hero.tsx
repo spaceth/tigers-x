@@ -2,7 +2,7 @@ import { campaign } from '../config/facts';
 import { assets } from '../config/site';
 import { HeroSky } from './HeroSky';
 
-/** Opening sky: patch, title, and one line. One viewport, nothing else. */
+/** Opening sky: patch, title, and one line. At least one viewport; taller when the copy needs it. */
 export function Hero() {
   return (
     <div className="hero-sky theme-night">
