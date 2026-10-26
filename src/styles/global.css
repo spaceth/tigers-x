@@ -1179,7 +1179,6 @@ html.is-exploring .story-stage {
 .explore-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   min-height: 40px;
   padding: 0 0.95rem;
   border-radius: 999px;
@@ -1191,20 +1190,10 @@ html.is-exploring .story-stage {
   color: var(--ink);
   cursor: pointer;
 }
-.explore-chip::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--stone);
-}
 .explore-chip[aria-pressed='true'] {
   background: transparent;
   border-color: #fff;
   color: var(--ink);
-}
-.explore-chip[aria-pressed='true']::before {
-  content: none;
 }
 .explore-detail {
   min-height: 7.5rem;
