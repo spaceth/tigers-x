@@ -78,11 +78,14 @@ export function Closing() {
       <footer className="site-footer-band theme-navy">
         <div className="container site-footer">
           <img src={assets.patch} alt="" width={56} height={56} loading="lazy" />
-          <p>
-            TIGERS-X — Thailand Innovative G-force Varied Emulsification Research for Space Exploration. Developed by
-            the AIIM-X Center of Excellence, Chulabhorn Royal Academy, with ISHA Lab, Panyapiwat Institute of Management
-            and TMEC, NSTDA. Operated in the ICE Cubes Facility aboard the International Space Station.
-          </p>
+          <div>
+            <p>
+              TIGERS-X — Thailand Innovative G-force Varied Emulsification Research for Space Exploration. Developed by
+              the AIIM-X Center of Excellence, Chulabhorn Royal Academy, with ISHA Lab, Panyapiwat Institute of
+              Management and TMEC, NSTDA. Operated in the ICE Cubes Facility aboard the International Space Station.
+            </p>
+            <p className="site-footer__copy">© 2026 Chulabhorn Royal Academy</p>
+          </div>
         </div>
       </footer>
     </section>
