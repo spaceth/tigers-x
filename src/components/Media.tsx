@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { mediaSlots, type MediaItem, type MediaSlot } from '../config/media';
 import { useInView, useReducedMotion } from '../lib/hooks';
 
@@ -48,7 +48,14 @@ function MediaFrame({ item, placeholder, sizes }: { item: MediaItem; placeholder
             {item.captions && <track kind="captions" src={item.captions.src} srcLang={item.captions.srclang} label={item.captions.label} default />}
           </video>
         ) : (
-          <img src={item.src} alt={item.alt} loading="lazy" decoding="async" sizes={sizes} style={{ objectPosition: item.focal }} />
+          <img
+            src={reduced && item.poster ? item.poster : item.src}
+            alt={item.alt}
+            loading="lazy"
+            decoding="async"
+            sizes={sizes}
+            style={{ objectPosition: item.focal }}
+          />
         ))}
     </div>
   );
@@ -62,6 +69,63 @@ function Caption({ item }: { item: MediaItem }) {
         {item.credit ?? 'Credit to be added'}
       </span>
     </figcaption>
+  );
+}
+
+/** One large photograph, with smaller thumbnails that choose which one is shown. */
+export function MediaSlideshow({ slotId, className = '' }: { slotId: MediaSlot['id']; className?: string }) {
+  const slot = mediaSlots[slotId];
+  const [index, setIndex] = useState(0);
+  const thumbsRef = useRef<HTMLDivElement>(null);
+  const item = slot.items[index] ?? slot.items[0];
+
+  const choose = (next: number, focus = false) => {
+    const count = slot.items.length;
+    const wrapped = (next + count) % count;
+    setIndex(wrapped);
+    if (focus) {
+      thumbsRef.current?.querySelectorAll('button')[wrapped]?.focus();
+    }
+  };
+
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      choose(index + 1, true);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      choose(index - 1, true);
+    }
+  };
+
+  return (
+    <figure className={`media media-slideshow ${className}`} data-slot={slot.id}>
+      <MediaFrame item={item} placeholder={slot.placeholder} />
+      {slot.items.length > 1 && (
+        <div
+          ref={thumbsRef}
+          className="media-thumbs"
+          role="radiogroup"
+          aria-label="Photographs of TIGERS-X aboard the station"
+          onKeyDown={onKeyDown}
+        >
+          {slot.items.map((thumb, i) => (
+            <button
+              key={thumb.id}
+              type="button"
+              role="radio"
+              aria-checked={i === index}
+              aria-label={thumb.caption}
+              className={i === index ? 'is-current' : undefined}
+              onClick={() => choose(i)}
+            >
+              {thumb.src && <img src={thumb.src} alt="" />}
+            </button>
+          ))}
+        </div>
+      )}
+      <Caption item={item} />
+    </figure>
   );
 }
 

@@ -14,10 +14,59 @@ export const publication = {
   venue: 'Research Square preprint, 22 October 2026',
   doi: '10.21203/rs.3.rs-11156278/v1',
   url: 'https://doi.org/10.21203/rs.3.rs-11156278/v1',
-  /** CAD file, experiment videos and image-analysis software. */
+  /** Processed on-orbit videos and the flight-model CAD. */
   dataUrl: 'https://doi.org/10.5281/zenodo.22934189',
   dataDoi: '10.5281/zenodo.22934189',
 } as const;
+
+/**
+ * Academic resources shown in the closing table. `href: null` renders as
+ * coming soon; the payload manual uses `DOCS_URL` from site.ts when that is set.
+ */
+export const academicResources: {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+  href: string | null;
+  linkLabel: string;
+}[] = [
+  {
+    id: 'parabolic-paper',
+    name: 'Universal and economical experimental platform for colloidal mixing lab-on-chip in parabolic flight',
+    type: 'Journal article',
+    description:
+      'The 2025 parabolic-flight study of the earlier lab-on-chip platform: 29 trials, about 20 seconds of reduced gravity each. Scientific Reports, 6 June 2025.',
+    href: 'https://www.nature.com/articles/s41598-025-04368-8',
+    linkLabel: 'Read',
+  },
+  {
+    id: 'iss-preprint',
+    name: publication.title,
+    type: 'Preprint',
+    description:
+      'Design, ground verification and the 10-day science run of TIGERS-X aboard the station. Research Square, 22 October 2026.',
+    href: 'https://www.researchsquare.com/article/rs-11156278/v1',
+    linkLabel: 'Read',
+  },
+  {
+    id: 'dataset',
+    name: 'TIGERS-X On-Orbit Emulsification Experiment: Processed Videos and Payload CAD',
+    type: 'Dataset',
+    description:
+      'Thirty processed videos of the channels during science operations, and the flight-model CAD. Zenodo, version 1.0.0.',
+    href: 'https://zenodo.org/records/22934189',
+    linkLabel: 'Open',
+  },
+  {
+    id: 'manual',
+    name: 'Payload User Manual',
+    type: 'Manual',
+    description: 'Operating instructions for the payload.',
+    href: null,
+    linkLabel: 'Open',
+  },
+];
 
 /** [paper] Launch and on-orbit campaign. */
 export const campaign = {

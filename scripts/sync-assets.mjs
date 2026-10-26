@@ -5,6 +5,7 @@
 //   patch.png -> public/media/patch.png             (byte-for-byte copy, original artwork)
 //   parabolic.png -> public/media/parabolic-patch.png (parabolic-flight experiment patch)
 //   medical.png, food.png, exploration.png -> public/media/icons/
+//   command.png -> public/media/command.png         (ground-control mark)
 //   cra.svg, mhesi.svg, tsri.svg -> public/media/partners/   (byte-for-byte)
 //   pim.webp, gistda.webp, tmec.webp -> public/media/partners/ (transparent padding trimmed)
 //   Cube.glb  -> public/models/tigers-x.glb         (meshopt-compressed web copy)
@@ -108,6 +109,7 @@ copy('parabolic.png', 'media/parabolic-patch.png');
 copy('medical.png', 'media/icons/medical.png');
 copy('food.png', 'media/icons/food.png');
 copy('exploration.png', 'media/icons/exploration.png');
+copy('command.png', 'media/command.png');
 copy('cra.svg', 'media/partners/cra.svg');
 copy('mhesi.svg', 'media/partners/mhesi.svg');
 copy('tsri.svg', 'media/partners/tsri.svg');

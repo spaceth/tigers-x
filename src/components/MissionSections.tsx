@@ -1,5 +1,5 @@
-import { campaign, verification } from '../config/facts';
-import { MediaFigure, MediaGallery } from './Media';
+import { campaign, mixingFindings, mixingIndex, verification, type ChannelRowId } from '../config/facts';
+import { MediaFigure, MediaGallery, MediaSlideshow } from './Media';
 import { Reveal } from './Reveal';
 
 function Qualification() {
@@ -39,12 +39,13 @@ function Qualification() {
                     {t.test}
                     <span>{t.what}</span>
                   </th>
-                  <td>{t.final === 'pass' ? 'Pass' : 'Fail'}</td>
+                  <td>
+                    <span className="qualify-result">{t.final === 'pass' ? 'Pass' : 'Fail'}</span>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <p className="qualify-result">Passed</p>
         </Reveal>
         <Reveal as="section" className="qualify-item" aria-labelledby="qualify-chem" delay={3}>
           <h4 id="qualify-chem">Chemical safety</h4>
@@ -79,10 +80,19 @@ export function MissionJourney() {
         <MediaGallery slotId="development-earth" />
         <Qualification />
       </div>
+    </section>
+  );
+}
 
+/** Launch, docking, and installation. Its own anchor so the header can land here. */
+export function LaunchJourney() {
+  return (
+    <section id="launch" className="chapter chapter--launch" aria-labelledby="launch-title">
       <div className="container journey-launch">
         <Reveal className="journey-launch__copy">
-          <h3 className="section-title">The journey up</h3>
+          <h2 id="launch-title" className="section-title">
+            The journey up
+          </h2>
           <p>
             Packed unpowered, TIGERS-X launched on {campaign.launch} aboard {campaign.vehicle}, a Dragon cargo flight
             to the International Space Station, lifting off from {campaign.launchSite} in Florida.
@@ -113,7 +123,58 @@ export function PayloadOnStation() {
   return (
     <section className="chapter chapter--pause" aria-label="TIGERS-X aboard the station">
       <div className="container container--wide">
-        <MediaFigure slotId="payload-on-iss" className="media--full" />
+        <MediaSlideshow slotId="payload-on-iss" className="media--full" />
+      </div>
+    </section>
+  );
+}
+
+const outlet = (id: ChannelRowId) => mixingIndex.find((row) => row.id === id)!.final.toFixed(2);
+
+/** Science operations on the lab-on-chip, between installation and the return. */
+export function ScienceOperations() {
+  return (
+    <section id="operations" className="chapter chapter--operations" aria-labelledby="operations-title">
+      <div className="container">
+        <Reveal className="chapter-intro">
+          <p className="eyebrow">Science operations</p>
+          <h2 id="operations-title" className="chapter-title">
+            The chip, running.
+          </h2>
+          <p className="lead">
+            For ten days the lab-on-chip mixed oil and water under command from Bangkok, and the cameras kept the
+            record.
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="container container--wide">
+        <MediaFigure slotId="science-operations" className="media--full" />
+      </div>
+
+      <div className="container">
+        <Reveal className="ops-copy">
+          <p>
+            Once the cube was commissioned, every science run was commanded from Bangkok through YAMCS. Eight pumps
+            metered the orange oil phase and the teal water phase into four Tesla-valve channels — CH1 and CH2, each
+            with two rows. Under the chip, a pair of cameras watched each device and the two pictures were joined into
+            one panorama, with a colour swatch in the frame so each session could be corrected. After a cycle finished,
+            the video and the logs came down, and the first look at them started the same day.
+          </p>
+          <p>
+            The recordings follow the flow at four moments after the pumps started. At the first, both devices looked
+            alike: oil leading into the channels, the far end still empty. By the second they had parted. Water pushed
+            through the bends of CH1, while CH2 stayed mostly oil. The third and fourth moments made that split
+            clearer. In CH1 the water filled most of the visible channel and the oil clung to the rim. In CH2 the oil
+            still occupied most of the length, and the water remained near the inlet.
+          </p>
+          <p>
+            The balance was set early. In all four rows the mix levelled off within the first {mixingFindings.convergedWithinPct}%
+            of the channel and changed little over the Tesla valves that followed. Scored from 1 for pure water to 2
+            for pure oil, CH1’s rows finished at {outlet('CH1-1')} and {outlet('CH1-2')}. CH2’s rows finished apart, at{' '}
+            {outlet('CH2-1')} and {outlet('CH2-2')}. The pumps kept the fluid moving. The geometry did the mixing.
+          </p>
+        </Reveal>
       </div>
     </section>
   );

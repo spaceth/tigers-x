@@ -1,32 +1,33 @@
 /**
- * Technical documentation destination. Leave as `null` until the final URL is
- * confirmed: the closing call to action then reads as forthcoming and renders no
- * link. Set a full URL (e.g. 'https://docs.example.org/tigers-x') to turn it into
- * an ordinary accessible link. The paper and data links live in config/facts.ts.
+ * Payload user manual. Leave as `null` until the URL is confirmed: the Academic
+ * resources row then reads as coming soon. Set a full URL to turn that row into
+ * a link. The paper and data links live in config/facts.ts.
  */
 export const DOCS_URL: string | null = null;
 
 export const chapters = [
-  { id: 'question', label: 'Question' },
-  { id: 'payload', label: 'Payload' },
+  { id: 'question', label: 'Overview' },
+  { id: 'payload', label: 'Payload Design' },
   { id: 'subsystems', label: 'Subsystems' },
   { id: 'chip', label: 'Lab-on-a-chip' },
-  { id: 'mission', label: 'Mission' },
-  { id: 'station', label: 'Aboard the ISS' },
-  { id: 'record', label: 'Record' },
-  { id: 'results', label: 'Results' },
-  { id: 'documentation', label: 'Paper' },
+  { id: 'mission', label: 'Assembly Integration and Testing' },
+  { id: 'launch', label: 'Launch' },
+  { id: 'station', label: 'Science Operation' },
+  { id: 'record', label: 'Results' },
+  { id: 'documentation', label: 'Academic Resources' },
 ] as const;
 
 export type ChapterId = (typeof chapters)[number]['id'];
 
 export const assets = {
   model: '/models/tigers-x.glb',
+  iss: '/models/iss.glb',
   patch: '/media/patch.png',
   parabolicPatch: '/media/parabolic-patch.png',
   iconMedical: '/media/icons/medical.png',
   iconFood: '/media/icons/food.png',
   iconExploration: '/media/icons/exploration.png',
+  command: '/media/command.png',
   modelSnapshot: '/media/payload-snapshot.webp',
 } as const;
 

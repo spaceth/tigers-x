@@ -28,7 +28,7 @@ export interface MediaItem {
 }
 
 export interface MediaSlot {
-  id: 'platform-parabolic' | 'platform-iss' | 'development-earth' | 'launch' | 'dragon-docking' | 'crew-installation' | 'payload-on-iss' | 'return-earth';
+  id: 'platform-parabolic' | 'platform-iss' | 'development-earth' | 'launch' | 'dragon-docking' | 'crew-installation' | 'payload-on-iss' | 'science-operations' | 'return-earth';
   /** Placeholder title shown until media is supplied. */
   placeholder: string;
   items: MediaItem[];
@@ -60,7 +60,7 @@ export const mediaSlots: Record<MediaSlot['id'], MediaSlot> = {
         src: '/media/mission/tigers-x-in-icf.jpg',
         alt: 'The aluminium TIGERS-X cube, its lid carrying the mission patch, ICE Cubes label and partner logos, installed in the ICE Cubes Facility aboard the ISS, surrounded by cables and rack hardware.',
         caption: 'TIGERS-X installed in the ICE Cubes Facility, Columbus module.',
-        credit: 'Sophie Adenot/ESA',
+        credit: 'ESA/NASA – S. Adenot',
         aspectRatio: 3 / 2,
       },
     ],
@@ -134,7 +134,7 @@ export const mediaSlots: Record<MediaSlot['id'], MediaSlot> = {
         captions: null,
         alt: 'Real footage of the CRS-34 Dragon approaching the International Space Station on 17 May 2026, seen from the station with Earth filling the lower half of the view and a solar array along the right edge.',
         caption: 'Real footage of the CRS-34 Dragon docking with the International Space Station on 17 May 2026.',
-        credit: 'Sophie Adenot/ESA',
+        credit: 'ESA/NASA – S. Adenot',
         aspectRatio: 16 / 9,
         ambient: true,
       },
@@ -142,16 +142,19 @@ export const mediaSlots: Record<MediaSlot['id'], MediaSlot> = {
   },
   'crew-installation': {
     id: 'crew-installation',
-    placeholder: 'Crew installation in Columbus — photograph',
+    placeholder: 'Crew installation in Columbus — video',
     items: [
       {
-        id: 'crew-installation-photo',
-        kind: 'image',
-        src: null,
-        alt: 'An astronaut installs the TIGERS-X payload in the ICE Cubes Facility inside Columbus.',
+        id: 'crew-installation-video',
+        kind: 'video',
+        src: '/media/mission/installation.mp4',
+        poster: '/media/mission/installation-poster.jpg',
+        captions: null,
+        alt: 'A crew member installs the TIGERS-X cube in the ICE Cubes Facility inside Columbus, sliding the labelled enclosure into the rack among cables and experiment hardware.',
         caption: 'Installation in the ICE Cubes Facility, Columbus module.',
         credit: 'ESA/NASA – S. Adenot',
-        aspectRatio: 4 / 5,
+        aspectRatio: 120 / 89,
+        ambient: true,
       },
     ],
   },
@@ -160,13 +163,58 @@ export const mediaSlots: Record<MediaSlot['id'], MediaSlot> = {
     placeholder: 'TIGERS-X aboard the ISS — photograph',
     items: [
       {
-        id: 'payload-on-iss-photo',
+        id: 'payload-on-iss-installed',
         kind: 'image',
-        src: '/media/mission/tigers-x-in-icf-wide.jpg',
+        src: '/media/mission/tigers-x-in-icf.jpg',
         alt: 'The aluminium TIGERS-X cube, its lid carrying the mission patch, ICE Cubes label and partner logos, installed in the ICE Cubes Facility aboard the ISS, surrounded by cables and rack hardware.',
         caption: 'TIGERS-X in place aboard the International Space Station.',
-        credit: 'Sophie Adenot/ESA',
+        credit: 'ESA/NASA – S. Adenot',
         aspectRatio: 3 / 2,
+      },
+      {
+        id: 'payload-on-iss-front',
+        kind: 'image',
+        src: '/media/mission/tigers-x-in-icf-2.jpg',
+        alt: 'Close view of the front face of the TIGERS-X cube in the ICE Cubes Facility, showing the Thai flag, CRA, ISHA, TSRI, TMEC and GISTDA marks, with cables and connectors around it.',
+        caption: 'The front of the cube in the ICE Cubes Facility.',
+        credit: 'ESA/NASA – S. Adenot',
+        aspectRatio: 3 / 2,
+      },
+      {
+        id: 'payload-on-iss-floating',
+        kind: 'image',
+        src: '/media/mission/tigers-x-floating.jpg',
+        alt: 'The TIGERS-X cube floats inside a station module, its lid showing the mission patch, partner logos and ICE Cubes label, with racks, stowage bags and cables behind it.',
+        caption: 'TIGERS-X floating inside the International Space Station.',
+        credit: 'ESA/NASA – S. Adenot',
+        aspectRatio: 3 / 2,
+        focal: '40% 45%',
+      },
+      {
+        id: 'payload-on-iss-back',
+        kind: 'image',
+        src: '/media/mission/tigers-x-back.jpg',
+        alt: 'The back panel of the TIGERS-X cube floats in the station, showing the flight-model label, handwritten signatures, the mission patch, and the Thai flag and CRA marks, with stowage bags and cables behind it.',
+        caption: 'The back of TIGERS-X, marked as the flight model.',
+        credit: 'ESA/NASA – S. Adenot',
+        aspectRatio: 3 / 2,
+      },
+    ],
+  },
+  'science-operations': {
+    id: 'science-operations',
+    placeholder: 'Lab-on-chip during science operations — animation',
+    items: [
+      {
+        id: 'lab-on-chip-run',
+        kind: 'image',
+        src: '/media/mission/lab-on-a-chip.gif',
+        poster: '/media/mission/lab-on-a-chip-poster.jpg',
+        alt: 'Panorama of a transparent lab-on-chip during a run, joined from two camera views. Orange oil and teal water move through two rows of Tesla-valve channels. A colour reference swatch sits in each half, CRA is moulded into the plastic, and tubing connects at both ends.',
+        caption:
+          'The lab-on-chip during a science run. Orange is the oil phase and teal the water phase, moving through the Tesla-valve channels. The two camera views are joined into one panorama.',
+        credit: 'Chulabhorn Royal Academy',
+        aspectRatio: 1090 / 358,
       },
     ],
   },

@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { CommandLink } from './CommandLink';
 import { MediaFigure } from './Media';
-import { Reveal } from './Reveal';
-import { StationSchematic } from './StationSchematic';
+import { StationModel } from './StationModel';
 
 const steps = [
   {
@@ -33,38 +32,15 @@ const steps = [
 ];
 
 export function StationChapter() {
-  const [active, setActive] = useState(0);
-  const stepEls = useRef<HTMLElement[]>([]);
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step));
-        }
-      },
-      { rootMargin: '-48% 0px -48% 0px' },
-    );
-    stepEls.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
   return (
     <section id="station" className="chapter chapter--station theme-night" aria-labelledby="station-title">
       <div className="container scroller">
         <div className="scroller-figure">
-          <StationSchematic active={active} />
+          <StationModel />
         </div>
         <div className="scroller-steps">
           {steps.map((s, i) => (
-            <article
-              key={s.title}
-              className="scroller-step"
-              data-step={i}
-              ref={(n) => {
-                if (n) stepEls.current[i] = n;
-              }}
-            >
+            <article key={s.title} className="scroller-step" data-step={i}>
               {i === 0 ? (
                 <>
                   <p className="eyebrow">Aboard the ISS</p>
@@ -87,54 +63,7 @@ export function StationChapter() {
       </div>
 
       <div className="container network-block">
-        <Reveal className="network-intro">
-          <h3 className="section-title">Commanded from Thailand</h3>
-          <p>
-            Every experiment ran under ground control from the Chulabhorn Royal Academy User Home Base in Bangkok,
-            using YAMCS telecommand and telemetry. The traffic passes through the facility and the station’s
-            infrastructure — a hosted service, not a dedicated payload radio link — and the ICE Cubes Mission Control
-            Centre in Belgium relays it to Bangkok.
-          </p>
-          <p>
-            After each experiment cycle, video and logs were sent down over secure file transfer in near real time,
-            and analysis began the same day.
-          </p>
-          <p className="muted">
-            Ground contact is only possible in signal windows, so a YAMCS instance on the payload’s own computer
-            buffers data and keeps the experiment state in between.
-          </p>
-        </Reveal>
-        <Reveal as="ol" className="network" delay={1}>
-          <li className="network-node network-node--accent">
-            <span className="network-title">TIGERS-X</span>
-            <span className="network-sub">Experiment cube, Columbus</span>
-          </li>
-          <li className="network-link">
-            <span>+12 V and Gigabit Ethernet</span>
-          </li>
-          <li className="network-node">
-            <span className="network-title">ICE Cubes Facility</span>
-            <span className="network-sub">Station data infrastructure</span>
-          </li>
-          <li className="network-link">
-            <span>Space-to-ground link</span>
-          </li>
-          <li className="network-node">
-            <span className="network-title">ICE Cubes Mission Control Centre</span>
-            <span className="network-sub">Space Applications Services, Belgium</span>
-          </li>
-          <li className="network-link">
-            <span>VPN</span>
-          </li>
-          <li className="network-node">
-            <span className="network-title">User Home Base</span>
-            <span className="network-sub">Chulabhorn Royal Academy, Bangkok · YAMCS</span>
-          </li>
-        </Reveal>
-        <p className="network-legend">
-          Each link carries traffic both ways: commands from Thailand toward the payload, experiment data back to the
-          team.
-        </p>
+        <CommandLink />
       </div>
     </section>
   );

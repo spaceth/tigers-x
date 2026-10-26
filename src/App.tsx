@@ -1,10 +1,9 @@
 import { Nav } from './components/Nav';
 import { ScienceChapter } from './components/ScienceChapter';
 import { PayloadStory } from './components/PayloadStory';
-import { MissionJourney, PayloadOnStation, ReturnToEarth } from './components/MissionSections';
+import { LaunchJourney, MissionJourney, PayloadOnStation, ReturnToEarth, ScienceOperations } from './components/MissionSections';
 import { StationChapter } from './components/StationChapter';
 import { RecordChapter } from './components/RecordChapter';
-import { ResultsChapter } from './components/ResultsChapter';
 import { Closing } from './components/Closing';
 
 export default function App() {
@@ -17,11 +16,12 @@ export default function App() {
           <PayloadStory />
         </div>
         <MissionJourney />
+        <LaunchJourney />
         <StationChapter />
         <PayloadOnStation />
+        <ScienceOperations />
         <ReturnToEarth />
         <RecordChapter />
-        <ResultsChapter />
         <Closing />
       </main>
     </>

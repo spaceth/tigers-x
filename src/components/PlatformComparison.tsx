@@ -17,6 +17,7 @@ export function PlatformComparison() {
         </p>
       </Reveal>
       <Reveal>
+        <div className="platforms-scroll">
         <table className="platforms-table">
           <caption className="visually-hidden">Parabolic-flight experiment compared with TIGERS-X on the ISS</caption>
           <colgroup>
@@ -73,6 +74,7 @@ export function PlatformComparison() {
             ))}
           </tbody>
         </table>
+        </div>
         <p className="platforms-note">
           Parabolic-flight figures are from the team’s 2025 study (Seehanam et al., Scientific Reports), as summarised in
           the TIGERS-X paper.

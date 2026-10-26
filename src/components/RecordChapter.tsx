@@ -101,7 +101,7 @@ export function RecordChapter() {
         <Reveal as="p" className="record-caveat">
           These figures come from the team’s mission report. They show that the payload operated autonomously,
           accepted commands, moved fluid, recorded imagery and returned data with no crew involvement beyond
-          installation and removal. What the imagery showed about mixing follows below.
+          installation and removal.
         </Reveal>
       </div>
     </section>

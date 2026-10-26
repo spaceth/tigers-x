@@ -1,41 +1,59 @@
-import { publication } from '../config/facts';
+import { academicResources } from '../config/facts';
 import { assets, DOCS_URL, partners } from '../config/site';
 import { Reveal } from './Reveal';
 
 export function Closing() {
+  const resources = academicResources.map((item) =>
+    item.id === 'manual' ? { ...item, href: DOCS_URL } : item,
+  );
+
   return (
     <section id="documentation" className="chapter chapter--closing" aria-labelledby="docs-title">
       <div className="container closing">
         <Reveal className="closing-copy">
-          <p className="eyebrow">Continue into the science</p>
+          <p className="eyebrow">Academic resources</p>
           <h2 id="docs-title" className="chapter-title">
-            The full technical story.
+            Papers, data and the manual.
           </h2>
           <p className="lead">
-            The paper covers the design, ground verification and on-orbit results in full. The CAD model, the
-            experiment videos and the image-analysis software are openly available.
+            The flight paper, the parabolic-flight study that came before it, and the recordings and CAD from the
+            station.
           </p>
-          <div className="closing-actions">
-            <a className="button button--primary" href={publication.url} target="_blank" rel="noreferrer">
-              Read the paper
-            </a>
-            <a className="button button--secondary" href={publication.dataUrl} target="_blank" rel="noreferrer">
-              Videos, CAD and analysis code
-            </a>
+        </Reveal>
+        <Reveal>
+          <div className="resource-scroll">
+            <table className="resource-table">
+              <caption className="visually-hidden">Academic resources</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                {resources.map((item) => (
+                  <tr key={item.id}>
+                    <th scope="row">{item.name}</th>
+                    <td>{item.type}</td>
+                    <td>{item.description}</td>
+                    <td>
+                      {item.href ? (
+                        <a href={item.href} target="_blank" rel="noreferrer">
+                          {item.linkLabel}
+                          <span className="visually-hidden"> {item.name}</span>
+                        </a>
+                      ) : (
+                        <span className="resource-soon">Coming soon</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <p className="closing-cite">
-            {publication.authors}. “{publication.title}.” {publication.venue}. doi:{publication.doi}
-          </p>
-          {DOCS_URL ? (
-            <a className="text-link" href={DOCS_URL}>
-              Explore technical documentation
-            </a>
-          ) : (
-            <p className="cta-pending">
-              <span className="cta-pending-title">Explore technical documentation</span>
-              <span className="cta-pending-note">The documentation site is forthcoming.</span>
-            </p>
-          )}
+          <p className="resource-note">More scientific resources are on the way.</p>
         </Reveal>
       </div>
       <div className="partner-bar">
