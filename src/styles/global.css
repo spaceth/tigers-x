@@ -2045,12 +2045,15 @@ html.is-exploring .story-stage {
 }
 .resource-table td:last-child,
 .resource-table th:last-child {
-  width: 6.5rem;
+  width: 8rem;
   padding-right: 0;
   white-space: nowrap;
+  vertical-align: middle;
 }
-.resource-table a {
-  font-weight: 500;
+.resource-table .button {
+  min-height: 38px;
+  padding: 0 1.15rem;
+  font-size: 0.875rem;
 }
 .resource-soon {
   color: var(--ink-tertiary);
@@ -2099,8 +2102,11 @@ html.is-exploring .story-stage {
     font-size: 0.75rem;
     letter-spacing: 0.02em;
   }
-  .resource-table td:last-child {
-    padding-top: 0.45rem;
+  .resource-table td:last-child,
+  .resource-table th:last-child {
+    width: auto;
+    padding-top: 0.65rem;
+    white-space: normal;
   }
 }
 

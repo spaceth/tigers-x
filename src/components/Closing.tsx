@@ -40,7 +40,7 @@ export function Closing() {
                     <td>{item.description}</td>
                     <td>
                       {item.href ? (
-                        <a href={item.href} target="_blank" rel="noreferrer">
+                        <a className="button button--primary" href={item.href} target="_blank" rel="noreferrer">
                           {item.linkLabel}
                           <span className="visually-hidden"> {item.name}</span>
                         </a>
