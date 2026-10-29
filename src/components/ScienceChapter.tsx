@@ -122,24 +122,22 @@ export function ScienceChapter() {
         </div>
         <div className="container science-grid">
           <Reveal className="science-copy">
-            <h2 className="science-heading">When nothing falls</h2>
+            <h2 className="science-heading">Emulsification without buoyancy</h2>
             <p>
-              Long missions cannot restock medicines that expire in a year or two, so some nutrition — including the
-              oil-in-water emulsions used in Total Parenteral Nutrition — may have to be made on board. On Earth those
-              mixtures are beaten together by high-shear machines that lean on turbulence and buoyancy; in orbit nothing
-              settles, and a small mixer with no moving parts might do the job instead. TIGERS-X asked whether a passive
-              Tesla-valve chip can still redistribute oil and water over days on the station, not only in twenty-second
-              aircraft dips — a study of mixing behaviour, not a medicine.
+              Lipid emulsions used in intravenous nutrition are made on Earth by high-shear mixing. Turbulence breaks
+              the oil into droplets, and buoyancy separates or stabilizes the phases. Neither mechanism is available
+              in microgravity, where interfacial tension and capillary forces dominate. TIGERS-X tested whether a
+              passive Tesla-valve mixer can still redistribute an immiscible oil–water pair under those conditions.
+              The flight measured mixing behavior. It did not manufacture a medicine.
             </p>
           </Reveal>
 
           <div className="science-aims">
             <Reveal delay={1}>
-              <h2 className="science-heading">The goal is not simply to mix fluids in space</h2>
+              <h2 className="science-heading">What the flight was built to answer</h2>
               <p>
-                It is to build datasets and models of nutrient systems in microgravity that can be translated into real
-                medical applications like TPN. This shifts the focus from demonstration to understanding the underlying
-                physics of how these fluids behave.
+                The campaign links three results: a cube qualified for the station, a record of oil–water flow over
+                days rather than seconds, and a teleoperated platform later experiments can reuse.
               </p>
             </Reveal>
             <GoalCards />

@@ -17,33 +17,33 @@ const nodes = [
 const stages = [
   {
     dir: 'up' as const,
-    title: 'A command leaves Bangkok',
-    text: 'At the Chulabhorn Royal Academy User Home Base, the team sends a telecommand through YAMCS. A VPN carries it to the ICE Cubes Mission Control Centre in Belgium. The cube has no radio of its own.',
+    title: 'The command leaves Bangkok',
+    text: 'The Chulabhorn Royal Academy User Home Base issues a telecommand in YAMCS. A VPN carries it to the ICE Cubes Mission Control Centre in Belgium. The cube has no radio of its own.',
   },
   {
     dir: 'up' as const,
-    title: 'Up on the station link',
-    text: 'Space Applications Services relays the command onto the station’s space-to-ground link. That link is open only during a signal window, so a command waits when the station is out of contact.',
+    title: 'The station link',
+    text: 'Space Applications Services places the command on the station’s space-to-ground link. The link is available only during acquisition of signal, so a command waits when the station is out of contact.',
   },
   {
     dir: 'up' as const,
-    title: 'The cube takes the instruction',
-    text: 'In Columbus, the ICE Cubes Facility delivers the command over Gigabit Ethernet, on the same connection that supplies the cube’s 12 V.',
+    title: 'Delivery in Columbus',
+    text: 'The ICE Cubes Facility delivers the command over Gigabit Ethernet, on the same interface that supplies the cube’s 12 V.',
   },
   {
     dir: 'up' as const,
-    title: 'The experiment runs on board',
-    text: 'TIGERS-X runs the experiment from that command. No astronaut is needed.',
+    title: 'The run is executed onboard',
+    text: 'TIGERS-X executes the commanded cycle. No crew action is required.',
   },
   {
     dir: 'down' as const,
-    title: 'Recordings start back down',
-    text: 'When the cycle ends, video and logs leave the cube along the same path. Between signal windows, a YAMCS instance on the cube stores the files and keeps the experiment state.',
+    title: 'Video and logs return',
+    text: 'At the end of the cycle, video and logs leave along the same path. Between signal windows, the onboard YAMCS instance stores the files and retains the experiment state.',
   },
   {
     dir: 'down' as const,
-    title: 'Bangkok reads them the same day',
-    text: 'The files arrive over secure transfer at the User Home Base. The team begins analysis the same day.',
+    title: 'Analysis the same day',
+    text: 'The files arrive at the User Home Base by secure transfer. Preliminary analysis begins the same day.',
   },
 ] as const;
 
@@ -89,11 +89,10 @@ export function CommandLink() {
     <div className="link-stick" ref={trackRef} data-reduced={reduced ? 'true' : 'false'}>
       <div className="link-pin" ref={pinRef}>
         <h3 id="command-title" className="section-title">
-          Commanded from Thailand
+          Telecommand and telemetry
         </h3>
         <p className="cmd-lead">
-          From the User Home Base in Bangkok, YAMCS sent every command up to the cube and brought the recordings
-          back down.
+          Commands left the User Home Base in Bangkok on YAMCS. Video and logs returned along the same path.
         </p>
 
         <div className="cmd" ref={diagramRef} data-dir="up">
@@ -133,7 +132,7 @@ export function CommandLink() {
           ))}
         </ol>
         <p className="figure-note">
-          The moving point follows that path. It is not a trace of the radio signal.
+          The moving point traces the command path. It is not a record of the radio signal.
         </p>
       </div>
     </div>

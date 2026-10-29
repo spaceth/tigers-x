@@ -103,18 +103,18 @@ export const beats: Beat[] = [
     id: 'inside-4u',
     chapter: 'payload',
     eyebrow: 'The payload',
-    title: 'All of that. Inside 4U.',
+    title: 'A laboratory in 4U.',
     headline: true,
     body: [
-      'Eight pumps, eight fluid bags, two lab-on-chip devices, four cameras and the computers that run them — a complete laboratory, built to fit a box twenty centimetres across.',
+      'Eight pumps, eight fluid bags, two lab-on-chip devices, four cameras, and the computers that sequence them occupy a cube 200 mm across. The following views open that cube. Qualification and the flight come after.',
     ],
     pose: { camera: HERO },
   },
   {
     id: 'envelope',
-    title: 'Twenty centimetres across. Ten centimetres tall.',
+    title: 'Compact in design',
     body: [
-      'TIGERS-X is an experiment cube built to the ICE Cubes interface standard: 200 × 200 × 100 mm, a 4U volume. At its pre-flight handover it weighed 2.32 kg. It plugs into a facility aboard the station for power and data; it is not a free-flying satellite.',
+      'The cube follows the ICE Cubes interface: 200 × 200 × 100 mm, a 4U volume. Mass at pre-flight handover was 2.32 kg, or 2.52 kg with the launch bag. It draws power and data from the facility.',
     ],
     extra: 'envelope',
     pose: {
@@ -128,10 +128,10 @@ export const beats: Beat[] = [
     id: 'structure',
     chapter: 'subsystems',
     eyebrow: 'Inside the payload',
-    title: 'A compact structure holds it all together.',
+    title: 'One structure, two modules.',
     body: [
-      'The structure is built from Aluminium 7075, a high-strength aluminium alloy. Lift the panels away and three subsystems appear — fluidics, electronics and the structural frame — with an internal panel separating the experiment module from the electronics module.',
-      'This exploded view illustrates how the parts relate. The payload does not open this way in flight.',
+      'The frame is aluminium 7075. An internal panel separates the experiment module from the electronics module. Removing the panels shows how the parts are arranged.',
+      'This exploded view is an assembly diagram. The cube does not open this way in flight.',
     ],
     pose: {
       camera: { target: [0, 66, 0], dir: [1.0, 0.85, 1.2], radius: 245, mobileRadius: 275 },
@@ -143,10 +143,10 @@ export const beats: Beat[] = [
   },
   {
     id: 'fluidics',
-    title: 'Eight pumps decide where every drop goes.',
+    title: 'Metered delivery, double containment.',
     body: [
-      'Eight Takasago® RP-QIII peristaltic pumps move the fluids by progressively squeezing flexible tubing. Each of the four mixing channels has its own pair: one pump for the oil phase, one for the water phase.',
-      'The fluids sit in eight CryoStore® bags inside one reservoir container: two bags of oil-phase mixture (10 mL each), two of BFluid® (15 mL each), and four empty bags of up to 25 mL that collect each channel’s mixture. The circuit is sealed and double-contained.',
+      'Eight Takasago RP-QIII peristaltic pumps move fluid by compressing tubing. Each of the four channels has one pump for the oil phase and one for the aqueous phase.',
+      'Eight CryoStore bags share one reservoir: two oil-phase bags of 10 mL, two BFluid® bags of 15 mL, and four collection bags of up to 25 mL. The circuit is sealed and double-contained.',
     ],
     pose: {
       camera: { target: [40, 58, 36], dir: [1.2, 0.72, 1.05], radius: 100, mobileRadius: 100 },
@@ -159,10 +159,10 @@ export const beats: Beat[] = [
   },
   {
     id: 'observation',
-    title: 'Four cameras watch the experiment.',
+    title: 'Four cameras, one corrected view.',
     body: [
-      'Directly beneath the chip, four See3CAM cameras in a 2 × 2 arrangement record the channels under white LED light. Each camera sees only part of a device, so pairs of synchronised views are stitched into one panorama. Here the chip assembly is lifted to reveal them.',
-      'Every frame also includes a four-colour reference swatch, used later to correct for changes in lighting.',
+      'Four See3CAM cameras in a 2 × 2 array sit beneath the chip and image it under white LED illumination. Each camera covers part of a device, so synchronized pairs are stitched into one panorama. The chip is lifted here only to show the cameras.',
+      'A four-color reference swatch in every frame supplies the correction for illumination differences between sessions.',
     ],
     pose: {
       camera: { target: [46, 86, -48], dir: [1.35, 0.5, -0.45], radius: 104, mobileRadius: 108 },
@@ -175,10 +175,10 @@ export const beats: Beat[] = [
   },
   {
     id: 'computing',
-    title: 'Computing that runs the lab — and listens to Earth.',
+    title: 'Onboard control between contacts.',
     body: [
-      'An Orange Pi 5 Pro on-board computer decodes ground commands, sequences each experiment, stores images and telemetry, and runs its own YAMCS mission-control instance to buffer data between contacts. It hands pump and lighting commands to an STM32F746 microcontroller.',
-      'Everything runs from the facility’s single 12 V supply, regulated down to 5 V and 3.3 V on board.',
+      'An Orange Pi 5 Pro decodes telecommands, sequences each run, and stores images and telemetry. An onboard YAMCS instance buffers data while the station is out of contact. Pump and lighting commands are passed to an STM32F746 microcontroller.',
+      'The facility provides a single 12 V supply, regulated onboard to 5 V and 3.3 V.',
     ],
     extra: 'computing-roles',
     pose: {
@@ -192,9 +192,9 @@ export const beats: Beat[] = [
   },
   {
     id: 'core',
-    title: 'Everything serves one small chip.',
+    title: 'Four channels on two devices.',
     body: [
-      'Fluid handling, imaging and computing exist to run the experiment at the centre of the payload: the lab-on-chip, two Tesla-valve devices — CH1 and CH2 — each with two parallel channel rows. Four independent mixing channels in all.',
+      'Fluid handling, imaging, and computing exist to run the lab-on-chip: two Tesla-valve devices, CH1 and CH2, each with two parallel rows. That is four independent mixing channels.',
     ],
     pose: {
       camera: { target: [46, 84, -50], dir: [0.85, 1.05, 0.75], radius: 95, mobileRadius: 100 },
@@ -211,10 +211,10 @@ export const beats: Beat[] = [
     id: 'deliver',
     chapter: 'chip',
     eyebrow: 'The lab-on-a-chip',
-    title: 'Two fluids. One channel.',
+    title: 'Two immiscible, optically distinct phases.',
     headline: true,
     body: [
-      'Each channel receives two immiscible fluids: Fluid A, an oil-phase mixture tinted orange with Oleoresin Paprika, and Fluid B, BFluid® glucose–electrolyte tinted with a food-grade blue dye that reads teal on camera. The colours are what make the phases measurable.',
+      'Each channel receives Fluid A, an oil-phase mixture colored with oleoresin paprika, and Fluid B, BFluid® colored with a food-grade blue dye. On camera the oil reads orange and the aqueous phase teal. The dyes make the phases measurable by hue. They are not the mixture under study.',
     ],
     extra: 'flow',
     pose: {
@@ -228,10 +228,10 @@ export const beats: Beat[] = [
   },
   {
     id: 'mix',
-    title: 'The channel shape does the mixing.',
+    title: 'The geometry does the mixing.',
     body: [
-      'The Tesla-valve chain is a passive static mixer. There is no impeller and no high-shear homogenizer: the geometry supplies the mixing, and the pumps only keep the flow moving.',
-      'Twelve fittings on the chip’s underside connect it to the fluid circuit — two inlets and one outlet for each of the four channels.',
+      'The Tesla-valve chain is a passive static mixer. There is no impeller and no high-shear homogenizer. The pumps maintain the flow; the channel shape redistributes the phases.',
+      'Twelve fittings on the underside connect the chip to the circuit: two inlets and one outlet for each of the four channels.',
     ],
     pose: {
       camera: { target: [46, 94, -50], dir: [0.55, 1.25, 0.62], radius: 66, mobileRadius: 70 },
@@ -245,10 +245,10 @@ export const beats: Beat[] = [
   },
   {
     id: 'watch',
-    title: 'Watch the interface.',
+    title: 'Hue as a measure of composition.',
     body: [
-      'The cameras beneath the chip record each run. After every experimental cycle the video is downlinked over a secure link, and analysis on the ground starts the same day.',
-      'On the ground, each frame is colour-corrected against its reference swatch and every pixel is scored by its hue: teal for water, orange for oil, and shades in between where the phases are mixed.',
+      'Video from each cycle is downlinked and examined the same day. Each frame is hue-corrected against its reference swatch.',
+      'A pixel is then scored from 1, a water hue, to 2, an oil hue. Interfacial and partly mixed regions take intermediate values, so the index does not impose a hard boundary between the phases.',
     ],
     pose: {
       camera: { target: [46, 88, -48], dir: [1.4, 0.4, 0.25], radius: 100, mobileRadius: 104 },
@@ -262,10 +262,10 @@ export const beats: Beat[] = [
   },
   {
     id: 'time',
-    title: 'Watch two devices diverge.',
+    title: 'What changes when buoyancy is removed.',
     body: [
-      'In orbit, the recordings captured how the flow developed after the pumps started. At first both devices looked alike, with the oil phase leading into the channels. Then they parted ways: water spread through CH1, while CH2 stayed dominated by oil.',
-      'Microgravity removes most buoyancy-driven separation, but viscosity and interfacial tension still act. The phases do not become miscible in orbit.',
+      'Microgravity suppresses buoyancy-driven separation. Viscosity and interfacial tension remain, and the two phases do not become miscible.',
+      'The on-orbit images show how that balance developed. Both devices began alike, then diverged. The sequence and the mixing index are reported with the science operations, after the cube is on the station.',
     ],
     pose: {
       camera: { target: [46, 86, -50], dir: [0.7, 1.15, 0.85], radius: 84, mobileRadius: 90 },
@@ -279,9 +279,9 @@ export const beats: Beat[] = [
   },
   {
     id: 'explore',
-    title: 'Explore the hardware yourself.',
+    title: 'Inspect the flight configuration.',
     body: [
-      'Turn the payload, choose a subsystem, and see how the parts fit together. The story waits for you here.',
+      'Rotate the model and select a subsystem. Dimensions and part names match the flight cube described above.',
     ],
     extra: 'explore',
     pose: {

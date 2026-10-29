@@ -4,29 +4,28 @@ import { StationModel } from './StationModel';
 
 const steps = [
   {
-    title: 'A small laboratory. Inside a much larger one.',
+    title: 'Installed in Columbus.',
     body: [
-      'TIGERS-X operated aboard the International Space Station, inside Columbus, the European Space Agency’s laboratory module.',
-      'Columbus is attached to the starboard side of the Harmony node, at the forward end of the station.',
+      'TIGERS-X operated in Columbus, the European Space Agency laboratory module, on the starboard side of the Harmony node.',
     ],
   },
   {
-    title: 'Columbus, Europe’s laboratory.',
+    title: 'A rack-mounted laboratory.',
     body: [
-      'Research facilities are mounted in equipment racks inside Columbus, which supplies them with power, temperature regulation and communications. One of these facilities is ICE Cubes.',
+      'Columbus supplies power, thermal control, and communications to the facilities in its racks. ICE Cubes is one of those facilities.',
     ],
   },
   {
-    title: 'ICE Cubes: a plug-in research facility.',
+    title: 'The ICE Cubes Facility.',
     body: [
-      'The ICE Cubes Facility, run by Space Applications Services, hosts compact experiment cubes inside the pressurised module. Each cube plugs into the facility for power and a data connection.',
+      'Operated by Space Applications Services, the facility accepts compact experiment cubes inside the pressurized module. Each cube connects once, for power and data.',
     ],
     media: true,
   },
   {
-    title: 'TIGERS-X, twenty centimetres across.',
+    title: 'Crew time limited to two events.',
     body: [
-      'Crew install the payload and remove it at the end of operations. In between, no astronaut is needed: the research team commands the experiment from Earth.',
+      'The crew installed the cube and removed it at the end of the campaign. Between those events the experiment was commanded from the ground, as the path below shows.',
     ],
   },
 ];

@@ -9,11 +9,12 @@ export function PlatformComparison() {
     <section className="container platforms" aria-labelledby="platforms-title">
       <Reveal className="platforms-intro">
         <h2 id="platforms-title" className="science-heading">
-          Two ways to reach microgravity
+          From parabolic flight to orbit
         </h2>
         <p>
-          The same team studied passive mixing first on parabolic flights, then aboard the station. The two experiments
-          differ in almost every condition that matters for watching fluids.
+          The same group first measured passive mixing on parabolic flights. Those intervals were too short, and too
+          disturbed, to show how a mixture evolves. The station campaign was designed to close that gap. The cube that
+          flew is described next.
         </p>
       </Reveal>
       <Reveal>
@@ -76,8 +77,7 @@ export function PlatformComparison() {
         </table>
         </div>
         <p className="platforms-note">
-          Parabolic-flight figures are from the team’s 2025 study (Seehanam et al., Scientific Reports), as summarised in
-          the TIGERS-X paper.
+          Parabolic-flight values are from Seehanam et al., Scientific Reports (2025), as cited in the TIGERS-X preprint.
         </p>
       </Reveal>
     </section>

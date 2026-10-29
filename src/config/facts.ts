@@ -36,7 +36,7 @@ export const academicResources: {
     name: 'Universal and economical experimental platform for colloidal mixing lab-on-chip in parabolic flight',
     type: 'Journal article',
     description:
-      'The 2025 parabolic-flight study of the earlier lab-on-chip platform: 29 trials, about 20 seconds of reduced gravity each. Scientific Reports, 6 June 2025.',
+      'Passive colloidal mixing on parabolic flights: 29 trials of about 20 s of reduced gravity. Scientific Reports, 6 June 2025.',
     href: 'https://www.nature.com/articles/s41598-025-04368-8',
     linkLabel: 'Read',
   },
@@ -45,7 +45,7 @@ export const academicResources: {
     name: publication.title,
     type: 'Preprint',
     description:
-      'Design, ground verification and the 10-day science run of TIGERS-X aboard the station. Research Square, 22 October 2026.',
+      'Design, ground verification, and the 10-day on-orbit campaign. Research Square preprint, 22 October 2026.',
     href: 'https://www.researchsquare.com/article/rs-11156278/v1',
     linkLabel: 'Read',
   },
@@ -54,7 +54,7 @@ export const academicResources: {
     name: 'TIGERS-X On-Orbit Emulsification Experiment: Processed Videos and Payload CAD',
     type: 'Dataset',
     description:
-      'Thirty processed videos of the channels during science operations, and the flight-model CAD. Zenodo, version 1.0.0.',
+      'Thirty processed channel videos from science operations, and the flight-model CAD. Zenodo, version 1.0.0.',
     href: 'https://zenodo.org/records/22934189',
     linkLabel: 'Open',
   },
@@ -62,7 +62,7 @@ export const academicResources: {
     id: 'manual',
     name: 'Payload User Manual',
     type: 'Manual',
-    description: 'Operating instructions for the payload.',
+    description: 'Procedures for operating the payload.',
     href: null,
     linkLabel: 'Open',
   },

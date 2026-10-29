@@ -41,19 +41,19 @@ const BOUNDS = [ENTRY_X, JUNCTION_X, CHAMBER_X, OUTLET_X, EXIT_X];
 const stages = [
   {
     title: 'Inlets',
-    text: 'Two pumps feed this channel. The water phase, BFluid®, enters along the outer edges, and the oil phase enters down the middle. The two stay side by side.',
+    text: 'Two pumps feed this channel. BFluid® enters along the outer edges and the oil phase enters along the centerline. The streams remain side by side until the valve chain.',
   },
   {
     title: 'Tesla valves',
-    text: 'The streams enter the Tesla-valve chain, a passive mixer with no moving parts. The pumps only keep the flow moving. Each unit mixes by its shape.',
+    text: 'The streams enter a passive Tesla-valve chain. The pumps maintain the flow. Mixing is produced by the channel geometry.',
   },
   {
     title: 'Chamber',
-    text: 'The channel opens into a rectangular observation chamber. This is the window the cameras record, where the two phases can still be told apart.',
+    text: 'The channel opens into a rectangular observation chamber. This is the field recorded by the cameras.',
   },
   {
     title: 'Outlet',
-    text: 'The fluid leaves through the outlet fitting and is collected in this channel’s bag.',
+    text: 'Effluent leaves through the outlet fitting and is collected in that channel’s bag.',
   },
 ] as const;
 
@@ -107,15 +107,14 @@ export function FlowDiagram() {
   return (
     <div className="flow-stick" ref={trackRef} data-reduced={reduced ? 'true' : 'false'}>
     <div className="flow-pin" ref={rootRef}>
-    <p className="flow-diagram__kicker">Conceptual fluid-flow illustration</p>
+    <p className="flow-diagram__kicker">Schematic of one channel</p>
     <figure className="flow-diagram">
       <svg viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`} role="img" aria-labelledby={`${id}-title ${id}-desc`}>
         <title id={`${id}-title`}>Oil and water phases flowing through one Tesla-valve channel</title>
         <desc id={`${id}-desc`}>
-          Outline of one channel row on the flight chip. The blue water phase and the gray oil phase
-          enter from the inlets on the left. After the Tesla valves the stream is orange, through the
-          observation chamber and out of the outlet on the right. The motion is illustrative, not a
-          measured recording.
+          Outline of one channel row on the flight chip. The aqueous and oil phases enter from the
+          inlets on the left, pass the Tesla valves, cross the observation chamber, and leave through
+          the outlet on the right. The motion is illustrative, not a measured velocity field.
         </desc>
         <defs>
           <clipPath id={`${id}-channel`}>
@@ -174,16 +173,14 @@ export function FlowDiagram() {
       </ol>
 
       <figcaption>
-        One of the chip’s four channel rows, traced from the flight chip’s CAD geometry (channels 1 mm
-        deep). The pale stream is the water phase, the blue stream is the oil phase, and the dark stream is
-        the fluid after the Tesla valves. The motion is illustrative, not a measured flow.
+        One of four channel rows, traced from the flight-chip geometry. The channels are 1 mm deep. Flow in
+        the figure is illustrative, not a measured velocity field.
       </figcaption>
     </figure>
     <p className="flow-diagram__follow">
-      They meet in a Tesla-valve mixer — a passive static mixer with no moving parts. The valve lets fluid pass
-      one way and resists reverse flow. Its asymmetric branches split the stream, loop it back, and re-join it
-      at an angle so the phases drive into one another. The outlet opens into a rectangular chamber where the
-      cameras watch what comes out.
+      The Tesla valve is a passive static mixer with no moving parts. Asymmetric branches divide the stream,
+      return part of it, and rejoin it at an angle, so the phases are driven into one another. The path then
+      opens into the observation chamber.
     </p>
     </div>
     </div>

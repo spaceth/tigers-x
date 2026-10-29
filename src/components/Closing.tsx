@@ -13,11 +13,11 @@ export function Closing() {
         <Reveal className="closing-copy">
           <p className="eyebrow">Academic resources</p>
           <h2 id="docs-title" className="chapter-title">
-            Papers, data and the manual.
+            Publications and data.
           </h2>
           <p className="lead">
-            The flight paper, the parabolic-flight study that came before it, and the recordings and CAD from the
-            station.
+            The flight preprint, the parabolic-flight paper that preceded it, and the processed videos and CAD from
+            the station.
           </p>
         </Reveal>
         <Reveal>
@@ -53,7 +53,7 @@ export function Closing() {
               </tbody>
             </table>
           </div>
-          <p className="resource-note">More scientific resources are on the way.</p>
+          <p className="resource-note">Further scientific resources will be added.</p>
         </Reveal>
       </div>
       <div className="partner-bar">

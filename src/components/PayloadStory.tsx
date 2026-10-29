@@ -62,7 +62,7 @@ function ComputingRoles() {
           <dd>Dedicated 5 V supply for the four cameras</dd>
         </div>
       </dl>
-      <p className="beat-note">The microcontroller is described here rather than labelled in the model.</p>
+      <p className="beat-note">The microcontroller is listed here. It is not a separate part in the model.</p>
     </>
   );
 }

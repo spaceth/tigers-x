@@ -190,7 +190,7 @@ export function Stage() {
           <h2 id="explore-title" ref={panelHeading} tabIndex={-1}>
             Explore the payload
           </h2>
-          <p className="explore-hint">Drag to turn the model, pinch or scroll to zoom. Choose a subsystem, or tap one in the model.</p>
+          <p className="explore-hint">Drag to rotate the model. Pinch or scroll to zoom. Select a subsystem in the list or in the model.</p>
           <div className="explore-list" role="group" aria-label="Subsystems">
             {explorerEntries.map((e) => (
               <button
@@ -211,11 +211,11 @@ export function Stage() {
                 <p>{selectedEntry.description}</p>
               </>
             ) : (
-              <p>Select a subsystem to highlight it and read what it does.</p>
+              <p>Select a subsystem to highlight it and read its function.</p>
             )}
           </div>
           <button type="button" className="button button--primary explore-return" onClick={exitExplore}>
-            Return to story
+            Close
           </button>
         </div>
       )}

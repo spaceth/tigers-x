@@ -10,8 +10,12 @@ export function RecordChapter() {
         <Reveal className="chapter-intro">
           <p className="eyebrow">Mission record</p>
           <h2 id="record-title" className="chapter-title">
-            A small payload. A substantial record.
+            Operational record.
           </h2>
+          <p className="lead">
+            The mixing results above come from the imagery. The figures here are the operational account: how long
+            the cube ran, and how much it recorded, commanded, and returned.
+          </p>
         </Reveal>
 
         <Reveal className="record-duration">
@@ -27,9 +31,9 @@ export function RecordChapter() {
             <span className="unit"> seconds</span>
           </p>
           <p className="record-note">
-            Experiments ran from {campaign.operationsStart} to {campaign.operationsEnd}, within the available signal
-            windows. A brief power interruption of about {campaign.powerInterruptionHours} hours did not compromise
-            the campaign.
+            Science operations ran from {campaign.operationsStart} to {campaign.operationsEnd}, within the available
+            acquisition-of-signal windows. A power interruption of about {campaign.powerInterruptionHours} hours did
+            not compromise the campaign.
           </p>
         </Reveal>
 
@@ -92,16 +96,16 @@ export function RecordChapter() {
               </div>
             </dl>
             <p className="record-note">
-              The pumps did not run continuously: across {operation.pumpOperations} operations, their combined runtime
-              is just over a quarter of an hour.
+              The pumps did not run continuously. Across {operation.pumpOperations} operations their combined runtime
+              was 15 min 22 s.
             </p>
           </Reveal>
         </div>
 
         <Reveal as="p" className="record-caveat">
-          These figures come from the team’s mission report. They show that the payload operated autonomously,
-          accepted commands, moved fluid, recorded imagery and returned data with no crew involvement beyond
-          installation and removal.
+          These figures are from the team’s mission report, not from the mixing analysis. They record that the
+          payload accepted commands, moved fluid, stored imagery, and returned data, with no crew involvement
+          beyond installation and removal.
         </Reveal>
       </div>
     </section>

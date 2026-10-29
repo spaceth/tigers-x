@@ -24,9 +24,10 @@ export function Hero() {
             </span>
           </h1>
           <p className="lead">
-            TIGERS-X is a low-cost lab-on-chip experiment cube that spent {campaign.days} days aboard the International
-            Space Station, operated entirely from the ground, watching oil and water mix inside Tesla-valve microchannels
-            under sustained microgravity.
+            TIGERS-X is a low-cost, teleoperated lab-on-chip cube. For {campaign.days} days aboard the International
+            Space Station it recorded how an immiscible oil and an aqueous phase redistribute in Tesla-valve
+            microchannels under sustained microgravity. After installation, every science run was commanded from the
+            ground.
           </p>
           <div className="hero-actions">
             <a className="button button--primary" href="#overview">
