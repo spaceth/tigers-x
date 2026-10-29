@@ -25,6 +25,8 @@ export interface Clip {
   alt: string;
   credit: string;
   fit?: 'cover' | 'contain';
+  /** Seconds into the file where this beat should begin. */
+  from?: number;
 }
 
 export type Media = Still | Clip;
@@ -48,8 +50,8 @@ export interface Line {
   /** Second line under the title, for the mission name. */
   dek?: string;
   body: string;
-  visual: 'photo' | 'why' | 'model' | 'chip' | 'run' | 'slides' | 'result' | 'record';
-  still?: Still;
+  visual: 'photo' | 'why' | 'model' | 'chip' | 'run' | 'slides' | 'result';
+  still?: Media;
   slides?: Slide[];
   /** Story position `t` at the start and end of a model line. */
   storyFrom?: number;
@@ -103,6 +105,7 @@ const install: Clip = {
   alt: 'A crew member installs the TIGERS-X cube in the ICE Cubes Facility inside Columbus, sliding the labelled enclosure into the rack among cables and experiment hardware.',
   credit: 'ESA/NASA – S. Adenot',
   fit: 'contain',
+  from: 148,
 };
 
 const run: Still = {
@@ -258,7 +261,7 @@ export const lines: Line[] = [
   {
     id: 'flight',
     start: 45,
-    end: 51.5,
+    end: 49.5,
     theme: 'photo',
     kicker: campaign.launch,
     title: 'CRS-34 leaves the pad.',
@@ -273,41 +276,35 @@ export const lines: Line[] = [
         media: pad,
       },
       {
-        at: 0.34,
+        at: 0.5,
         kicker: campaign.launch,
         title: 'On the way up.',
         body: 'Falcon 9 carried the cube to orbit. Dragon then docked with the station.',
         media: ascent,
       },
-      {
-        at: 0.67,
-        kicker: 'Columbus module',
-        title: 'Installed once.',
-        body: 'A crew member fitted the cube into the ICE Cubes Facility. After that, every science run was commanded from Bangkok.',
-        media: install,
-      },
     ],
   },
   {
+    id: 'install',
+    start: 49.5,
+    end: 55.5,
+    theme: 'photo',
+    kicker: 'Columbus module',
+    title: 'Installed once.',
+    body: 'A crew member fitted the cube into the ICE Cubes Facility. After that, every science run was commanded from Bangkok.',
+    visual: 'photo',
+    still: install,
+  },
+  {
     id: 'result',
-    start: 51.5,
-    end: 56,
+    start: 55.5,
+    end: LOOP,
     theme: 'photo',
     kicker: `Science operations · ${campaign.operationsStart} – ${campaign.operationsEnd}`,
     title: 'Set in the first stretch.',
     body: `The mixing index runs from 1, a water hue, to 2, an oil hue. It levelled off within the first ${mixingFindings.convergedWithinPct}% of each channel. CH1 stayed near an even mix. The two rows of CH2 did not.`,
     visual: 'result',
     still: onStation,
-  },
-  {
-    id: 'record',
-    start: 56,
-    end: LOOP,
-    theme: 'navy',
-    kicker: 'Mission record',
-    title: 'Commanded from the ground.',
-    body: 'Crew time ended at installation and removal. The cube accepted commands, moved fluid, stored imagery, and returned data. The film then repeats.',
-    visual: 'record',
   },
 ];
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { mixingIndex, operation, fmt } from '../config/facts';
-import { assets, partners } from '../config/site';
+import { mixingIndex } from '../config/facts';
+import { assets } from '../config/site';
 import { useReducedMotion } from '../lib/hooks';
 import { ChannelView } from './ChannelView';
 import { PayloadView } from './PayloadView';
@@ -60,10 +60,40 @@ function useFilmClock() {
   return { time, paused, seek, toggle };
 }
 
-function FrameMedia({ media, drift }: { media: Media; drift: boolean }) {
+function FrameMedia({
+  media,
+  drift,
+  elapsed,
+  paused,
+}: {
+  media: Media;
+  drift: boolean;
+  elapsed: number;
+  paused: boolean;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || media.kind !== 'video') return;
+    const place = () => {
+      const target = elapsed + (media.from ?? 0);
+      if (video.readyState >= 1 && Math.abs(video.currentTime - target) > 0.45) {
+        const limit = Number.isFinite(video.duration) ? Math.max(0, video.duration - 0.05) : target;
+        video.currentTime = Math.min(Math.max(0, target), limit);
+      }
+      if (paused) video.pause();
+      else void video.play().catch(() => {});
+    };
+    place();
+    video.addEventListener('loadeddata', place);
+    return () => video.removeEventListener('loadeddata', place);
+  }, [elapsed, paused, media]);
+
   if (media.kind === 'video') {
     return (
       <video
+        ref={videoRef}
         key={media.src}
         className={media.fit === 'contain' ? 'is-contain' : undefined}
         src={media.src}
@@ -71,6 +101,7 @@ function FrameMedia({ media, drift }: { media: Media; drift: boolean }) {
         muted
         playsInline
         autoPlay
+        preload="auto"
         aria-label={media.alt}
       />
     );
@@ -86,16 +117,6 @@ function FrameMedia({ media, drift }: { media: Media; drift: boolean }) {
     />
   );
 }
-
-const recordStats = [
-  {
-    value: `${operation.duration.days} days`,
-    label: `${operation.duration.hours} h ${operation.duration.minutes} min on orbit`,
-  },
-  { value: fmt(operation.videoFiles), label: `video files · ≈ ${operation.recordedGB} GB` },
-  { value: fmt(operation.groundCommands), label: 'ground commands' },
-  { value: fmt(operation.pumpOperations), label: `pump operations · ${operation.pumps} pumps` },
-];
 
 export function Presentation() {
   const { time, paused, seek, toggle } = useFilmClock();
@@ -131,6 +152,11 @@ export function Presentation() {
       const img = new Image();
       img.src = src;
     }
+    const clip = document.createElement('video');
+    clip.preload = 'auto';
+    clip.muted = true;
+    clip.src = '/media/mission/installation.mp4';
+    clip.load();
   }, []);
 
   useEffect(() => {
@@ -161,7 +187,12 @@ export function Presentation() {
 
       {(line.visual === 'photo' || line.visual === 'slides' || line.visual === 'result') && media && (
         <div className={`film-photo${media.kind === 'video' || media.fit === 'contain' ? ' is-stage' : ''}`} key={media.kind === 'video' ? media.src : media.src}>
-          <FrameMedia media={media} drift={!reduced && media.kind === 'image' && media.fit !== 'contain'} />
+          <FrameMedia
+            media={media}
+            drift={!reduced && media.kind === 'image' && media.fit !== 'contain'}
+            elapsed={time - line.start}
+            paused={paused}
+          />
           <p className="film-credit">{media.credit}</p>
         </div>
       )}
@@ -223,36 +254,6 @@ export function Presentation() {
           </dl>
         )}
       </div>
-
-      {line.visual === 'record' && (
-        <>
-          <dl className="film-record">
-            {recordStats.map((stat) => (
-              <div key={stat.label}>
-                <dd>{stat.value}</dd>
-                <dt>{stat.label}</dt>
-              </div>
-            ))}
-          </dl>
-          <ul className="film-partners" aria-label="Partners">
-            {partners.map((partner) => (
-              <li key={partner.id}>
-                <img
-                  className={
-                    'mark' in partner
-                      ? `partner-logo partner-logo--${partner.id} partner-logo--${partner.mark}`
-                      : `partner-logo partner-logo--${partner.id}`
-                  }
-                  src={partner.src}
-                  width={partner.width}
-                  height={partner.height}
-                  alt={partner.alt}
-                />
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
 
       <div className="film-bar">
         <div className="film-rail" role="group" aria-label="Presentation sections">
