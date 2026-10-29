@@ -1,0 +1,8 @@
+# Publishing the repo root serves index.html with /src/main.tsx, which the
+# browser cannot run. Build first and publish Vite's output.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
