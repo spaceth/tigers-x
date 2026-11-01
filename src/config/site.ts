@@ -1,9 +1,9 @@
 /**
- * Payload user manual. Leave as `null` until the URL is confirmed: the Academic
- * resources row then reads as coming soon. Set a full URL to turn that row into
- * a link. The paper and data links live in config/facts.ts.
+ * Payload specification and user's guide. A root-relative path stays on this
+ * site; a full URL opens externally. `null` leaves the Academic resources row
+ * as coming soon. The paper and data links live in config/facts.ts.
  */
-export const DOCS_URL: string | null = null;
+export const DOCS_URL: string | null = '/specification';
 
 export const chapters = [
   { id: 'question', label: 'Overview' },

@@ -5,8 +5,12 @@ import { LaunchJourney, MissionJourney, PayloadOnStation, ReturnToEarth, Science
 import { StationChapter } from './components/StationChapter';
 import { RecordChapter } from './components/RecordChapter';
 import { Closing } from './components/Closing';
+import { SpecificationPage } from './components/SpecificationPage';
 
 export default function App() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  if (path === '/specification') return <SpecificationPage />;
+
   return (
     <>
       <Nav />

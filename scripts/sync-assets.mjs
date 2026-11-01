@@ -6,6 +6,9 @@
 //   parabolic.png -> public/media/parabolic-patch.png (parabolic-flight experiment patch)
 //   medical.png, food.png, exploration.png -> public/media/icons/
 //   command.png -> public/media/command.png         (ground-control mark)
+//   DB13W3.svg -> public/media/spec/DB13W3.svg     (connector face)
+//   Cam_View1.svg, EE_View1.svg, Pump_View1.svg, Fluidic_View1.svg, Res_View1.svg
+//       -> public/media/spec/                    (subsystem views)
 //   og.png -> public/og.png                         (Open Graph image, byte-for-byte)
 //   cra.svg, mhesi.svg, tsri.svg -> public/media/partners/   (byte-for-byte)
 //   pim.webp, gistda.webp, tmec.webp -> public/media/partners/ (transparent padding trimmed)
@@ -39,6 +42,18 @@ function copy(srcName, destRel) {
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.copyFileSync(src, dest);
   console.log(`copied ${srcName} -> ${rel(dest)}`);
+}
+
+/** Browsers refuse an SVG used in <img> when it contains a script. Root file stays intact. */
+function copyStaticSvg(srcName, destRel) {
+  const src = path.join(root, srcName);
+  const dest = path.join(pub, destRel);
+  if (!fs.existsSync(src)) throw new Error(`Missing root input: ${srcName}`);
+  const cleaned = fs.readFileSync(src, 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  if (fs.existsSync(dest) && fs.readFileSync(dest, 'utf8') === cleaned && isFresh(src, dest)) return;
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.writeFileSync(dest, cleaned);
+  console.log(`copied ${srcName} -> ${rel(dest)} (script removed for display)`);
 }
 
 async function buildModel() {
@@ -111,6 +126,12 @@ copy('medical.png', 'media/icons/medical.png');
 copy('food.png', 'media/icons/food.png');
 copy('exploration.png', 'media/icons/exploration.png');
 copy('command.png', 'media/command.png');
+copy('DB13W3.svg', 'media/spec/DB13W3.svg');
+copyStaticSvg('Cam_View1.svg', 'media/spec/Cam_View1.svg');
+copyStaticSvg('EE_View1.svg', 'media/spec/EE_View1.svg');
+copyStaticSvg('Pump_View1.svg', 'media/spec/Pump_View1.svg');
+copyStaticSvg('Fluidic_View1.svg', 'media/spec/Fluidic_View1.svg');
+copyStaticSvg('Res_View1.svg', 'media/spec/Res_View1.svg');
 copy('og.png', 'og.png');
 copy('cra.svg', 'media/partners/cra.svg');
 copy('mhesi.svg', 'media/partners/mhesi.svg');

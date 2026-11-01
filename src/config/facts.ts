@@ -60,9 +60,9 @@ export const academicResources: {
   },
   {
     id: 'manual',
-    name: 'Payload User Manual',
+    name: 'Payload specification and user\u2019s guide',
     type: 'Manual',
-    description: 'Procedures for operating the payload.',
+    description: 'Interfaces, operating limits, and safety results for the experiment cube.',
     href: null,
     linkLabel: 'Open',
   },
