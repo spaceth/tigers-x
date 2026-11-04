@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { assets, chapters, type ChapterId } from '../config/site';
+import { copy } from '../content';
 import { useSectionTheme } from '../lib/hooks';
+import { LanguageSwitch } from './LanguageSwitch';
 
 export function Nav() {
   const [active, setActive] = useState<ChapterId>('question');
@@ -31,25 +33,14 @@ export function Nav() {
   return (
     <header className={theme ? `site-nav ${theme}` : 'site-nav'}>
       <a className="skip-link" href="#question">
-        Skip to content
+        {copy.nav.skip}
       </a>
       <div className="site-nav-inner">
-        <a className="wordmark" href="#question" aria-label="TIGERS-X, back to the beginning">
+        <a className="wordmark" href="#question" aria-label={copy.nav.homeAria}>
           <img src={assets.patch} alt="" width={28} height={28} />
-          <span>TIGERS-X</span>
+          <span>{copy.nav.wordmark}</span>
         </a>
-        <button
-          type="button"
-          className="nav-toggle"
-          aria-expanded={open}
-          aria-controls="chapter-list"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="nav-toggle-label">{activeLabel}</span>
-          <span className="nav-toggle-icon" aria-hidden="true" />
-          <span className="visually-hidden">{open ? 'Close chapter list' : 'Open chapter list'}</span>
-        </button>
-        <nav aria-label="Chapters">
+        <nav aria-label={copy.nav.chaptersAria}>
           <ol id="chapter-list" className={`chapter-list${open ? ' is-open' : ''}`}>
             {chapters.map((c) => (
               <li key={c.id}>
@@ -60,6 +51,20 @@ export function Nav() {
             ))}
           </ol>
         </nav>
+        <div className="site-nav-tools">
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-expanded={open}
+            aria-controls="chapter-list"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="nav-toggle-label">{activeLabel}</span>
+            <span className="nav-toggle-icon" aria-hidden="true" />
+            <span className="visually-hidden">{open ? copy.nav.closeList : copy.nav.openList}</span>
+          </button>
+          <LanguageSwitch />
+        </div>
       </div>
     </header>
   );

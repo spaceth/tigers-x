@@ -3,6 +3,7 @@ import { explorerEntries } from '../config/explorer';
 import { labels, type LabelId } from '../config/story';
 import { assets } from '../config/site';
 import { envelope } from '../config/facts';
+import { copy } from '../content';
 import { hasWebGL, useNarrow, useReducedMotion } from '../lib/hooks';
 import { setStory, useStory } from '../lib/storyStore';
 import { registerLabel } from './labelRegistry';
@@ -43,11 +44,11 @@ export function StaticFallback({ reason }: { reason: 'unsupported' | 'error' }) 
       {imgOk ? (
         <img
           src={assets.modelSnapshot}
-          alt="Static rendering of the TIGERS-X design model: a low, square aluminium payload with its top panel in place."
+          alt={copy.stage.fallbackAlt}
           onError={() => setImgOk(false)}
         />
       ) : (
-        <svg viewBox="0 0 340 220" role="img" aria-label="Outline drawing of the TIGERS-X payload: a square box 200 by 200 millimetres and 100 millimetres tall.">
+        <svg viewBox="0 0 340 220" role="img" aria-label={copy.stage.fallbackAria}>
           <g fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinejoin="round">
             <path d="M40 120 L160 70 L280 120 L160 170 Z" />
             <path d="M40 120 L40 150 L160 200 L280 150 L280 120" />
@@ -61,9 +62,7 @@ export function StaticFallback({ reason }: { reason: 'unsupported' | 'error' }) 
         </svg>
       )}
       <figcaption>
-        {reason === 'unsupported'
-          ? 'Interactive 3D is not available in this browser, so a static view of the payload is shown. Every explanation remains in the text.'
-          : 'The 3D model could not be loaded, so a static view of the payload is shown. Every explanation remains in the text.'}
+        {reason === 'unsupported' ? copy.stage.unsupported : copy.stage.error}
       </figcaption>
     </figure>
   );
@@ -177,7 +176,7 @@ export function Stage() {
         )}
         {(status === 'idle' || status === 'loading') && (
           <div className="stage-loading" role="status">
-            <span>Loading the 3D payload model</span>
+            <span>{copy.stage.loading}</span>
             <span className="stage-loading-bar" aria-hidden="true">
               <span style={{ transform: `scaleX(${Math.max(0.04, progress)})` }} />
             </span>
@@ -188,10 +187,10 @@ export function Stage() {
       {exploring && (
         <div className="explore-panel">
           <h2 id="explore-title" ref={panelHeading} tabIndex={-1}>
-            Explore the payload
+            {copy.stage.exploreTitle}
           </h2>
-          <p className="explore-hint">Drag to rotate the model. Pinch or scroll to zoom. Select a subsystem in the list or in the model.</p>
-          <div className="explore-list" role="group" aria-label="Subsystems">
+          <p className="explore-hint">{copy.stage.exploreHint}</p>
+          <div className="explore-list" role="group" aria-label={copy.stage.subsystemsAria}>
             {explorerEntries.map((e) => (
               <button
                 key={e.id}
@@ -211,11 +210,11 @@ export function Stage() {
                 <p>{selectedEntry.description}</p>
               </>
             ) : (
-              <p>Select a subsystem to highlight it and read its function.</p>
+              <p>{copy.stage.selectPrompt}</p>
             )}
           </div>
           <button type="button" className="button button--primary explore-return" onClick={exitExplore}>
-            Close
+            {copy.stage.close}
           </button>
         </div>
       )}
@@ -225,10 +224,10 @@ export function Stage() {
 
 export function ExploreButton() {
   const ready = useStory((s) => s.stageReady);
-  if (!ready) return <p className="beat-note">The interactive explorer becomes available once the 3D model has loaded.</p>;
+  if (!ready) return <p className="beat-note">{copy.stage.explorePending}</p>;
   return (
     <button type="button" className="button explore-open" onClick={() => setStory({ exploring: true, selected: null })}>
-      Explore the hardware
+      {copy.stage.exploreButton}
     </button>
   );
 }

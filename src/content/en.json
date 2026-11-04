@@ -1,0 +1,657 @@
+{
+  "meta": {
+    "siteName": "TIGERS-X",
+    "fullName": "Thailand Innovative G-force Varied Emulsification Research for Space Exploration",
+    "title": "TIGERS-X — A microgravity emulsification laboratory in 4U",
+    "description": "TIGERS-X is a teleoperated lab-on-chip cube that recorded oil–water mixing in Tesla-valve microchannels during a 10-day campaign aboard the International Space Station.",
+    "ogImageAlt": "The TIGERS-X payload floating inside a station module."
+  },
+  "nav": {
+    "skip": "Skip to content",
+    "wordmark": "TIGERS-X",
+    "homeAria": "TIGERS-X, back to the beginning",
+    "chaptersAria": "Chapters",
+    "openList": "Open chapter list",
+    "closeList": "Close chapter list",
+    "language": "Language",
+    "languageUnavailable": "Thai is not available yet",
+    "chapters": {
+      "question": "Overview",
+      "payload": "Payload Design",
+      "subsystems": "Subsystems",
+      "chip": "Lab-on-a-chip",
+      "mission": "Assembly Integration and Testing",
+      "launch": "Launch",
+      "station": "Science Operation",
+      "record": "Results",
+      "documentation": "Academic Resources"
+    }
+  },
+  "hero": {
+    "patchAlt": "TIGERS-X mission patch: an orange payload box above Earth, framed by the words Thailand Innovative G-force-Varied Emulsification Research for Space Exploration.",
+    "name": "TIGERS-X",
+    "fullName": "Thailand Innovative G\u2011force Varied Emulsification Research for Space Exploration",
+    "lead": "TIGERS-X is a low-cost, teleoperated lab-on-chip cube. For {days} days aboard the International Space Station it recorded how an immiscible oil and an aqueous phase redistribute in Tesla-valve microchannels under sustained microgravity. After installation, every science run was commanded from the ground.",
+    "explore": "Explore Mission",
+    "resources": "Academic Resources"
+  },
+  "science": {
+    "heading": "Emulsification without buoyancy",
+    "intro": "Lipid emulsions used in intravenous nutrition are made on Earth by high-shear mixing. Turbulence breaks the oil into droplets, and buoyancy separates or stabilizes the phases. Neither mechanism is available in microgravity, where interfacial tension and capillary forces dominate. TIGERS-X tested whether a passive Tesla-valve mixer can still redistribute an immiscible oil–water pair under those conditions. The flight measured mixing behavior. It did not manufacture a medicine.",
+    "aimsHeading": "What the flight was built to answer",
+    "aimsIntro": "The campaign links three results: a cube qualified for the station, a record of oil–water flow over days rather than seconds, and a teleoperated platform later experiments can reuse.",
+    "goals": {
+      "tpn": {
+        "title": "A mixer that does not need shear or buoyancy",
+        "body": "Parenteral emulsions are specified by droplet size. Conventional production uses high-shear homogenizers. TIGERS-X asks whether capillary instabilities in a static mixer can redistribute the phases when those homogenizers cannot be used."
+      },
+      "food": {
+        "title": "Sustained microgravity, not a brief parabola",
+        "body": "A 2025 parabolic-flight study saw stronger interfacial mixing, but each interval lasted about 20 seconds and included g-jitter. The station campaign follows the same class of passive mixing for long enough to see how the flow develops and then rests."
+      },
+      "medicine": {
+        "title": "A platform for the next experiment",
+        "body": "After installation the cube needed no crew. The same teleoperated architecture is a route to more demanding microgravity life-science work, including cell-culture systems, on later flights."
+      }
+    }
+  },
+  "platforms": {
+    "title": "From parabolic flight to orbit",
+    "intro": "The same group first measured passive mixing on parabolic flights. Those intervals were too short, and too disturbed, to show how a mixture evolves. The station campaign was designed to close that gap. The cube that flew is described next.",
+    "caption": "Parabolic-flight experiment compared with TIGERS-X on the ISS",
+    "factor": "Factor",
+    "pictures": "In pictures",
+    "parabolicLabel": "Parabolic flight · 2025",
+    "issLabel": "ISS · TIGERS-X · 2026",
+    "parabolicHead": "Parabolic flight",
+    "parabolicSub": "Prior study, 2025",
+    "issHead": "International Space Station",
+    "issSub": "TIGERS-X, 2026",
+    "parabolicPatchAlt": "Parabolic Flight Experiment patch",
+    "issPatchAlt": "TIGERS-X mission patch",
+    "note": "Parabolic-flight values are from Seehanam et al., Scientific Reports (2025), as cited in the TIGERS-X preprint.",
+    "rows": [
+      {
+        "factor": "Environment",
+        "parabolic": "Aircraft, repeated parabolic arcs",
+        "iss": "ICE Cubes Facility, Columbus module"
+      },
+      {
+        "factor": "Duration",
+        "parabolic": "About {windowSeconds} s per parabola",
+        "iss": "{days} days, {operationsStart}–{operationsEnd}"
+      },
+      {
+        "factor": "Gravity",
+        "parabolic": "Reduced gravity, g-jitter {gJitter}",
+        "iss": "Sustained microgravity"
+      },
+      {
+        "factor": "Observations",
+        "parabolic": "{trials} trials",
+        "iss": "Repeated cycles, four channels on two devices"
+      },
+      {
+        "factor": "Mixer",
+        "parabolic": "Passive static mixer",
+        "iss": "Passive Tesla-valve channels and an observation chamber"
+      },
+      {
+        "factor": "Fluids",
+        "parabolic": "Immiscible pairs",
+        "iss": "Oil phase with oleoresin paprika; aqueous BFluid® with a food-grade blue dye"
+      },
+      {
+        "factor": "Hardware",
+        "parabolic": "{platformKg} kg platform",
+        "iss": "2.32 kg cube, 200 × 200 × 100 mm; eight pumps, four cameras"
+      },
+      {
+        "factor": "Control",
+        "parabolic": "Executed within each parabola",
+        "iss": "Teleoperated from Bangkok via YAMCS"
+      },
+      {
+        "factor": "Interval observed",
+        "parabolic": "Initial mixing only",
+        "iss": "Flow development across events, then the quiescent interval"
+      },
+      {
+        "factor": "Measurement",
+        "parabolic": "Color Distribution Entropy",
+        "iss": "Hue-based mixing index, calibrated to an in-frame swatch"
+      },
+      {
+        "factor": "Principal result",
+        "parabolic": "Best emulsion {uniformityGainPct}% more uniform than the microgravity control",
+        "iss": "Composition set in the first 10–20% of channel length; the devices diverged"
+      }
+    ]
+  },
+  "story": {
+    "chapters": {
+      "payload": "The payload",
+      "subsystems": "Inside the payload",
+      "chip": "The lab-on-a-chip"
+    },
+    "labels": {
+      "structure": "Aluminium 7075 structure",
+      "pumps": "Eight peristaltic pumps",
+      "reservoir": "Reservoir · eight fluid bags",
+      "cameras": "Four cameras, 2 × 2",
+      "chip": "Lab-on-chip",
+      "computer": "Orange Pi 5 Pro computer",
+      "mainBoard": "Main circuit board",
+      "hub": "Hub enclosure",
+      "channelLayers": "Tesla-valve channel layers",
+      "portLayer": "Port layer · 12 fluid ports",
+      "connector": "Facility connector"
+    },
+    "beats": {
+      "inside-4u": {
+        "eyebrow": "The payload",
+        "title": "A laboratory in 4U.",
+        "body": [
+          "Eight pumps, eight fluid bags, two lab-on-chip devices, four cameras, and the computers that sequence them occupy a cube 200 mm across. The following views open that cube. Qualification and the flight come after."
+        ]
+      },
+      "envelope": {
+        "title": "Compact in design",
+        "body": [
+          "The cube follows the ICE Cubes interface: 200 × 200 × 100 mm, a 4U volume. Mass at pre-flight handover was 2.32 kg, or 2.52 kg with the launch bag. It draws power and data from the facility."
+        ]
+      },
+      "structure": {
+        "eyebrow": "Inside the payload",
+        "title": "One structure, two modules.",
+        "body": [
+          "The frame is aluminium 7075. An internal panel separates the experiment module from the electronics module. Removing the panels shows how the parts are arranged.",
+          "This exploded view is an assembly diagram. The cube does not open this way in flight."
+        ]
+      },
+      "fluidics": {
+        "title": "Metered delivery, double containment.",
+        "body": [
+          "Eight Takasago RP-QIII peristaltic pumps move fluid by compressing tubing. Each of the four channels has one pump for the oil phase and one for the aqueous phase.",
+          "Eight CryoStore bags share one reservoir: two oil-phase bags of 10 mL, two BFluid® bags of 15 mL, and four collection bags of up to 25 mL. The circuit is sealed and double-contained."
+        ]
+      },
+      "observation": {
+        "title": "Four cameras, one corrected view.",
+        "body": [
+          "Four See3CAM cameras in a 2 × 2 array sit beneath the chip and image it under white LED illumination. Each camera covers part of a device, so synchronized pairs are stitched into one panorama. The chip is lifted here only to show the cameras.",
+          "A four-color reference swatch in every frame supplies the correction for illumination differences between sessions."
+        ]
+      },
+      "computing": {
+        "title": "Onboard control between contacts.",
+        "body": [
+          "An Orange Pi 5 Pro decodes telecommands, sequences each run, and stores images and telemetry. An onboard YAMCS instance buffers data while the station is out of contact. Pump and lighting commands are passed to an STM32F746 microcontroller.",
+          "The facility provides a single 12 V supply, regulated onboard to 5 V and 3.3 V."
+        ]
+      },
+      "core": {
+        "title": "Four channels on two devices.",
+        "body": [
+          "Fluid handling, imaging, and computing exist to run the lab-on-chip: two Tesla-valve devices, CH1 and CH2, each with two parallel rows. That is four independent mixing channels."
+        ]
+      },
+      "deliver": {
+        "eyebrow": "The lab-on-a-chip",
+        "title": "Two immiscible, optically distinct phases.",
+        "body": [
+          "Each channel receives Fluid A, an oil-phase mixture colored with oleoresin paprika, and Fluid B, BFluid® colored with a food-grade blue dye. On camera the oil reads orange and the aqueous phase teal. The dyes make the phases measurable by hue. They are not the mixture under study."
+        ]
+      },
+      "mix": {
+        "title": "The geometry does the mixing.",
+        "body": [
+          "The Tesla-valve chain is a passive static mixer. There is no impeller and no high-shear homogenizer. The pumps maintain the flow; the channel shape redistributes the phases.",
+          "Twelve fittings on the underside connect the chip to the circuit: two inlets and one outlet for each of the four channels."
+        ]
+      },
+      "watch": {
+        "title": "Hue as a measure of composition.",
+        "body": [
+          "Video from each cycle is downlinked and examined the same day. Each frame is hue-corrected against its reference swatch.",
+          "A pixel is then scored from 1, a water hue, to 2, an oil hue. Interfacial and partly mixed regions take intermediate values, so the index does not impose a hard boundary between the phases."
+        ]
+      },
+      "time": {
+        "title": "What changes when buoyancy is removed.",
+        "body": [
+          "Microgravity suppresses buoyancy-driven separation. Viscosity and interfacial tension remain, and the two phases do not become miscible.",
+          "The on-orbit images show how that balance developed. Both devices began alike, then diverged. The sequence and the mixing index are reported with the science operations, after the cube is on the station."
+        ]
+      },
+      "explore": {
+        "title": "Inspect the flight configuration.",
+        "body": [
+          "Rotate the model and select a subsystem. Dimensions and part names match the flight cube described above."
+        ]
+      }
+    },
+    "envelope": {
+      "envelope": "Envelope",
+      "volume": "Volume",
+      "mass": "Mass at handover",
+      "power": "Power",
+      "peakPower": "{peakPowerW} W peak"
+    },
+    "computingRoles": {
+      "orangePi": {
+        "title": "Orange Pi 5 Pro",
+        "body": "Command decoding, experiment sequencing, image and telemetry storage, onboard YAMCS"
+      },
+      "stm32": {
+        "title": "STM32F746 microcontroller",
+        "body": "Drives the pumps (PWM) and the LED lighting"
+      },
+      "power": {
+        "title": "Power module",
+        "body": "12 V in; regulated 5 V and 3.3 V rails with overcurrent protection"
+      },
+      "hub": {
+        "title": "USB hub",
+        "body": "Dedicated 5 V supply for the four cameras"
+      },
+      "note": "The microcontroller is listed here. It is not a separate part in the model."
+    }
+  },
+  "stage": {
+    "loading": "Loading the 3D payload model",
+    "fallbackAlt": "Static rendering of the TIGERS-X design model: a low, square aluminium payload with its top panel in place.",
+    "fallbackAria": "Outline drawing of the TIGERS-X payload: a square box 200 by 200 millimetres and 100 millimetres tall.",
+    "unsupported": "Interactive 3D is not available in this browser, so a static view of the payload is shown. Every explanation remains in the text.",
+    "error": "The 3D model could not be loaded, so a static view of the payload is shown. Every explanation remains in the text.",
+    "exploreTitle": "Explore the payload",
+    "exploreHint": "Drag to rotate the model. Pinch or scroll to zoom. Select a subsystem in the list or in the model.",
+    "subsystemsAria": "Subsystems",
+    "selectPrompt": "Select a subsystem to highlight it and read its function.",
+    "close": "Close",
+    "exploreButton": "Explore the hardware",
+    "explorePending": "The interactive explorer becomes available once the 3D model has loaded."
+  },
+  "explorer": {
+    "chip": {
+      "title": "Lab-on-chip",
+      "description": "Two devices, CH1 and CH2, each with two parallel Tesla-valve rows. Each channel has an oil inlet, an aqueous inlet, and one outlet. The valve chain folds the phases together, then opens into an observation chamber."
+    },
+    "pumps": {
+      "title": "Eight peristaltic pumps",
+      "description": "Takasago RP-QIII peristaltic pumps move fluid by compressing tubing. Each channel has one pump for the oil phase and one for the aqueous phase."
+    },
+    "reservoir": {
+      "title": "Fluid storage",
+      "description": "Eight CryoStore bags in one container: two oil-phase bags of 10 mL, two aqueous bags of 15 mL, and four collection bags. The circuit is sealed and double-contained."
+    },
+    "cameras": {
+      "title": "Four cameras",
+      "description": "Four See3CAM cameras in a 2 × 2 array image the chip under white LED illumination. Synchronized pairs are stitched into one panorama."
+    },
+    "computing": {
+      "title": "Computing and control",
+      "description": "An Orange Pi 5 Pro sequences each run, stores images and telemetry, and buffers data in onboard YAMCS. It commands an STM32F746 microcontroller, which drives the pumps and the LED illumination. A USB hub powers the four cameras."
+    },
+    "structure": {
+      "title": "Structure and enclosure",
+      "description": "An aluminium 7075 structure carries the subsystems inside a 200 × 200 × 100 mm envelope. Internal parts use their own materials."
+    },
+    "connector": {
+      "title": "Facility connector",
+      "description": "A DB13W3 connector on the underside mates with the ICE Cubes Facility. The cube draws +12 V only. Four differential pairs carry Gigabit Ethernet for commands and data."
+    }
+  },
+  "flow": {
+    "kicker": "Schematic of one channel",
+    "svgTitle": "Oil and water phases flowing through one Tesla-valve channel",
+    "svgDesc": "Outline of one channel row on the flight chip. The aqueous and oil phases enter from the inlets on the left, pass the Tesla valves, cross the observation chamber, and leave through the outlet on the right. The motion is illustrative, not a measured velocity field.",
+    "legendAqueous": "Water phase · BFluid®",
+    "legendOil": "Oil phase",
+    "legendMixed": "Mixed through the Tesla valves",
+    "caption": "One of four channel rows, traced from the flight-chip geometry. The channels are 1 mm deep. Flow in the figure is illustrative, not a measured velocity field.",
+    "follow": "The Tesla valve is a passive static mixer with no moving parts. Asymmetric branches divide the stream, return part of it, and rejoin it at an angle, so the phases are driven into one another. The path then opens into the observation chamber.",
+    "stages": [
+      {
+        "title": "Inlets",
+        "text": "Two pumps feed this channel. BFluid® enters along the outer edges and the oil phase enters along the centerline. The streams remain side by side until the valve chain."
+      },
+      {
+        "title": "Tesla valves",
+        "text": "The streams enter a passive Tesla-valve chain. The pumps maintain the flow. Mixing is produced by the channel geometry."
+      },
+      {
+        "title": "Chamber",
+        "text": "The channel opens into a rectangular observation chamber. This is the field recorded by the cameras."
+      },
+      {
+        "title": "Outlet",
+        "text": "Effluent leaves through the outlet fitting and is collected in that channel’s bag."
+      }
+    ]
+  },
+  "mission": {
+    "eyebrow": "Assembly, integration, and testing",
+    "title": "Qualified before flight.",
+    "lead": "The AIIM-X Center of Excellence at Chulabhorn Royal Academy built the cube with ISHA Lab, Panyapiwat Institute of Management, and the Thai Microelectronics Center (TMEC), NSTDA. Fluids were prepared under sterile conditions in a class II biosafety cabinet, then sealed for flight.",
+    "qualifyTitle": "Three independent checks",
+    "qualifyIntro": "Before handover the cube was verified against the ICE Cubes interface requirements and the safety requirements for pressurized ISS payloads.",
+    "structureTitle": "Structure",
+    "structure": "Mechanical loading and vibration on all three axes, at Thailand’s Electrical and Electronic Products Testing Center (PTEC). Inspection before, during, and after each run found no cracking, loose parts, or change in structural signature.",
+    "passed": "Passed",
+    "emcTitle": "Electromagnetic compatibility",
+    "emcCaption": "EMC test results",
+    "emcTest": "Test",
+    "emcResult": "Result",
+    "pass": "Pass",
+    "fail": "Fail",
+    "chemTitle": "Chemical safety",
+    "chem": "NASA assessed every reagent, including the trace colorants, as non-corrosive, non-oxidizing, and non-flammable at the quantities flown. If both containment layers failed together, the releasable volume would be at most about 60 mL.",
+    "approved": "Approved"
+  },
+  "launch": {
+    "title": "Launch and installation",
+    "transport": "The cube was transported unpowered. It launched on {launch} on {vehicle} from {launchSite}.",
+    "afterDocking": "After docking, a crew member installed the cube in the ICE Cubes Facility in Columbus. That single interface provides power, data, and grounding. The User Home Base in Bangkok then completed remote commissioning. From that point the science runs required no further crew involvement."
+  },
+  "station": {
+    "eyebrow": "Aboard the ISS",
+    "pauseAria": "TIGERS-X aboard the station",
+    "columbus": "Columbus",
+    "iss": "International Space Station",
+    "caption": "Columbus, the European laboratory, on the starboard side of Harmony.",
+    "fallback": "The station model could not be loaded.",
+    "steps": [
+      {
+        "title": "Installed in Columbus.",
+        "body": [
+          "TIGERS-X operated in Columbus, the European Space Agency laboratory module, on the starboard side of the Harmony node."
+        ]
+      },
+      {
+        "title": "A rack-mounted laboratory.",
+        "body": [
+          "Columbus supplies power, thermal control, and communications to the facilities in its racks. ICE Cubes is one of those facilities."
+        ]
+      },
+      {
+        "title": "The ICE Cubes Facility.",
+        "body": [
+          "Operated by Space Applications Services, the facility accepts compact experiment cubes inside the pressurized module. Each cube connects once, for power and data."
+        ]
+      },
+      {
+        "title": "Crew time limited to two events.",
+        "body": [
+          "The crew installed the cube and removed it at the end of the campaign. Between those events the experiment was commanded from the ground, as the path below shows."
+        ]
+      }
+    ]
+  },
+  "command": {
+    "title": "Telecommand and telemetry",
+    "lead": "Commands left the User Home Base in Bangkok on YAMCS. Video and logs returned along the same path.",
+    "uplink": "Uplink",
+    "downlink": "Downlink",
+    "uplinkLegend": "Uplink · command",
+    "downlinkLegend": "Downlink · video and logs",
+    "note": "The moving point traces the command path. It is not a record of the radio signal.",
+    "nodes": [
+      { "title": "User Home Base", "sub": "Bangkok · YAMCS" },
+      { "title": "Mission Control Centre", "sub": "Belgium" },
+      { "title": "ICE Cubes Facility", "sub": "On the station" },
+      { "title": "TIGERS-X", "sub": "Columbus" }
+    ],
+    "stages": [
+      {
+        "dir": "up",
+        "title": "The command leaves Bangkok",
+        "text": "The Chulabhorn Royal Academy User Home Base issues a telecommand in YAMCS. A VPN carries it to the ICE Cubes Mission Control Centre in Belgium. The cube has no radio of its own."
+      },
+      {
+        "dir": "up",
+        "title": "The station link",
+        "text": "Space Applications Services places the command on the station’s space-to-ground link. The link is available only during acquisition of signal, so a command waits when the station is out of contact."
+      },
+      {
+        "dir": "up",
+        "title": "Delivery in Columbus",
+        "text": "The ICE Cubes Facility delivers the command over Gigabit Ethernet, on the same interface that supplies the cube’s 12 V."
+      },
+      {
+        "dir": "up",
+        "title": "The run is executed onboard",
+        "text": "TIGERS-X executes the commanded cycle. No crew action is required."
+      },
+      {
+        "dir": "down",
+        "title": "Video and logs return",
+        "text": "At the end of the cycle, video and logs leave along the same path. Between signal windows, the onboard YAMCS instance stores the files and retains the experiment state."
+      },
+      {
+        "dir": "down",
+        "title": "Analysis the same day",
+        "text": "The files arrive at the User Home Base by secure transfer. Preliminary analysis begins the same day."
+      }
+    ]
+  },
+  "operations": {
+    "eyebrow": "Science operations",
+    "title": "Flow behavior in the channels.",
+    "lead": "Over ten days the chip was imaged under sustained microgravity. The sequence is the qualitative record. The mixing index is the quantitative one.",
+    "paragraphs": [
+      "Every science cycle was commanded from Bangkok through YAMCS. Eight pumps metered the oil and aqueous phases into four Tesla-valve channels, CH1 and CH2, each with two rows. Paired camera views were stitched into one panorama, and an in-frame color swatch corrected each session. Video and logs were downlinked after each cycle and examined the same day.",
+      "At event 1, both devices showed the same front: oil leading, the downstream channel still empty. By event 2 they had diverged. Water penetrated the serpentine path of CH1, while CH2 remained largely oil. At events 3 and 4 the split was sharper. In CH1 the aqueous phase occupied most of the visible channel and oil was confined to the rim. In CH2, oil occupied most of the length and water remained near the inlet.",
+      "The cumulative mixing index, from 1 for a water hue to 2 for an oil hue, converged within the first {convergedWithinPct}% of channel length in all four rows and then remained nearly flat. At event 4 the outlet values were {ch11} and {ch12} on CH1, and {ch21} and {ch22} on CH2. The CH1 rows were nearly symmetric. The CH2 rows were not. Pumping maintained the flow. The channel geometry set the phase distribution."
+    ]
+  },
+  "return": {
+    "title": "Recovery",
+    "body": "After the campaign the crew removed the cube. It was deactivated and returned on a cargo vehicle. On the ground it is powered on again so that post-flight measurements can be compared with the on-orbit data. That comparison is the third stage of the concept of operations, and it is still in progress."
+  },
+  "record": {
+    "eyebrow": "Mission record",
+    "title": "Operational record.",
+    "lead": "The mixing results above come from the imagery. The figures here are the operational account: how long the cube ran, and how much it recorded, commanded, and returned.",
+    "kicker": "Payload operation",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "note": "Science operations ran from {operationsStart} to {operationsEnd}, within the available acquisition-of-signal windows. A power interruption of about {powerInterruptionHours} hours did not compromise the campaign.",
+    "imagingTitle": "Imaging and data",
+    "videoFiles": "Experiment video files recorded",
+    "dataRecorded": "Data recorded",
+    "recordedValue": "≈ {recordedGB} GB",
+    "downlinked": "Downlinked before physical retrieval",
+    "downlinkedValue": "{downlinkedGB} GB",
+    "barAria": "{downlinkedGB} GB of approximately {recordedGB} GB recorded was downlinked before physical retrieval, about {percent} percent.",
+    "legendDownlinked": "Downlinked: {downlinkedGB} GB",
+    "legendRecorded": "Recorded in total: ≈ {recordedGB} GB",
+    "commandTitle": "Commanding and fluid actuation",
+    "groundCommands": "Ground commands executed",
+    "pumpOperations": "Pump operations, across all {pumps} pumps",
+    "pumpRuntime": "Combined pump runtime",
+    "pumpRuntimeValue": "{minutes} min {seconds} s",
+    "pumpNote": "The pumps did not run continuously. Across {pumpOperations} operations their combined runtime was 15 min 22 s.",
+    "caveat": "These figures are from the team’s mission report, not from the mixing analysis. They record that the payload accepted commands, moved fluid, stored imagery, and returned data, with no crew involvement beyond installation and removal."
+  },
+  "closing": {
+    "eyebrow": "Academic resources",
+    "title": "Publications and data.",
+    "lead": "The flight preprint, the parabolic-flight paper that preceded it, and the processed videos and CAD from the station.",
+    "caption": "Academic resources",
+    "name": "Name",
+    "type": "Type",
+    "description": "Description",
+    "link": "Link",
+    "soon": "Coming soon",
+    "note": "Further scientific resources will be added.",
+    "partnersAria": "Partners",
+    "footer": "TIGERS-X — Thailand Innovative G-force Varied Emulsification Research for Space Exploration. Developed by the AIIM-X Center of Excellence, Chulabhorn Royal Academy, with ISHA Lab, Panyapiwat Institute of Management and TMEC, NSTDA. Operated in the ICE Cubes Facility aboard the International Space Station.",
+    "copyright": "© 2026 Chulabhorn Royal Academy"
+  },
+  "resources": {
+    "parabolic-paper": {
+      "name": "Universal and economical experimental platform for colloidal mixing lab-on-chip in parabolic flight",
+      "type": "Journal article",
+      "description": "Passive colloidal mixing on parabolic flights: 29 trials of about 20 s of reduced gravity. Scientific Reports, 6 June 2025.",
+      "linkLabel": "Read"
+    },
+    "iss-preprint": {
+      "name": "On-board International Space Station Verification of Autonomous Emulsification Lab-on-Chip Payload: TIGERS-X Project",
+      "type": "Preprint",
+      "description": "Design, ground verification, and the 10-day on-orbit campaign. Research Square preprint, 22 October 2026.",
+      "linkLabel": "Read"
+    },
+    "dataset": {
+      "name": "TIGERS-X On-Orbit Emulsification Experiment: Processed Videos and Payload CAD",
+      "type": "Dataset",
+      "description": "Thirty processed channel videos from science operations, and the flight-model CAD. Zenodo, version 1.0.0.",
+      "linkLabel": "Open"
+    },
+    "manual": {
+      "name": "Payload specification and user’s guide",
+      "type": "Manual",
+      "description": "Interfaces, operating limits, and safety results for the experiment cube.",
+      "linkLabel": "Open"
+    }
+  },
+  "partners": {
+    "cra": "Chulabhorn Royal Academy",
+    "mhesi": "Ministry of Higher Education, Science, Research and Innovation",
+    "tsri": "Thailand Science Research and Innovation",
+    "pim": "Panyapiwat Institute of Management",
+    "gistda": "Geo-Informatics and Space Technology Development Agency",
+    "tmec": "Thai Microelectronics Center"
+  },
+  "media": {
+    "placeholderVideo": "Video forthcoming",
+    "placeholderPhoto": "Photograph forthcoming",
+    "placeholderAria": "{placeholder}: media to be added.",
+    "creditPending": "Credit to be added",
+    "slideshowAria": "Photographs of TIGERS-X aboard the station",
+    "slots": {
+      "platform-parabolic": {
+        "placeholder": "Zero-g parabolic flight — photograph",
+        "items": {
+          "platform-parabolic-photo": {
+            "alt": "Three team members in navy flight suits kneel around the boxed lab-on-chip platform, strapped to the padded floor of the parabolic-flight aircraft cabin.",
+            "caption": "The 2025 lab-on-chip platform on a zero-g parabolic flight.",
+            "credit": "Chulabhorn Royal Academy"
+          }
+        }
+      },
+      "platform-iss": {
+        "placeholder": "TIGERS-X on the ISS — photograph",
+        "items": {
+          "platform-iss-photo": {
+            "alt": "The aluminium TIGERS-X cube, its lid carrying the mission patch, ICE Cubes label and partner logos, installed in the ICE Cubes Facility aboard the ISS, surrounded by cables and rack hardware.",
+            "caption": "TIGERS-X installed in the ICE Cubes Facility, Columbus module.",
+            "credit": "ESA/NASA – S. Adenot"
+          }
+        }
+      },
+      "development-earth": {
+        "placeholder": "Payload development — photography",
+        "items": {
+          "development-photo-1": {
+            "alt": "Two team members in clean-room suits and hair nets assemble TIGERS-X at a workbench: one fits an electronics stack, the other works on the open aluminium enclosure. A Thai flag and the GISTDA logo are on the wall behind.",
+            "caption": "Assembling the experiment cube in the clean room at GISTDA’s National Satellite Assembly, Integration and Test Center.",
+            "credit": "Chulabhorn Royal Academy"
+          },
+          "development-photo-2": {
+            "alt": "The open TIGERS-X enclosure on a workbench, showing circuit boards and wiring inside, with the labelled outer panels laid out beside it.",
+            "caption": "Electronics in the open enclosure, with the outer panels laid out for fit.",
+            "credit": "Chulabhorn Royal Academy"
+          },
+          "development-photo-3": {
+            "alt": "Three team members in clean-room suits look at a laptop showing a camera view of the chip; the assembled cube sits on the bench beside them.",
+            "caption": "Checking the camera view of the chip during integration.",
+            "credit": "Chulabhorn Royal Academy"
+          },
+          "development-photo-4": {
+            "alt": "Five team members in clean-room coats and shoe covers pose in the test hall beneath the GISTDA, THEOS-2 and National Satellite Assembly, Integration and Test Center signs.",
+            "caption": "The team at the National Satellite Assembly, Integration and Test Center.",
+            "credit": "Chulabhorn Royal Academy"
+          }
+        }
+      },
+      "launch": {
+        "placeholder": "Launch — photograph",
+        "items": {
+          "launch-photo": {
+            "alt": "Seen from the pad, a Falcon 9 rises past its launch tower between lightning towers, its engine flame lighting billowing white exhaust clouds under a deep blue sky.",
+            "caption": "Falcon 9 lifts off from Space Launch Complex 40 with CRS-34, carrying TIGERS-X to the International Space Station.",
+            "credit": "SpaceX"
+          }
+        }
+      },
+      "dragon-docking": {
+        "placeholder": "Dragon docking with the ISS — video",
+        "items": {
+          "docking-video": {
+            "alt": "Real footage of the CRS-34 Dragon approaching the International Space Station on 17 May 2026, seen from the station with Earth filling the lower half of the view and a solar array along the right edge.",
+            "caption": "CRS-34 Dragon docking with the International Space Station, 17 May 2026.",
+            "credit": "ESA/NASA – S. Adenot"
+          }
+        }
+      },
+      "crew-installation": {
+        "placeholder": "Crew installation in Columbus — video",
+        "items": {
+          "crew-installation-video": {
+            "alt": "A crew member installs the TIGERS-X cube in the ICE Cubes Facility inside Columbus, sliding the labelled enclosure into the rack among cables and experiment hardware.",
+            "caption": "Installation in the ICE Cubes Facility, Columbus module.",
+            "credit": "ESA/NASA – S. Adenot"
+          }
+        }
+      },
+      "payload-on-iss": {
+        "placeholder": "TIGERS-X aboard the ISS — photograph",
+        "items": {
+          "payload-on-iss-installed": {
+            "alt": "The aluminium TIGERS-X cube, its lid carrying the mission patch, ICE Cubes label and partner logos, installed in the ICE Cubes Facility aboard the ISS, surrounded by cables and rack hardware.",
+            "caption": "TIGERS-X in place aboard the International Space Station.",
+            "credit": "ESA/NASA – S. Adenot"
+          },
+          "payload-on-iss-front": {
+            "alt": "Close view of the front face of the TIGERS-X cube in the ICE Cubes Facility, showing the Thai flag, CRA, ISHA, TSRI, TMEC and GISTDA marks, with cables and connectors around it.",
+            "caption": "The front of the cube in the ICE Cubes Facility.",
+            "credit": "ESA/NASA – S. Adenot"
+          },
+          "payload-on-iss-floating": {
+            "alt": "The TIGERS-X cube floats inside a station module, its lid showing the mission patch, partner logos and ICE Cubes label, with racks, stowage bags and cables behind it.",
+            "caption": "TIGERS-X floating inside the International Space Station.",
+            "credit": "ESA/NASA – S. Adenot"
+          },
+          "payload-on-iss-back": {
+            "alt": "The back panel of the TIGERS-X cube floats in the station, showing the flight-model label, handwritten signatures, the mission patch, and the Thai flag and CRA marks, with stowage bags and cables behind it.",
+            "caption": "The back of TIGERS-X, marked as the flight model.",
+            "credit": "ESA/NASA – S. Adenot"
+          }
+        }
+      },
+      "science-operations": {
+        "placeholder": "Lab-on-chip during science operations — animation",
+        "items": {
+          "lab-on-chip-run": {
+            "alt": "Panorama of a transparent lab-on-chip during a run, joined from two camera views. Orange oil and teal water move through two rows of Tesla-valve channels. A colour reference swatch sits in each half, CRA is moulded into the plastic, and tubing connects at both ends.",
+            "caption": "A science run. Orange is the oil phase and teal the aqueous phase in the Tesla-valve channels. The panorama joins two synchronized camera views.",
+            "credit": "Chulabhorn Royal Academy"
+          }
+        }
+      },
+      "return-earth": {
+        "placeholder": "Return to Earth — photograph",
+        "items": {
+          "return-undock": {
+            "alt": "A white Dragon cargo spacecraft, its docking hatch facing the camera and its trunk lit by sunlight, drifts away against the black of space.",
+            "caption": "A Dragon cargo spacecraft leaves the station. Recovery of the cube and its onboard recordings is a later step.",
+            "credit": "NASA Johnson Space Center"
+          }
+        }
+      }
+    }
+  }
+}

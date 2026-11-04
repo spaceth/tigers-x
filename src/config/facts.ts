@@ -7,6 +7,8 @@
  * Keep separate measures separate — do not sum or merge them.
  */
 
+import { copy } from '../content';
+
 export const publication = {
   title: 'On-board International Space Station Verification of Autonomous Emulsification Lab-on-Chip Payload: TIGERS-X Project',
   authors:
@@ -22,51 +24,30 @@ export const publication = {
 /**
  * Academic resources shown in the closing table. `href: null` renders as
  * coming soon; the payload manual uses `DOCS_URL` from site.ts when that is set.
+ * Names and descriptions live in `src/content/en.json`.
  */
+const resourceLinks: Record<keyof typeof copy.resources, string | null> = {
+  'parabolic-paper': 'https://www.nature.com/articles/s41598-025-04368-8',
+  'iss-preprint': 'https://www.researchsquare.com/article/rs-11156278/v1',
+  dataset: 'https://zenodo.org/records/22934189',
+  manual: null,
+};
+
 export const academicResources: {
-  id: string;
+  id: keyof typeof copy.resources;
   name: string;
   type: string;
   description: string;
   href: string | null;
   linkLabel: string;
-}[] = [
-  {
-    id: 'parabolic-paper',
-    name: 'Universal and economical experimental platform for colloidal mixing lab-on-chip in parabolic flight',
-    type: 'Journal article',
-    description:
-      'Passive colloidal mixing on parabolic flights: 29 trials of about 20 s of reduced gravity. Scientific Reports, 6 June 2025.',
-    href: 'https://www.nature.com/articles/s41598-025-04368-8',
-    linkLabel: 'Read',
-  },
-  {
-    id: 'iss-preprint',
-    name: publication.title,
-    type: 'Preprint',
-    description:
-      'Design, ground verification, and the 10-day on-orbit campaign. Research Square preprint, 22 October 2026.',
-    href: 'https://www.researchsquare.com/article/rs-11156278/v1',
-    linkLabel: 'Read',
-  },
-  {
-    id: 'dataset',
-    name: 'TIGERS-X On-Orbit Emulsification Experiment: Processed Videos and Payload CAD',
-    type: 'Dataset',
-    description:
-      'Thirty processed channel videos from science operations, and the flight-model CAD. Zenodo, version 1.0.0.',
-    href: 'https://zenodo.org/records/22934189',
-    linkLabel: 'Open',
-  },
-  {
-    id: 'manual',
-    name: 'Payload specification and user\u2019s guide',
-    type: 'Manual',
-    description: 'Interfaces, operating limits, and safety results for the experiment cube.',
-    href: null,
-    linkLabel: 'Open',
-  },
-];
+}[] = (Object.keys(copy.resources) as (keyof typeof copy.resources)[]).map((id) => ({
+  id,
+  name: copy.resources[id].name,
+  type: copy.resources[id].type,
+  description: copy.resources[id].description,
+  href: resourceLinks[id],
+  linkLabel: copy.resources[id].linkLabel,
+}));
 
 /** [paper] Launch and on-orbit campaign. */
 export const campaign = {

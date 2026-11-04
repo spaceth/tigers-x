@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import channels from '../config/chip-channels.generated.json';
+import { copy } from '../content';
 import { stickyProgress, useReducedMotion, useScrollFrame } from '../lib/hooks';
 
 /*
@@ -38,30 +39,13 @@ const secondInlet = (toX: number) => `11.2,26.3 ${toX},25.7 ${toX},32.5 11.2,31.
 /** x positions the flow front crosses, one per explanation. */
 const BOUNDS = [ENTRY_X, JUNCTION_X, CHAMBER_X, OUTLET_X, EXIT_X];
 
-const stages = [
-  {
-    title: 'Inlets',
-    text: 'Two pumps feed this channel. BFluid® enters along the outer edges and the oil phase enters along the centerline. The streams remain side by side until the valve chain.',
-  },
-  {
-    title: 'Tesla valves',
-    text: 'The streams enter a passive Tesla-valve chain. The pumps maintain the flow. Mixing is produced by the channel geometry.',
-  },
-  {
-    title: 'Chamber',
-    text: 'The channel opens into a rectangular observation chamber. This is the field recorded by the cameras.',
-  },
-  {
-    title: 'Outlet',
-    text: 'Effluent leaves through the outlet fitting and is collected in that channel’s bag.',
-  },
-] as const;
+const stages = copy.flow.stages;
 
 const zones = [
-  { x: (PORTS.inlets[0] + PORTS.inlets[1]) / 2, label: 'Inlets' },
-  { x: (JUNCTION_X + CHAMBER_X) / 2, label: 'Tesla valves' },
-  { x: CHAMBER_X + 4.6, label: 'Chamber' },
-  { x: PORTS.outlet, label: 'Outlet' },
+  { x: (PORTS.inlets[0] + PORTS.inlets[1]) / 2, label: stages[0].title },
+  { x: (JUNCTION_X + CHAMBER_X) / 2, label: stages[1].title },
+  { x: CHAMBER_X + 4.6, label: stages[2].title },
+  { x: PORTS.outlet, label: stages[3].title },
 ];
 
 function frontAt(t: number) {
@@ -107,15 +91,11 @@ export function FlowDiagram() {
   return (
     <div className="flow-stick" ref={trackRef} data-reduced={reduced ? 'true' : 'false'}>
     <div className="flow-pin" ref={rootRef}>
-    <p className="flow-diagram__kicker">Schematic of one channel</p>
+    <p className="flow-diagram__kicker">{copy.flow.kicker}</p>
     <figure className="flow-diagram">
       <svg viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`} role="img" aria-labelledby={`${id}-title ${id}-desc`}>
-        <title id={`${id}-title`}>Oil and water phases flowing through one Tesla-valve channel</title>
-        <desc id={`${id}-desc`}>
-          Outline of one channel row on the flight chip. The aqueous and oil phases enter from the
-          inlets on the left, pass the Tesla valves, cross the observation chamber, and leave through
-          the outlet on the right. The motion is illustrative, not a measured velocity field.
-        </desc>
+        <title id={`${id}-title`}>{copy.flow.svgTitle}</title>
+        <desc id={`${id}-desc`}>{copy.flow.svgDesc}</desc>
         <defs>
           <clipPath id={`${id}-channel`}>
             <path d={ROW.d} clipRule="evenodd" />
@@ -151,15 +131,15 @@ export function FlowDiagram() {
       <ul className="fd-legend">
         <li>
           <span className="fd-swatch fd-swatch--aqueous" aria-hidden="true" />
-          Water phase · BFluid®
+          {copy.flow.legendAqueous}
         </li>
         <li>
           <span className="fd-swatch fd-swatch--lipid" aria-hidden="true" />
-          Oil phase
+          {copy.flow.legendOil}
         </li>
         <li>
           <span className="fd-swatch fd-swatch--mixed" aria-hidden="true" />
-          Mixed through the Tesla valves
+          {copy.flow.legendMixed}
         </li>
       </ul>
 
@@ -173,15 +153,10 @@ export function FlowDiagram() {
       </ol>
 
       <figcaption>
-        One of four channel rows, traced from the flight-chip geometry. The channels are 1 mm deep. Flow in
-        the figure is illustrative, not a measured velocity field.
+        {copy.flow.caption}
       </figcaption>
     </figure>
-    <p className="flow-diagram__follow">
-      The Tesla valve is a passive static mixer with no moving parts. Asymmetric branches divide the stream,
-      return part of it, and rejoin it at an angle, so the phases are driven into one another. The path then
-      opens into the observation chamber.
-    </p>
+    <p className="flow-diagram__follow">{copy.flow.follow}</p>
     </div>
     </div>
   );

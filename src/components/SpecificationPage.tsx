@@ -1,20 +1,12 @@
 import { lazy, Suspense, useEffect, useState, type MouseEvent } from 'react';
 import { assets } from '../config/site';
+import { specCopy } from '../content';
+import { LanguageSwitch } from './LanguageSwitch';
 import '../styles/specification.css';
 
 const SpecModel = lazy(() => import('./SpecModel'));
 
-const toc = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'mechanical', label: 'Mechanical' },
-  { id: 'electrical', label: 'Electrical' },
-  { id: 'imaging', label: 'Imaging' },
-  { id: 'data', label: 'Data and command' },
-  { id: 'fluidics', label: 'Fluidic system' },
-  { id: 'safety', label: 'Qualification and safety' },
-  { id: 'contact', label: 'Contact' },
-] as const;
-
+const toc = specCopy.toc;
 type SectionId = (typeof toc)[number]['id'];
 
 function SpecFigure({ src, alt }: { src: string; alt: string }) {
@@ -34,21 +26,19 @@ function showSection(id: string, behavior: ScrollBehavior = 'smooth') {
 
 export function SpecificationPage() {
   const [active, setActive] = useState<SectionId>('overview');
+  const page = specCopy;
 
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = 'TIGERS-X — Payload specification';
+    document.title = page.meta.title;
     const meta = document.querySelector('meta[name="description"]');
     const previousDesc = meta?.getAttribute('content') ?? null;
-    meta?.setAttribute(
-      'content',
-      'Mechanical, electrical, imaging, data, fluidic, and safety limits for the TIGERS-X experiment cube.',
-    );
+    meta?.setAttribute('content', page.meta.description);
     return () => {
       document.title = previousTitle;
       if (previousDesc !== null) meta?.setAttribute('content', previousDesc);
     };
-  }, []);
+  }, [page.meta.description, page.meta.title]);
 
   useEffect(() => {
     const els = toc.map((item) => document.getElementById(item.id)).filter((el): el is HTMLElement => el !== null);
@@ -85,21 +75,24 @@ export function SpecificationPage() {
   return (
     <div className="spec-page">
       <a className="skip-link" href="#overview">
-        Skip to content
+        {page.chrome.skip}
       </a>
       <div className="spec-wrap">
         <header className="spec-header">
           <a className="spec-home" href="/">
             <img src={assets.patch} alt="" width={28} height={28} />
-            <span>TIGERS-X</span>
+            <span>{page.chrome.wordmark}</span>
           </a>
-          <a className="spec-back" href="/">
-            Mission site
-          </a>
+          <div className="spec-header-tools">
+            <a className="spec-back" href="/">
+              {page.chrome.back}
+            </a>
+            <LanguageSwitch label={page.chrome.language} unavailableLabel={page.chrome.languageUnavailable} />
+          </div>
         </header>
         <div className="spec-layout">
-          <nav className="spec-toc" aria-label="On this page">
-            <p className="spec-toc-label">On this page</p>
+          <nav className="spec-toc" aria-label={page.chrome.tocLabel}>
+            <p className="spec-toc-label">{page.chrome.tocLabel}</p>
             <ol>
               {toc.map((item) => (
                 <li key={item.id}>
@@ -115,157 +108,88 @@ export function SpecificationPage() {
             </ol>
           </nav>
           <article className="spec-main">
-            <p className="spec-kicker">Payload specification</p>
-            <h1 className="spec-title">TIGERS-X experiment cube</h1>
-            <p className="spec-lead">
-              Technical limits, interfaces, and safety results for integrating an experiment with the TIGERS-X
-              platform. The page brings together the product specification and the Payload User&apos;s Guide, version
-              1.1 (April 2026), prepared by the ISHA and ARSL research teams.
-            </p>
+            <p className="spec-kicker">{page.header.kicker}</p>
+            <h1 className="spec-title">{page.header.title}</h1>
+            <p className="spec-lead">{page.header.lead}</p>
             <ul className="spec-sources">
-              <li>Product specification, including the CRS-34 flight record.</li>
-              <li>Payload User&apos;s Guide 1.1, April 2026.</li>
+              {page.header.sources.map((source) => (
+                <li key={source}>{source}</li>
+              ))}
             </ul>
 
             <section className="spec-section" id="overview" aria-labelledby="overview-title">
-              <h2 id="overview-title">Overview</h2>
-              <p>
-                The user&apos;s guide is the reference for researchers and experiment developers. It states the
-                technical specifications, interface boundaries, and operational constraints for flying an experiment
-                inside TIGERS-X.
-              </p>
-              <p>
-                TIGERS-X is a 2U × 2U experiment cube for the ICE Cubes Facility on the International Space Station. It
-                runs autonomous microfluidic mixing experiments, films them with four cameras, and downlinks data in
-                near real time.
-              </p>
+              <h2 id="overview-title">{page.overview.title}</h2>
+              {page.overview.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Identity and flight record, from the product specification.</caption>
+                  <caption>{page.overview.identityCaption}</caption>
                   <tbody>
-                    <tr>
-                      <th scope="row">Full name</th>
-                      <td>Thailand Innovative G-force Varied Emulsification Research for Space Exploration</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Product type</th>
-                      <td>Autonomous lab-on-a-chip experiment payload (Experiment Cube)</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Host platform</th>
-                      <td>ICE Cubes Facility, Columbus module, ISS</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Primary application</th>
-                      <td>Passive mixing and emulsion stability of medical fluids</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Flight</th>
-                      <td>
-                        Launched on SpaceX CRS-34, 15 May 2026 (US time). Returned on CRS-34 Dragon, splashdown 17 June
-                        2026.
-                      </td>
-                    </tr>
+                    {page.overview.identity.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        <td>{row.value}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-              <h3>Key features</h3>
+              <h3>{page.overview.featuresTitle}</h3>
               <ul>
-                <li>2U × 2U cube, 200 × 200 × 100 mm, with a 2.5 kg experiment mass budget.</li>
-                <li>
-                  Sequences run on board. Ground commanding is through the ICE Cubes Mission Control Centre.
-                </li>
-                <li>
-                  Two-tier computing: an Orange Pi 5 Ultra for processing and data handling, and an STM32F7
-                  microcontroller for low-level hardware control.
-                </li>
-                <li>
-                  Four global-shutter RGB and IR cameras in a 2 × 2 array, with overlapping fields of view and hardware
-                  H.264 recording.
-                </li>
-                <li>
-                  Optional microfluidic module: eight peristaltic pumps, sealed fluid bags, and 4-channel static-mixer
-                  chips.
-                </li>
-                <li>One DB13W3P connector carries +12 V power and the LAN data link. The shell is bonded to the frame.</li>
-                <li>IPv4 over TCP/HTTPS through a VPN, YAMCS telemetry, and SFTP file downlink.</li>
-                <li>Designed to MIL-STD-461G EMC tests and ISS crew-safety standards (SSP and JSC).</li>
+                {page.overview.features.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
               </ul>
             </section>
 
             <section className="spec-section" id="mechanical" aria-labelledby="mechanical-title">
-              <h2 id="mechanical-title">Mechanical</h2>
+              <h2 id="mechanical-title">{page.mechanical.title}</h2>
               <Suspense
                 fallback={
                   <p className="spec-model-status" role="status">
-                    Loading the payload model…
+                    {page.chrome.modelLoading}
                   </p>
                 }
               >
                 <SpecModel />
               </Suspense>
-              <p>The cube integrates with the host facility in a 2 × 2U form factor. Dimensions are in millimetres.</p>
+              <p>{page.mechanical.intro}</p>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Envelope and mass. Both documents are cited where the limits differ.</caption>
+                  <caption>{page.mechanical.envelopeCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Parameter</th>
-                      <th scope="col">Value</th>
+                      <th scope="col">{page.mechanical.parameter}</th>
+                      <th scope="col">{page.mechanical.value}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">Form factor</th>
-                      <td>2U × 2U cube</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Envelope</th>
-                      <td>200 × 200 × 100 mm</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Maximum experiment mass</th>
-                      <td>2.5 kg in the user&apos;s guide. The product specification allows up to 3 kg.</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Maximum equivalent vent radius</th>
-                      <td>
-                        About 300 cm. The product specification cites an ISS limit of 5080 cm. The user&apos;s guide
-                        describes the value as well within an ISS maximum of ≪ 5080 cm.
-                      </td>
-                    </tr>
+                    {page.mechanical.envelope.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        <td>{row.value}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Parts list from the mechanical drawing.</caption>
+                  <caption>{page.mechanical.partsCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Item</th>
-                      <th scope="col">Part</th>
-                      <th scope="col">Qty</th>
+                      <th scope="col">{page.mechanical.item}</th>
+                      <th scope="col">{page.mechanical.part}</th>
+                      <th scope="col">{page.mechanical.qty}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      ['1', 'Base plate', '1'],
-                      ['2', 'DB13', '1'],
-                      ['3', 'Corner', '4'],
-                      ['4', 'Edge', '2'],
-                      ['5', 'Top plate', '1'],
-                      ['6', 'Frame bracket 1', '2'],
-                      ['7', 'Frame bracket 2', '2'],
-                      ['8', 'Front plate', '2'],
-                      ['9', 'Side plate', '2'],
-                      ['10', 'Panel plate', '1'],
-                      ['11', 'Panel bracket', '6'],
-                      ['12', 'FOOT6.2xD15', '4'],
-                    ].map(([item, part, qty]) => (
-                      <tr key={item}>
-                        <th scope="row">{item}</th>
-                        <td>{part}</td>
-                        <td>{qty}</td>
+                    {page.mechanical.parts.map((row) => (
+                      <tr key={row.item}>
+                        <th scope="row">{row.item}</th>
+                        <td>{row.part}</td>
+                        <td>{row.qty}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -274,447 +198,226 @@ export function SpecificationPage() {
             </section>
 
             <section className="spec-section" id="electrical" aria-labelledby="electrical-title">
-              <h2 id="electrical-title">Electrical</h2>
+              <h2 id="electrical-title">{page.electrical.title}</h2>
               <figure className="spec-figure spec-figure--connector">
                 <img
                   src="/media/spec/DB13W3.svg"
                   width={300}
                   height={81}
-                  alt="DB13W3 connector face. Large contacts are labeled A3, A2, and A1. The upper signal pins are labeled 5, 4, 3, 2, 1 and the lower pins 10, 9, 8, 7, 6."
+                  alt={page.electrical.connectorAlt}
                 />
               </figure>
-              <p>
-                The power system supplies regulated power to the experimental subsystems. The primary input is +12 V
-                DC through a DB13W3P mixed-layout connector. The connector shell is bonded to the structural frame for
-                grounding. Regulated 5 V and 3.3 V rails are available for the payload.
-              </p>
+              <p>{page.electrical.intro}</p>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Connector contacts.</caption>
+                  <caption>{page.electrical.contactsCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Contact</th>
-                      <th scope="col">Function</th>
+                      <th scope="col">{page.electrical.contact}</th>
+                      <th scope="col">{page.electrical.function}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">A1</th>
-                      <td>+12 V</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">A2</th>
-                      <td>Ground</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">A3</th>
-                      <td>+5 V</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>B+ / R+</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>B− / R−</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>C+</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>C−</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">5</th>
-                      <td>CD, cube detection</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">6</th>
-                      <td>A+ / T+</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">7</th>
-                      <td>A− / T−</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">8</th>
-                      <td>D+</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">9</th>
-                      <td>D−</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">10</th>
-                      <td>SHLD, Ethernet cable shield</td>
-                    </tr>
+                    {page.electrical.contacts.map((row) => (
+                      <tr key={row.pin}>
+                        <th scope="row">{row.pin}</th>
+                        <td>{row.function}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-              <h3>Power phases</h3>
-              <p>The user&apos;s guide requires the payload to stay inside these phases.</p>
+              <h3>{page.electrical.phasesTitle}</h3>
+              <p>{page.electrical.phasesIntro}</p>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Power phases from the user&apos;s guide.</caption>
+                  <caption>{page.electrical.phasesCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Mode</th>
-                      <th scope="col">Duration</th>
-                      <th scope="col">Consumption</th>
-                      <th scope="col">Peak</th>
+                      <th scope="col">{page.electrical.mode}</th>
+                      <th scope="col">{page.electrical.duration}</th>
+                      <th scope="col">{page.electrical.consumption}</th>
+                      <th scope="col">{page.electrical.peak}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">Standby</th>
-                      <td>—</td>
-                      <td>9 W</td>
-                      <td>12 W</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Observation</th>
-                      <td>40 minutes</td>
-                      <td>12 W</td>
-                      <td>15 W</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Experiment run</th>
-                      <td>20 minutes</td>
-                      <td>15 W</td>
-                      <td>18 W</td>
-                    </tr>
+                    {page.electrical.phases.map((row) => (
+                      <tr key={row.mode}>
+                        <th scope="row">{row.mode}</th>
+                        <td>{row.duration}</td>
+                        <td>{row.consumption}</td>
+                        <td>{row.peak}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-              <h3>Operating limits</h3>
+              <h3>{page.electrical.limitsTitle}</h3>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>
-                    Shared limits from both documents. Current and temperature maxima are given from each source.
-                  </caption>
+                  <caption>{page.electrical.limitsCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Parameter</th>
-                      <th scope="col">Minimum</th>
-                      <th scope="col">Nominal</th>
-                      <th scope="col">Maximum</th>
+                      <th scope="col">{page.mechanical.parameter}</th>
+                      <th scope="col">{page.electrical.minimum}</th>
+                      <th scope="col">{page.electrical.nominal}</th>
+                      <th scope="col">{page.electrical.maximum}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">Input voltage</th>
-                      <td>11.5 V</td>
-                      <td>12.0 V</td>
-                      <td>12.6 V</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Input current</th>
-                      <td>—</td>
-                      <td>1.0 A</td>
-                      <td>1.8 A in the user&apos;s guide. 3.1 A in the product specification.</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Power consumption</th>
-                      <td>—</td>
-                      <td>12 W</td>
-                      <td>18 W</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Internal temperature</th>
-                      <td>5 °C</td>
-                      <td>25 °C</td>
-                      <td>45 °C in the user&apos;s guide. Up to 40 °C in the product specification.</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Boot time</th>
-                      <td>—</td>
-                      <td>60 s</td>
-                      <td>90 s</td>
-                    </tr>
+                    {page.electrical.limits.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        <td>{row.min}</td>
+                        <td>{row.nominal}</td>
+                        <td>{row.max}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
             </section>
 
             <section className="spec-section" id="imaging" aria-labelledby="imaging-title">
-              <h2 id="imaging-title">Imaging</h2>
-              <SpecFigure
-                src="/media/spec/Cam_View1.svg"
-                alt="View of the imaging assembly: the camera hardware that records the experiment."
-              />
-              <p>Onboard diagnostics record the experiment. Processing and camera control are split across two computers.</p>
+              <h2 id="imaging-title">{page.imaging.title}</h2>
+              <SpecFigure src="/media/spec/Cam_View1.svg" alt={page.imaging.figureAlt} />
+              <p>{page.imaging.intro}</p>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Processing hardware.</caption>
+                  <caption>{page.imaging.processingCaption}</caption>
                   <tbody>
-                    <tr>
-                      <th scope="row">Main computer</th>
-                      <td>Orange Pi 5 Ultra, 16 GB RAM, 64 GB eMMC, 1 TB NVMe SSD</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Microcontroller</th>
-                      <td>STM32F746VIT6, 1 MB flash, 320 KB SRAM, for low-level hardware control</td>
-                    </tr>
+                    {page.imaging.processing.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        <td>{row.value}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Camera and recording.</caption>
+                  <caption>{page.imaging.cameraCaption}</caption>
                   <tbody>
-                    <tr>
-                      <th scope="row">Array</th>
-                      <td>4 cameras in a 2 × 2 matrix, with overlapping fields of view</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Sensor</th>
-                      <td>See3CAM_27CUG, 2 megapixel global shutter, 1600 × 1300, RGB and IR</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Frame rate</th>
-                      <td>15 fps</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Stream</th>
-                      <td>UYVY at 1280 × 720</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Recording</th>
-                      <td>Hardware H.264 in an MP4 container, 4000 kbit/s</td>
-                    </tr>
+                    {page.imaging.camera.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        <td>{row.value}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
             </section>
 
             <section className="spec-section" id="data" aria-labelledby="data-title">
-              <h2 id="data-title">Data and command</h2>
-              <SpecFigure
-                src="/media/spec/EE_View1.svg"
-                alt="View of the electronics that handle data and commanding."
-              />
-              <p>
-                Power and data share the DB13W3P connector. An internal LAN port carries IPv4 over TCP/HTTPS through a
-                secure VPN. Files are downlinked by SFTP. The Orange Pi 5 Ultra manages telemetry and the bulk transfer.
-              </p>
+              <h2 id="data-title">{page.data.title}</h2>
+              <SpecFigure src="/media/spec/EE_View1.svg" alt={page.data.figureAlt} />
+              <p>{page.data.intro}</p>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>Link budget.</caption>
+                  <caption>{page.data.linkCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Parameter</th>
-                      <th scope="col">Downlink</th>
-                      <th scope="col">Uplink</th>
+                      <th scope="col">{page.data.parameter}</th>
+                      <th scope="col">{page.data.downlink}</th>
+                      <th scope="col">{page.data.uplink}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">Nominal allocation</th>
-                      <td>1 Mbit/s</td>
-                      <td>&lt; 0.1 Mbit/s</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Burst limit</th>
-                      <td>4 Mbit/s</td>
-                      <td>&lt; 0.5 Mbit/s</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Telecommand rate</th>
-                      <td>—</td>
-                      <td>0.5 Hz nominal, 1.0 Hz maximum</td>
-                    </tr>
+                    {page.data.link.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        <td>{row.downlink}</td>
+                        <td>{row.uplink}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-              <h3>Telemetry path</h3>
-              <p>
-                YAMCS server in the experiment cube, then the ICE Cubes Facility, the ISS Control Centre, the ICE Cubes
-                Mission Control Centre (ICMCC), and finally the archive and Open MCT display.
-              </p>
-              <h3>Bulk downlink</h3>
-              <p>About 1.8 GB takes about 240 minutes at 1 Mbit/s, and about 480 minutes at a degraded 0.5 Mbit/s.</p>
+              <h3>{page.data.pathTitle}</h3>
+              <p>{page.data.path}</p>
+              <h3>{page.data.bulkTitle}</h3>
+              <p>{page.data.bulk}</p>
             </section>
 
             <section className="spec-section" id="fluidics" aria-labelledby="fluidics-title">
-              <h2 id="fluidics-title">Fluidic system</h2>
-              <p>
-                An optional microfluidic module is available for biological or chemical experiments. The product
-                specification notes that the mixer can be modified.
-              </p>
-              <h3>Pumps</h3>
-              <SpecFigure src="/media/spec/Pump_View1.svg" alt="View of the peristaltic pumps." />
-              <p>Eight peristaltic pumps. The user&apos;s guide names them Tagasako RP-QIII.</p>
-              <h3>Fluid storage</h3>
-              <SpecFigure src="/media/spec/Res_View1.svg" alt="View of the fluid storage bags." />
-              <p>
-                10 ml sealed storage bags. The product specification allows bags up to 20 ml. The user&apos;s guide
-                states 10 ml secure storage bags.
-              </p>
-              <h3>Mixer</h3>
-              <SpecFigure
-                src="/media/spec/Fluidic_View1.svg"
-                alt="View of the microfluidic static mixer, with four channels on the chip."
-              />
-              <p>Microfluidic static mixer, 4 channels per chip.</p>
+              <h2 id="fluidics-title">{page.fluidics.title}</h2>
+              <p>{page.fluidics.intro}</p>
+              <h3>{page.fluidics.pumpsTitle}</h3>
+              <SpecFigure src="/media/spec/Pump_View1.svg" alt={page.fluidics.pumpsAlt} />
+              <p>{page.fluidics.pumps}</p>
+              <h3>{page.fluidics.storageTitle}</h3>
+              <SpecFigure src="/media/spec/Res_View1.svg" alt={page.fluidics.storageAlt} />
+              <p>{page.fluidics.storage}</p>
+              <h3>{page.fluidics.mixerTitle}</h3>
+              <SpecFigure src="/media/spec/Fluidic_View1.svg" alt={page.fluidics.mixerAlt} />
+              <p>{page.fluidics.mixer}</p>
             </section>
 
             <section className="spec-section" id="safety" aria-labelledby="safety-title">
-              <h2 id="safety-title">Qualification and safety</h2>
-              <p>
-                TIGERS-X is qualified to the MIL-STD-461G EMC tests below and to the listed ISS crew-safety standards.
-                The sealed container holds 64.59 J against a 19,307 J limit.
-              </p>
+              <h2 id="safety-title">{page.safety.title}</h2>
+              <p>{page.safety.intro}</p>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>MIL-STD-461G tests required for compliance.</caption>
+                  <caption>{page.safety.emcCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Test</th>
-                      <th scope="col">Description</th>
+                      <th scope="col">{page.safety.test}</th>
+                      <th scope="col">{page.safety.description}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">CE101</th>
-                      <td>Conducted emissions, audio-frequency currents, power leads</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">CE102</th>
-                      <td>Conducted emissions, radio-frequency potential, power leads</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">CS101</th>
-                      <td>Conducted susceptibility, power leads</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">CS114</th>
-                      <td>Conducted susceptibility, bulk cable injection</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">RE101</th>
-                      <td>Radiated emissions, magnetic field</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">RS101</th>
-                      <td>Radiated susceptibility, magnetic field</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">RS103</th>
-                      <td>Radiated susceptibility, electric field</td>
-                    </tr>
+                    {page.safety.emc.map((row) => (
+                      <tr key={row.test}>
+                        <th scope="row">{row.test}</th>
+                        <td>{row.description}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-              <h3>ISS crew safety</h3>
-              <p>
-                Results below are those recorded in the product specification, with the sharper wording from the
-                user&apos;s guide kept where it adds a limit. A dash means the documents cite the standard and do not
-                state a separate result.
-              </p>
+              <h3>{page.safety.crewTitle}</h3>
+              <p>{page.safety.crewIntro}</p>
               <div className="spec-scroll">
                 <table className="spec-table">
-                  <caption>ISS safety hazards, standards, and payload results.</caption>
+                  <caption>{page.safety.crewCaption}</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Hazard</th>
-                      <th scope="col">Standard</th>
-                      <th scope="col">Payload result</th>
+                      <th scope="col">{page.safety.hazard}</th>
+                      <th scope="col">{page.safety.standard}</th>
+                      <th scope="col">{page.safety.result}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">Crew eye safety, UV and incoherent light above 10,000 nits</th>
-                      <td>SSP 51721 §4.9.4; SSP 50005 §5.7.3.2.1.B, C 1) and 2)</td>
-                      <td>Protection against excessive optical radiation</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Battery leakage or rupture, low-BRC cells</th>
-                      <td>JSC 20793; SSP 30599</td>
-                      <td>—</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Fire propagation</th>
-                      <td>JSC 29353</td>
-                      <td>—</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Material offgassing in the habitable volume</th>
-                      <td>—</td>
-                      <td>Polymeric mass below 20 lb (9.072 kg)</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Dust, toxic, or biological material</th>
-                      <td>—</td>
-                      <td>Toxicity Hazard Level 0 or N/A. Biological Safety Level ≤ 1</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Sharp particles from glass or frangible parts</th>
-                      <td>—</td>
-                      <td>Parts enclosed, with positive protection against release of particles larger than 50 µm</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Sharp edges, corners, and holes</th>
-                      <td>SSP 57000 §3.1.4 and §3.12.8.2–3.12.8.6; COL-RIBRE-SPE-0164 §3.12.9.2–3.12.9.8</td>
-                      <td>No safety violations identified, and no safety impact</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Touch temperature</th>
-                      <td>SSP 50005</td>
-                      <td>—</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Acoustic noise</th>
-                      <td>SSP 57000; COL-RIBRE-SPE-0164</td>
-                      <td>No safety impact</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Power distribution and circuit protection</th>
-                      <td>SSP 51700, Appendix E, letter TA-92-038</td>
-                      <td>—</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Non-ionizing electromagnetic radiation</th>
-                      <td>SSP 30237 and SSP 30243, or COL-ESA-RQ-014 and/or OE-14-002</td>
-                      <td>No safety impact</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Rotating equipment</th>
-                      <td>SSP 52005 or SSP 30558</td>
-                      <td>Kinetic energy below 19,307 J (14,240 ft-lb). Not fracture critical</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Sealed container</th>
-                      <td>ISS limits: stored energy below 19,307 J, and ΔP ≤ 1.52 bar</td>
-                      <td>64.59 J stored energy. Maximum ΔP 1.12 bar</td>
-                    </tr>
+                    {page.safety.hazards.map((row) => (
+                      <tr key={row.hazard}>
+                        <th scope="row">{row.hazard}</th>
+                        <td>{row.standard}</td>
+                        <td>{row.result}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
             </section>
 
             <section className="spec-section" id="contact" aria-labelledby="contact-title">
-              <h2 id="contact-title">Contact</h2>
+              <h2 id="contact-title">{page.contact.title}</h2>
               <address className="spec-contact">
-                Potiwat Ngamkajornwiwat, Ph.D.
+                {page.contact.lines.map((line) => (
+                  <span key={line}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
+                <a href={page.contact.phoneHref}>{page.contact.phone}</a>
                 <br />
-                Co-project Leader
+                <a href={page.contact.emailHref}>{page.contact.email}</a>
                 <br />
-                AstroRobotics &amp; Space Laboratory (ARSL)
-                <br />
-                Panyapiwat Institute of Management
-                <br />
-                <a href="tel:+66948296151">+66 94 829 6151</a>
-                <br />
-                <a href="mailto:potiwatnga@pim.ac.th">potiwatnga@pim.ac.th</a>
-                <br />
-                ISHA Lab: <a href="https://ishalab.space/">ishalab.space</a>
+                {page.contact.labLabel} <a href={page.contact.labHref}>{page.contact.lab}</a>
               </address>
-              <p className="spec-footer">
-                User&apos;s guide version 1.1, April 2026. Limits that differ between the guide and the product
-                specification are written out in the tables.
-              </p>
+              <p className="spec-footer">{page.contact.footer}</p>
             </section>
           </article>
         </div>

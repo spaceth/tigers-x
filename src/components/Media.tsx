@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { mediaSlots, type MediaItem, type MediaSlot } from '../config/media';
+import { copy, fill } from '../content';
 import { useInView, useReducedMotion } from '../lib/hooks';
 
 function MediaFrame({ item, placeholder, sizes }: { item: MediaItem; placeholder: string; sizes?: string }) {
@@ -20,9 +21,9 @@ function MediaFrame({ item, placeholder, sizes }: { item: MediaItem; placeholder
 
   if (!item.src) {
     return (
-      <div ref={ref} className="media-frame media-frame--placeholder" style={style} role="img" aria-label={`${placeholder}: media to be added.`}>
+      <div ref={ref} className="media-frame media-frame--placeholder" style={style} role="img" aria-label={fill(copy.media.placeholderAria, { placeholder })}>
         <span className="media-placeholder-title">{placeholder}</span>
-        <span className="media-placeholder-kind">{item.kind === 'video' ? 'Video forthcoming' : 'Photograph forthcoming'}</span>
+        <span className="media-placeholder-kind">{item.kind === 'video' ? copy.media.placeholderVideo : copy.media.placeholderPhoto}</span>
       </div>
     );
   }
@@ -66,7 +67,7 @@ function Caption({ item }: { item: MediaItem }) {
     <figcaption>
       {item.caption}
       <span className={`media-credit${item.credit ? '' : ' media-credit--pending'}`}>
-        {item.credit ?? 'Credit to be added'}
+        {item.credit ?? copy.media.creditPending}
       </span>
     </figcaption>
   );
@@ -106,7 +107,7 @@ export function MediaSlideshow({ slotId, className = '' }: { slotId: MediaSlot['
           ref={thumbsRef}
           className="media-thumbs"
           role="radiogroup"
-          aria-label="Photographs of TIGERS-X aboard the station"
+          aria-label={copy.media.slideshowAria}
           onKeyDown={onKeyDown}
         >
           {slot.items.map((thumb, i) => (

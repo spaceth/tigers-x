@@ -32,12 +32,15 @@ of every story beat and a console report), `inspect-step.mjs`, `raster-top.mjs`.
 | What | Where |
 | --- | --- |
 | Documentation link | `DOCS_URL` in `src/config/site.ts`. While `null`, the closing section says the documentation is forthcoming and renders no link. |
-| Mission photos and video | `src/config/media.ts`. Put files in `public/media/mission/`, set `src` (and `poster` / `captions` for video), write a real `alt`. Placeholders keep the final aspect ratio. |
+| Mission photos and video | `src/config/media.ts` for files and aspect ratios. Captions and alt text live in `src/content/en.json`. Put files in `public/media/mission/`. Placeholders keep the final aspect ratio. |
 | Brand colours | `src/config/brand.ts`. `accentWarm` and `accentDeep` are **provisional** (the supplied `#ed6d2` / `#173b7` are not valid hex). Contrast notes are in the file; `accentWarm` is for graphics only, not small text. |
 | Mission figures | `src/config/facts.ts` |
-| Story copy and camera poses | `src/config/story.ts` (beats, labels, camera keys) |
+| Story copy | `src/content/en.json` (`story.beats`, keyed by beat id) |
+| Camera poses | `src/config/story.ts` |
+| Specification copy | `src/content/spec.en.json` |
 | Part → subsystem mapping, explode rigs | `src/config/modelMap.ts` |
-| Chapters / nav | `chapters` in `src/config/site.ts` |
+| Chapters / nav | `src/content/en.json` (`nav.chapters`); ids stay in `src/config/site.ts` |
+| Enable Thai | Add `'th'` to `availableLocales` in `src/content/index.ts` after filling `th.json` and `spec.th.json` |
 | WebGL fallback image | Optional `public/media/payload-snapshot.webp` (`assets.modelSnapshot` in `site.ts`). Without it, an SVG outline is shown. Test with `?nowebgl`. |
 
 ## Known limitations

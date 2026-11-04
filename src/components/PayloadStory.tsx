@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { beats, type Beat } from '../config/story';
 import { envelope } from '../config/facts';
+import { copy, fill } from '../content';
 import { useNarrow, useReducedMotion } from '../lib/hooks';
 import { setStory, useStory } from '../lib/storyStore';
 import { ExploreButton, Stage } from '../stage/Stage';
@@ -10,32 +11,28 @@ import { FlowDiagram } from './FlowDiagram';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const chapterTitles: Record<NonNullable<Beat['chapter']>, string> = {
-  payload: 'The payload',
-  subsystems: 'Inside the payload',
-  chip: 'The lab-on-a-chip',
-};
+const chapterTitles = copy.story.chapters;
 
 function EnvelopeFacts() {
   return (
     <dl className="spec-line">
       <div>
-        <dt>Envelope</dt>
+        <dt>{copy.story.envelope.envelope}</dt>
         <dd>
           {envelope.widthMm} × {envelope.depthMm} × {envelope.heightMm} mm
         </dd>
       </div>
       <div>
-        <dt>Volume</dt>
+        <dt>{copy.story.envelope.volume}</dt>
         <dd>{envelope.formFactor}</dd>
       </div>
       <div>
-        <dt>Mass at handover</dt>
+        <dt>{copy.story.envelope.mass}</dt>
         <dd>{envelope.massKg} kg</dd>
       </div>
       <div>
-        <dt>Power</dt>
-        <dd>{envelope.peakPowerW} W peak</dd>
+        <dt>{copy.story.envelope.power}</dt>
+        <dd>{fill(copy.story.envelope.peakPower, { peakPowerW: envelope.peakPowerW })}</dd>
       </div>
     </dl>
   );
@@ -46,23 +43,23 @@ function ComputingRoles() {
     <>
       <dl className="role-list">
         <div>
-          <dt>Orange Pi 5 Pro</dt>
-          <dd>Command decoding, experiment sequencing, image and telemetry storage, onboard YAMCS</dd>
+          <dt>{copy.story.computingRoles.orangePi.title}</dt>
+          <dd>{copy.story.computingRoles.orangePi.body}</dd>
         </div>
         <div>
-          <dt>STM32F746 microcontroller</dt>
-          <dd>Drives the pumps (PWM) and the LED lighting</dd>
+          <dt>{copy.story.computingRoles.stm32.title}</dt>
+          <dd>{copy.story.computingRoles.stm32.body}</dd>
         </div>
         <div>
-          <dt>Power module</dt>
-          <dd>12 V in; regulated 5 V and 3.3 V rails with overcurrent protection</dd>
+          <dt>{copy.story.computingRoles.power.title}</dt>
+          <dd>{copy.story.computingRoles.power.body}</dd>
         </div>
         <div>
-          <dt>USB hub</dt>
-          <dd>Dedicated 5 V supply for the four cameras</dd>
+          <dt>{copy.story.computingRoles.hub.title}</dt>
+          <dd>{copy.story.computingRoles.hub.body}</dd>
         </div>
       </dl>
-      <p className="beat-note">The microcontroller is listed here. It is not a separate part in the model.</p>
+      <p className="beat-note">{copy.story.computingRoles.note}</p>
     </>
   );
 }

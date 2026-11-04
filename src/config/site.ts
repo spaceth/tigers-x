@@ -3,21 +3,28 @@
  * site; a full URL opens externally. `null` leaves the Academic resources row
  * as coming soon. The paper and data links live in config/facts.ts.
  */
+import { copy } from '../content';
+
 export const DOCS_URL: string | null = '/specification';
 
-export const chapters = [
-  { id: 'question', label: 'Overview' },
-  { id: 'payload', label: 'Payload Design' },
-  { id: 'subsystems', label: 'Subsystems' },
-  { id: 'chip', label: 'Lab-on-a-chip' },
-  { id: 'mission', label: 'Assembly Integration and Testing' },
-  { id: 'launch', label: 'Launch' },
-  { id: 'station', label: 'Science Operation' },
-  { id: 'record', label: 'Results' },
-  { id: 'documentation', label: 'Academic Resources' },
+export const chapterIds = [
+  'question',
+  'payload',
+  'subsystems',
+  'chip',
+  'mission',
+  'launch',
+  'station',
+  'record',
+  'documentation',
 ] as const;
 
-export type ChapterId = (typeof chapters)[number]['id'];
+export type ChapterId = (typeof chapterIds)[number];
+
+export const chapters: { id: ChapterId; label: string }[] = chapterIds.map((id) => ({
+  id,
+  label: copy.nav.chapters[id],
+}));
 
 export const assets = {
   model: '/models/tigers-x.glb',
@@ -36,14 +43,14 @@ export const partners = [
   {
     id: 'cra',
     src: '/media/partners/cra.svg',
-    alt: 'Chulabhorn Royal Academy',
+    alt: copy.partners.cra,
     width: 240,
     height: 122,
   },
   {
     id: 'mhesi',
     src: '/media/partners/mhesi.svg',
-    alt: 'Ministry of Higher Education, Science, Research and Innovation',
+    alt: copy.partners.mhesi,
     width: 383,
     height: 383,
     mark: 'seal',
@@ -51,7 +58,7 @@ export const partners = [
   {
     id: 'tsri',
     src: '/media/partners/tsri.svg',
-    alt: 'Thailand Science Research and Innovation',
+    alt: copy.partners.tsri,
     width: 240,
     height: 290,
     mark: 'stack',
@@ -59,7 +66,7 @@ export const partners = [
   {
     id: 'pim',
     src: '/media/partners/pim.webp',
-    alt: 'Panyapiwat Institute of Management',
+    alt: copy.partners.pim,
     width: 291,
     height: 271,
     mark: 'seal',
@@ -67,14 +74,14 @@ export const partners = [
   {
     id: 'gistda',
     src: '/media/partners/gistda.webp',
-    alt: 'Geo-Informatics and Space Technology Development Agency',
+    alt: copy.partners.gistda,
     width: 340,
     height: 109,
   },
   {
     id: 'tmec',
     src: '/media/partners/tmec.webp',
-    alt: 'Thai Microelectronics Center',
+    alt: copy.partners.tmec,
     width: 319,
     height: 87,
   },

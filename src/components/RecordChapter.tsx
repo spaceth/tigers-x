@@ -1,75 +1,84 @@
 import { campaign, fmt, operation } from '../config/facts';
+import { copy, fill } from '../content';
 import { Reveal } from './Reveal';
 
 export function RecordChapter() {
   const d = operation.duration;
   const share = operation.downlinkedGB / operation.recordedGB;
+  const percent = Math.round(share * 100);
+  const vars = {
+    operationsStart: campaign.operationsStart,
+    operationsEnd: campaign.operationsEnd,
+    powerInterruptionHours: campaign.powerInterruptionHours,
+    recordedGB: operation.recordedGB,
+    downlinkedGB: operation.downlinkedGB,
+    pumps: operation.pumps,
+    pumpOperations: fmt(operation.pumpOperations),
+    minutes: operation.pumpRuntime.minutes,
+    seconds: operation.pumpRuntime.seconds,
+    percent,
+  };
   return (
     <section id="record" className="chapter chapter--record" aria-labelledby="record-title">
       <div className="container">
         <Reveal className="chapter-intro">
-          <p className="eyebrow">Mission record</p>
+          <p className="eyebrow">{copy.record.eyebrow}</p>
           <h2 id="record-title" className="chapter-title">
-            Operational record.
+            {copy.record.title}
           </h2>
-          <p className="lead">
-            The mixing results above come from the imagery. The figures here are the operational account: how long
-            the cube ran, and how much it recorded, commanded, and returned.
-          </p>
+          <p className="lead">{copy.record.lead}</p>
         </Reveal>
 
         <Reveal className="record-duration">
-          <p className="record-kicker">Payload operation</p>
+          <p className="record-kicker">{copy.record.kicker}</p>
           <p className="record-hero">
             <span className="num">{d.days}</span>
-            <span className="unit"> days </span>
+            <span className="unit"> {copy.record.days} </span>
             <span className="num">{d.hours}</span>
-            <span className="unit"> hours </span>
+            <span className="unit"> {copy.record.hours} </span>
             <span className="num">{d.minutes}</span>
-            <span className="unit"> minutes </span>
+            <span className="unit"> {copy.record.minutes} </span>
             <span className="num">{d.seconds}</span>
-            <span className="unit"> seconds</span>
+            <span className="unit"> {copy.record.seconds}</span>
           </p>
-          <p className="record-note">
-            Science operations ran from {campaign.operationsStart} to {campaign.operationsEnd}, within the available
-            acquisition-of-signal windows. A power interruption of about {campaign.powerInterruptionHours} hours did
-            not compromise the campaign.
-          </p>
+          <p className="record-note">{fill(copy.record.note, vars)}</p>
         </Reveal>
 
         <div className="record-groups">
           <Reveal as="section" className="record-group" aria-labelledby="record-imaging" delay={1}>
             <h3 id="record-imaging" className="record-group-title">
-              Imaging and data
+              {copy.record.imagingTitle}
             </h3>
             <dl className="record-figures">
               <div>
-                <dt>Experiment video files recorded</dt>
+                <dt>{copy.record.videoFiles}</dt>
                 <dd>{fmt(operation.videoFiles)}</dd>
               </div>
               <div>
-                <dt>Data recorded</dt>
-                <dd>≈ {operation.recordedGB} GB</dd>
+                <dt>{copy.record.dataRecorded}</dt>
+                <dd>{fill(copy.record.recordedValue, vars)}</dd>
               </div>
               <div>
-                <dt>Downlinked before physical retrieval</dt>
-                <dd>{operation.downlinkedGB} GB</dd>
+                <dt>{copy.record.downlinked}</dt>
+                <dd>{fill(copy.record.downlinkedValue, vars)}</dd>
               </div>
             </dl>
             <figure className="data-bar">
               <div
                 className="data-bar-track"
                 role="img"
-                aria-label={`${operation.downlinkedGB} GB of approximately ${operation.recordedGB} GB recorded was downlinked before physical retrieval, about ${Math.round(share * 100)} percent.`}
+                aria-label={fill(copy.record.barAria, vars)}
               >
                 <span className="data-bar-fill" style={{ width: `${share * 100}%` }} />
               </div>
               <figcaption>
                 <span>
-                  <span className="legend-swatch legend-swatch--fill" aria-hidden="true" /> Downlinked: {operation.downlinkedGB} GB
+                  <span className="legend-swatch legend-swatch--fill" aria-hidden="true" />{' '}
+                  {fill(copy.record.legendDownlinked, vars)}
                 </span>
                 <span>
-                  <span className="legend-swatch legend-swatch--track" aria-hidden="true" /> Recorded in total: ≈ {operation.recordedGB} GB
+                  <span className="legend-swatch legend-swatch--track" aria-hidden="true" />{' '}
+                  {fill(copy.record.legendRecorded, vars)}
                 </span>
               </figcaption>
             </figure>
@@ -77,35 +86,28 @@ export function RecordChapter() {
 
           <Reveal as="section" className="record-group" aria-labelledby="record-commanding" delay={2}>
             <h3 id="record-commanding" className="record-group-title">
-              Commanding and fluid actuation
+              {copy.record.commandTitle}
             </h3>
             <dl className="record-figures">
               <div>
-                <dt>Ground commands executed</dt>
+                <dt>{copy.record.groundCommands}</dt>
                 <dd>{fmt(operation.groundCommands)}</dd>
               </div>
               <div>
-                <dt>Pump operations, across all {operation.pumps} pumps</dt>
+                <dt>{fill(copy.record.pumpOperations, vars)}</dt>
                 <dd>{fmt(operation.pumpOperations)}</dd>
               </div>
               <div>
-                <dt>Combined pump runtime</dt>
-                <dd>
-                  {operation.pumpRuntime.minutes} min {operation.pumpRuntime.seconds} s
-                </dd>
+                <dt>{copy.record.pumpRuntime}</dt>
+                <dd>{fill(copy.record.pumpRuntimeValue, vars)}</dd>
               </div>
             </dl>
-            <p className="record-note">
-              The pumps did not run continuously. Across {operation.pumpOperations} operations their combined runtime
-              was 15 min 22 s.
-            </p>
+            <p className="record-note">{fill(copy.record.pumpNote, vars)}</p>
           </Reveal>
         </div>
 
         <Reveal as="p" className="record-caveat">
-          These figures are from the team’s mission report, not from the mixing analysis. They record that the
-          payload accepted commands, moved fluid, stored imagery, and returned data, with no crew involvement
-          beyond installation and removal.
+          {copy.record.caveat}
         </Reveal>
       </div>
     </section>

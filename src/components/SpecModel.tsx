@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { specCopy } from '../content';
 import { hasWebGL, useReducedMotion } from '../lib/hooks';
 import { resolvePose, type ResolvedPose } from '../lib/pose';
 import { applyPose, buildPayload, loadPayloadModel, type Payload } from '../stage/payload';
@@ -164,14 +165,14 @@ export default function SpecModel() {
       </Canvas>
       {status === 'loading' && (
         <div className="spec-model-loading" role="status">
-          <span>Loading the payload model</span>
+          <span>{specCopy.chrome.modelLoading}</span>
           <span className="spec-model-bar" aria-hidden="true">
             <span style={{ transform: `scaleX(${Math.max(0.04, progress)})` }} />
           </span>
         </div>
       )}
       </div>
-      <figcaption>Drag to rotate. Scroll or pinch to zoom.</figcaption>
+      <figcaption>{specCopy.chrome.modelHint}</figcaption>
     </figure>
   );
 }

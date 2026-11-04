@@ -85,11 +85,12 @@ The site should feel like a well-printed paper that happens to contain a machine
 
 | Change | File |
 | --- | --- |
-| Story copy and camera poses | `src/config/story.ts` |
+| Story, chapter, and specification copy | `src/content/en.json` and `src/content/spec.en.json` |
+| Enable Thai in the language switch | Add `'th'` to `availableLocales` in `src/content/index.ts` after filling `th.json` and `spec.th.json` |
+| Camera poses for each story beat | `src/config/story.ts` |
 | Which mesh belongs to which subsystem | `src/config/modelMap.ts` |
 | Colours | `src/config/brand.ts` |
 | Dates, masses, and other published figures | `src/config/facts.ts` |
-| Chapter list | `src/config/site.ts` |
-| Specification prose and drawings | `src/components/SpecificationPage.tsx` |
+| Photo and video files | `src/config/media.ts` |
 
 How to run the asset scripts, and the limits worth knowing before editing the model, are in [`docs/HANDOFF.md`](docs/HANDOFF.md).

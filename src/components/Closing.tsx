@@ -1,5 +1,6 @@
 import { academicResources } from '../config/facts';
 import { assets, DOCS_URL, partners } from '../config/site';
+import { copy } from '../content';
 import { Reveal } from './Reveal';
 
 export function Closing() {
@@ -11,25 +12,22 @@ export function Closing() {
     <section id="documentation" className="chapter chapter--closing" aria-labelledby="docs-title">
       <div className="container closing">
         <Reveal className="closing-copy">
-          <p className="eyebrow">Academic resources</p>
+          <p className="eyebrow">{copy.closing.eyebrow}</p>
           <h2 id="docs-title" className="chapter-title">
-            Publications and data.
+            {copy.closing.title}
           </h2>
-          <p className="lead">
-            The flight preprint, the parabolic-flight paper that preceded it, and the processed videos and CAD from
-            the station.
-          </p>
+          <p className="lead">{copy.closing.lead}</p>
         </Reveal>
         <Reveal>
           <div className="resource-scroll">
             <table className="resource-table">
-              <caption className="visually-hidden">Academic resources</caption>
+              <caption className="visually-hidden">{copy.closing.caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Link</th>
+                  <th scope="col">{copy.closing.name}</th>
+                  <th scope="col">{copy.closing.type}</th>
+                  <th scope="col">{copy.closing.description}</th>
+                  <th scope="col">{copy.closing.link}</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,7 +47,7 @@ export function Closing() {
                           <span className="visually-hidden"> {item.name}</span>
                         </a>
                       ) : (
-                        <span className="resource-soon">Coming soon</span>
+                        <span className="resource-soon">{copy.closing.soon}</span>
                       )}
                     </td>
                   </tr>
@@ -57,11 +55,11 @@ export function Closing() {
               </tbody>
             </table>
           </div>
-          <p className="resource-note">Further scientific resources will be added.</p>
+          <p className="resource-note">{copy.closing.note}</p>
         </Reveal>
       </div>
       <div className="partner-bar">
-        <ul className="partner-bar__list container" aria-label="Partners">
+        <ul className="partner-bar__list container" aria-label={copy.closing.partnersAria}>
           {partners.map((partner) => (
             <li key={partner.id}>
               <img
@@ -83,12 +81,8 @@ export function Closing() {
         <div className="container site-footer">
           <img src={assets.patch} alt="" width={56} height={56} loading="lazy" />
           <div>
-            <p>
-              TIGERS-X — Thailand Innovative G-force Varied Emulsification Research for Space Exploration. Developed by
-              the AIIM-X Center of Excellence, Chulabhorn Royal Academy, with ISHA Lab, Panyapiwat Institute of
-              Management and TMEC, NSTDA. Operated in the ICE Cubes Facility aboard the International Space Station.
-            </p>
-            <p className="site-footer__copy">© 2026 Chulabhorn Royal Academy</p>
+            <p>{copy.closing.footer}</p>
+            <p className="site-footer__copy">{copy.closing.copyright}</p>
           </div>
         </div>
       </footer>

@@ -1,0 +1,294 @@
+{
+  "meta": {
+    "title": "TIGERS-X — Payload specification",
+    "description": "Mechanical, electrical, imaging, data, fluidic, and safety limits for the TIGERS-X experiment cube."
+  },
+  "chrome": {
+    "skip": "Skip to content",
+    "wordmark": "TIGERS-X",
+    "back": "Mission site",
+    "tocLabel": "On this page",
+    "modelLoading": "Loading the payload model…",
+    "modelHint": "Drag to rotate. Scroll or pinch to zoom.",
+    "language": "Language",
+    "languageUnavailable": "Thai is not available yet"
+  },
+  "header": {
+    "kicker": "Payload specification",
+    "title": "TIGERS-X experiment cube",
+    "lead": "Technical limits, interfaces, and safety results for integrating an experiment with the TIGERS-X platform. The page brings together the product specification and the Payload User's Guide, version 1.1 (April 2026), prepared by the ISHA and ARSL research teams.",
+    "sources": [
+      "Product specification, including the CRS-34 flight record.",
+      "Payload User's Guide 1.1, April 2026."
+    ]
+  },
+  "toc": [
+    { "id": "overview", "label": "Overview" },
+    { "id": "mechanical", "label": "Mechanical" },
+    { "id": "electrical", "label": "Electrical" },
+    { "id": "imaging", "label": "Imaging" },
+    { "id": "data", "label": "Data and command" },
+    { "id": "fluidics", "label": "Fluidic system" },
+    { "id": "safety", "label": "Qualification and safety" },
+    { "id": "contact", "label": "Contact" }
+  ],
+  "overview": {
+    "title": "Overview",
+    "paragraphs": [
+      "The user's guide is the reference for researchers and experiment developers. It states the technical specifications, interface boundaries, and operational constraints for flying an experiment inside TIGERS-X.",
+      "TIGERS-X is a 2U × 2U experiment cube for the ICE Cubes Facility on the International Space Station. It runs autonomous microfluidic mixing experiments, films them with four cameras, and downlinks data in near real time."
+    ],
+    "identityCaption": "Identity and flight record, from the product specification.",
+    "identity": [
+      { "label": "Full name", "value": "Thailand Innovative G-force Varied Emulsification Research for Space Exploration" },
+      { "label": "Product type", "value": "Autonomous lab-on-a-chip experiment payload (Experiment Cube)" },
+      { "label": "Host platform", "value": "ICE Cubes Facility, Columbus module, ISS" },
+      { "label": "Primary application", "value": "Passive mixing and emulsion stability of medical fluids" },
+      { "label": "Flight", "value": "Launched on SpaceX CRS-34, 15 May 2026 (US time). Returned on CRS-34 Dragon, splashdown 17 June 2026." }
+    ],
+    "featuresTitle": "Key features",
+    "features": [
+      "2U × 2U cube, 200 × 200 × 100 mm, with a 2.5 kg experiment mass budget.",
+      "Sequences run on board. Ground commanding is through the ICE Cubes Mission Control Centre.",
+      "Two-tier computing: an Orange Pi 5 Ultra for processing and data handling, and an STM32F7 microcontroller for low-level hardware control.",
+      "Four global-shutter RGB and IR cameras in a 2 × 2 array, with overlapping fields of view and hardware H.264 recording.",
+      "Optional microfluidic module: eight peristaltic pumps, sealed fluid bags, and 4-channel static-mixer chips.",
+      "One DB13W3P connector carries +12 V power and the LAN data link. The shell is bonded to the frame.",
+      "IPv4 over TCP/HTTPS through a VPN, YAMCS telemetry, and SFTP file downlink.",
+      "Designed to MIL-STD-461G EMC tests and ISS crew-safety standards (SSP and JSC)."
+    ]
+  },
+  "mechanical": {
+    "title": "Mechanical",
+    "intro": "The cube integrates with the host facility in a 2 × 2U form factor. Dimensions are in millimetres.",
+    "envelopeCaption": "Envelope and mass. Both documents are cited where the limits differ.",
+    "parameter": "Parameter",
+    "value": "Value",
+    "envelope": [
+      { "label": "Form factor", "value": "2U × 2U cube" },
+      { "label": "Envelope", "value": "200 × 200 × 100 mm" },
+      { "label": "Maximum experiment mass", "value": "2.5 kg in the user's guide. The product specification allows up to 3 kg." },
+      { "label": "Maximum equivalent vent radius", "value": "About 300 cm. The product specification cites an ISS limit of 5080 cm. The user's guide describes the value as well within an ISS maximum of ≪ 5080 cm." }
+    ],
+    "partsCaption": "Parts list from the mechanical drawing.",
+    "item": "Item",
+    "part": "Part",
+    "qty": "Qty",
+    "parts": [
+      { "item": "1", "part": "Base plate", "qty": "1" },
+      { "item": "2", "part": "DB13", "qty": "1" },
+      { "item": "3", "part": "Corner", "qty": "4" },
+      { "item": "4", "part": "Edge", "qty": "2" },
+      { "item": "5", "part": "Top plate", "qty": "1" },
+      { "item": "6", "part": "Frame bracket 1", "qty": "2" },
+      { "item": "7", "part": "Frame bracket 2", "qty": "2" },
+      { "item": "8", "part": "Front plate", "qty": "2" },
+      { "item": "9", "part": "Side plate", "qty": "2" },
+      { "item": "10", "part": "Panel plate", "qty": "1" },
+      { "item": "11", "part": "Panel bracket", "qty": "6" },
+      { "item": "12", "part": "FOOT6.2xD15", "qty": "4" }
+    ]
+  },
+  "electrical": {
+    "title": "Electrical",
+    "connectorAlt": "DB13W3 connector face. Large contacts are labeled A3, A2, and A1. The upper signal pins are labeled 5, 4, 3, 2, 1 and the lower pins 10, 9, 8, 7, 6.",
+    "intro": "The power system supplies regulated power to the experimental subsystems. The primary input is +12 V DC through a DB13W3P mixed-layout connector. The connector shell is bonded to the structural frame for grounding. Regulated 5 V and 3.3 V rails are available for the payload.",
+    "contactsCaption": "Connector contacts.",
+    "contact": "Contact",
+    "function": "Function",
+    "contacts": [
+      { "pin": "A1", "function": "+12 V" },
+      { "pin": "A2", "function": "Ground" },
+      { "pin": "A3", "function": "+5 V" },
+      { "pin": "1", "function": "B+ / R+" },
+      { "pin": "2", "function": "B− / R−" },
+      { "pin": "3", "function": "C+" },
+      { "pin": "4", "function": "C−" },
+      { "pin": "5", "function": "CD, cube detection" },
+      { "pin": "6", "function": "A+ / T+" },
+      { "pin": "7", "function": "A− / T−" },
+      { "pin": "8", "function": "D+" },
+      { "pin": "9", "function": "D−" },
+      { "pin": "10", "function": "SHLD, Ethernet cable shield" }
+    ],
+    "phasesTitle": "Power phases",
+    "phasesIntro": "The user's guide requires the payload to stay inside these phases.",
+    "phasesCaption": "Power phases from the user's guide.",
+    "mode": "Mode",
+    "duration": "Duration",
+    "consumption": "Consumption",
+    "peak": "Peak",
+    "phases": [
+      { "mode": "Standby", "duration": "—", "consumption": "9 W", "peak": "12 W" },
+      { "mode": "Observation", "duration": "40 minutes", "consumption": "12 W", "peak": "15 W" },
+      { "mode": "Experiment run", "duration": "20 minutes", "consumption": "15 W", "peak": "18 W" }
+    ],
+    "limitsTitle": "Operating limits",
+    "limitsCaption": "Shared limits from both documents. Current and temperature maxima are given from each source.",
+    "minimum": "Minimum",
+    "nominal": "Nominal",
+    "maximum": "Maximum",
+    "limits": [
+      { "label": "Input voltage", "min": "11.5 V", "nominal": "12.0 V", "max": "12.6 V" },
+      { "label": "Input current", "min": "—", "nominal": "1.0 A", "max": "1.8 A in the user's guide. 3.1 A in the product specification." },
+      { "label": "Power consumption", "min": "—", "nominal": "12 W", "max": "18 W" },
+      { "label": "Internal temperature", "min": "5 °C", "nominal": "25 °C", "max": "45 °C in the user's guide. Up to 40 °C in the product specification." },
+      { "label": "Boot time", "min": "—", "nominal": "60 s", "max": "90 s" }
+    ]
+  },
+  "imaging": {
+    "title": "Imaging",
+    "figureAlt": "View of the imaging assembly: the camera hardware that records the experiment.",
+    "intro": "Onboard diagnostics record the experiment. Processing and camera control are split across two computers.",
+    "processingCaption": "Processing hardware.",
+    "processing": [
+      { "label": "Main computer", "value": "Orange Pi 5 Ultra, 16 GB RAM, 64 GB eMMC, 1 TB NVMe SSD" },
+      { "label": "Microcontroller", "value": "STM32F746VIT6, 1 MB flash, 320 KB SRAM, for low-level hardware control" }
+    ],
+    "cameraCaption": "Camera and recording.",
+    "camera": [
+      { "label": "Array", "value": "4 cameras in a 2 × 2 matrix, with overlapping fields of view" },
+      { "label": "Sensor", "value": "See3CAM_27CUG, 2 megapixel global shutter, 1600 × 1300, RGB and IR" },
+      { "label": "Frame rate", "value": "15 fps" },
+      { "label": "Stream", "value": "UYVY at 1280 × 720" },
+      { "label": "Recording", "value": "Hardware H.264 in an MP4 container, 4000 kbit/s" }
+    ]
+  },
+  "data": {
+    "title": "Data and command",
+    "figureAlt": "View of the electronics that handle data and commanding.",
+    "intro": "Power and data share the DB13W3P connector. An internal LAN port carries IPv4 over TCP/HTTPS through a secure VPN. Files are downlinked by SFTP. The Orange Pi 5 Ultra manages telemetry and the bulk transfer.",
+    "linkCaption": "Link budget.",
+    "parameter": "Parameter",
+    "downlink": "Downlink",
+    "uplink": "Uplink",
+    "link": [
+      { "label": "Nominal allocation", "downlink": "1 Mbit/s", "uplink": "< 0.1 Mbit/s" },
+      { "label": "Burst limit", "downlink": "4 Mbit/s", "uplink": "< 0.5 Mbit/s" },
+      { "label": "Telecommand rate", "downlink": "—", "uplink": "0.5 Hz nominal, 1.0 Hz maximum" }
+    ],
+    "pathTitle": "Telemetry path",
+    "path": "YAMCS server in the experiment cube, then the ICE Cubes Facility, the ISS Control Centre, the ICE Cubes Mission Control Centre (ICMCC), and finally the archive and Open MCT display.",
+    "bulkTitle": "Bulk downlink",
+    "bulk": "About 1.8 GB takes about 240 minutes at 1 Mbit/s, and about 480 minutes at a degraded 0.5 Mbit/s."
+  },
+  "fluidics": {
+    "title": "Fluidic system",
+    "intro": "An optional microfluidic module is available for biological or chemical experiments. The product specification notes that the mixer can be modified.",
+    "pumpsTitle": "Pumps",
+    "pumpsAlt": "View of the peristaltic pumps.",
+    "pumps": "Eight peristaltic pumps. The user's guide names them Tagasako RP-QIII.",
+    "storageTitle": "Fluid storage",
+    "storageAlt": "View of the fluid storage bags.",
+    "storage": "10 ml sealed storage bags. The product specification allows bags up to 20 ml. The user's guide states 10 ml secure storage bags.",
+    "mixerTitle": "Mixer",
+    "mixerAlt": "View of the microfluidic static mixer, with four channels on the chip.",
+    "mixer": "Microfluidic static mixer, 4 channels per chip."
+  },
+  "safety": {
+    "title": "Qualification and safety",
+    "intro": "TIGERS-X is qualified to the MIL-STD-461G EMC tests below and to the listed ISS crew-safety standards. The sealed container holds 64.59 J against a 19,307 J limit.",
+    "emcCaption": "MIL-STD-461G tests required for compliance.",
+    "test": "Test",
+    "description": "Description",
+    "emc": [
+      { "test": "CE101", "description": "Conducted emissions, audio-frequency currents, power leads" },
+      { "test": "CE102", "description": "Conducted emissions, radio-frequency potential, power leads" },
+      { "test": "CS101", "description": "Conducted susceptibility, power leads" },
+      { "test": "CS114", "description": "Conducted susceptibility, bulk cable injection" },
+      { "test": "RE101", "description": "Radiated emissions, magnetic field" },
+      { "test": "RS101", "description": "Radiated susceptibility, magnetic field" },
+      { "test": "RS103", "description": "Radiated susceptibility, electric field" }
+    ],
+    "crewTitle": "ISS crew safety",
+    "crewIntro": "Results below are those recorded in the product specification, with the sharper wording from the user's guide kept where it adds a limit. A dash means the documents cite the standard and do not state a separate result.",
+    "crewCaption": "ISS safety hazards, standards, and payload results.",
+    "hazard": "Hazard",
+    "standard": "Standard",
+    "result": "Payload result",
+    "hazards": [
+      {
+        "hazard": "Crew eye safety, UV and incoherent light above 10,000 nits",
+        "standard": "SSP 51721 §4.9.4; SSP 50005 §5.7.3.2.1.B, C 1) and 2)",
+        "result": "Protection against excessive optical radiation"
+      },
+      {
+        "hazard": "Battery leakage or rupture, low-BRC cells",
+        "standard": "JSC 20793; SSP 30599",
+        "result": "—"
+      },
+      {
+        "hazard": "Fire propagation",
+        "standard": "JSC 29353",
+        "result": "—"
+      },
+      {
+        "hazard": "Material offgassing in the habitable volume",
+        "standard": "—",
+        "result": "Polymeric mass below 20 lb (9.072 kg)"
+      },
+      {
+        "hazard": "Dust, toxic, or biological material",
+        "standard": "—",
+        "result": "Toxicity Hazard Level 0 or N/A. Biological Safety Level ≤ 1"
+      },
+      {
+        "hazard": "Sharp particles from glass or frangible parts",
+        "standard": "—",
+        "result": "Parts enclosed, with positive protection against release of particles larger than 50 µm"
+      },
+      {
+        "hazard": "Sharp edges, corners, and holes",
+        "standard": "SSP 57000 §3.1.4 and §3.12.8.2–3.12.8.6; COL-RIBRE-SPE-0164 §3.12.9.2–3.12.9.8",
+        "result": "No safety violations identified, and no safety impact"
+      },
+      {
+        "hazard": "Touch temperature",
+        "standard": "SSP 50005",
+        "result": "—"
+      },
+      {
+        "hazard": "Acoustic noise",
+        "standard": "SSP 57000; COL-RIBRE-SPE-0164",
+        "result": "No safety impact"
+      },
+      {
+        "hazard": "Power distribution and circuit protection",
+        "standard": "SSP 51700, Appendix E, letter TA-92-038",
+        "result": "—"
+      },
+      {
+        "hazard": "Non-ionizing electromagnetic radiation",
+        "standard": "SSP 30237 and SSP 30243, or COL-ESA-RQ-014 and/or OE-14-002",
+        "result": "No safety impact"
+      },
+      {
+        "hazard": "Rotating equipment",
+        "standard": "SSP 52005 or SSP 30558",
+        "result": "Kinetic energy below 19,307 J (14,240 ft-lb). Not fracture critical"
+      },
+      {
+        "hazard": "Sealed container",
+        "standard": "ISS limits: stored energy below 19,307 J, and ΔP ≤ 1.52 bar",
+        "result": "64.59 J stored energy. Maximum ΔP 1.12 bar"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "lines": [
+      "Potiwat Ngamkajornwiwat, Ph.D.",
+      "Co-project Leader",
+      "AstroRobotics & Space Laboratory (ARSL)",
+      "Panyapiwat Institute of Management"
+    ],
+    "phone": "+66 94 829 6151",
+    "phoneHref": "tel:+66948296151",
+    "email": "potiwatnga@pim.ac.th",
+    "emailHref": "mailto:potiwatnga@pim.ac.th",
+    "labLabel": "ISHA Lab:",
+    "lab": "ishalab.space",
+    "labHref": "https://ishalab.space/",
+    "footer": "User's guide version 1.1, April 2026. Limits that differ between the guide and the product specification are written out in the tables."
+  }
+}

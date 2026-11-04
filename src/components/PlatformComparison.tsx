@@ -1,5 +1,6 @@
 import { platformLabels, platformRows } from '../config/science';
 import { assets } from '../config/site';
+import { copy } from '../content';
 import { MediaFigure } from './Media';
 import { Reveal } from './Reveal';
 
@@ -9,18 +10,14 @@ export function PlatformComparison() {
     <section className="container platforms" aria-labelledby="platforms-title">
       <Reveal className="platforms-intro">
         <h2 id="platforms-title" className="science-heading">
-          From parabolic flight to orbit
+          {copy.platforms.title}
         </h2>
-        <p>
-          The same group first measured passive mixing on parabolic flights. Those intervals were too short, and too
-          disturbed, to show how a mixture evolves. The station campaign was designed to close that gap. The cube that
-          flew is described next.
-        </p>
+        <p>{copy.platforms.intro}</p>
       </Reveal>
       <Reveal>
         <div className="platforms-scroll">
         <table className="platforms-table">
-          <caption className="visually-hidden">Parabolic-flight experiment compared with TIGERS-X on the ISS</caption>
+          <caption className="visually-hidden">{copy.platforms.caption}</caption>
           <colgroup>
             <col className="platforms-col--factor" />
             <col />
@@ -29,23 +26,23 @@ export function PlatformComparison() {
           <thead>
             <tr>
               <th scope="col">
-                <span>Factor</span>
+                <span>{copy.platforms.factor}</span>
               </th>
               <th scope="col">
                 <div className="platforms-head">
-                  <img src={assets.parabolicPatch} alt="Parabolic Flight Experiment patch" width={1000} height={1000} loading="lazy" />
+                  <img src={assets.parabolicPatch} alt={copy.platforms.parabolicPatchAlt} width={1000} height={1000} loading="lazy" />
                   <div>
-                    Parabolic flight
-                    <span>Prior study, 2025</span>
+                    {copy.platforms.parabolicHead}
+                    <span>{copy.platforms.parabolicSub}</span>
                   </div>
                 </div>
               </th>
               <th scope="col" className="is-iss">
                 <div className="platforms-head">
-                  <img src={assets.patch} alt="TIGERS-X mission patch" width={2048} height={2048} loading="lazy" />
+                  <img src={assets.patch} alt={copy.platforms.issPatchAlt} width={2048} height={2048} loading="lazy" />
                   <div>
-                    International Space Station
-                    <span>TIGERS-X, 2026</span>
+                    {copy.platforms.issHead}
+                    <span>{copy.platforms.issSub}</span>
                   </div>
                 </div>
               </th>
@@ -53,7 +50,7 @@ export function PlatformComparison() {
           </thead>
           <tbody>
             <tr className="platforms-media-row">
-              <th scope="row">In pictures</th>
+              <th scope="row">{copy.platforms.pictures}</th>
               <td data-label={platformLabels.parabolic}>
                 <MediaFigure slotId="platform-parabolic" />
               </td>
@@ -77,7 +74,7 @@ export function PlatformComparison() {
         </table>
         </div>
         <p className="platforms-note">
-          Parabolic-flight values are from Seehanam et al., Scientific Reports (2025), as cited in the TIGERS-X preprint.
+          {copy.platforms.note}
         </p>
       </Reveal>
     </section>

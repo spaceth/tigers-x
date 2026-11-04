@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { copy } from '../content';
 import { stickyProgress, useReducedMotion, useScrollFrame } from '../lib/hooks';
 
 /**
@@ -7,45 +8,8 @@ import { stickyProgress, useReducedMotion, useScrollFrame } from '../lib/hooks';
  * The packet position is written on the diagram each frame; React state changes
  * only when the explanation changes.
  */
-const nodes = [
-  { title: 'User Home Base', sub: 'Bangkok · YAMCS' },
-  { title: 'Mission Control Centre', sub: 'Belgium' },
-  { title: 'ICE Cubes Facility', sub: 'On the station' },
-  { title: 'TIGERS-X', sub: 'Columbus' },
-] as const;
-
-const stages = [
-  {
-    dir: 'up' as const,
-    title: 'The command leaves Bangkok',
-    text: 'The Chulabhorn Royal Academy User Home Base issues a telecommand in YAMCS. A VPN carries it to the ICE Cubes Mission Control Centre in Belgium. The cube has no radio of its own.',
-  },
-  {
-    dir: 'up' as const,
-    title: 'The station link',
-    text: 'Space Applications Services places the command on the station’s space-to-ground link. The link is available only during acquisition of signal, so a command waits when the station is out of contact.',
-  },
-  {
-    dir: 'up' as const,
-    title: 'Delivery in Columbus',
-    text: 'The ICE Cubes Facility delivers the command over Gigabit Ethernet, on the same interface that supplies the cube’s 12 V.',
-  },
-  {
-    dir: 'up' as const,
-    title: 'The run is executed onboard',
-    text: 'TIGERS-X executes the commanded cycle. No crew action is required.',
-  },
-  {
-    dir: 'down' as const,
-    title: 'Video and logs return',
-    text: 'At the end of the cycle, video and logs leave along the same path. Between signal windows, the onboard YAMCS instance stores the files and retains the experiment state.',
-  },
-  {
-    dir: 'down' as const,
-    title: 'Analysis the same day',
-    text: 'The files arrive at the User Home Base by secure transfer. Preliminary analysis begins the same day.',
-  },
-] as const;
+const nodes = copy.command.nodes;
+const stages = copy.command.stages;
 
 /** Node index at each stage boundary. The cube holds, then the path reverses. */
 const KEYS = [0, 1, 2, 3, 3, 1, 0];
@@ -89,11 +53,9 @@ export function CommandLink() {
     <div className="link-stick" ref={trackRef} data-reduced={reduced ? 'true' : 'false'}>
       <div className="link-pin" ref={pinRef}>
         <h3 id="command-title" className="section-title">
-          Telecommand and telemetry
+          {copy.command.title}
         </h3>
-        <p className="cmd-lead">
-          Commands left the User Home Base in Bangkok on YAMCS. Video and logs returned along the same path.
-        </p>
+        <p className="cmd-lead">{copy.command.lead}</p>
 
         <div className="cmd" ref={diagramRef} data-dir="up">
           <div className="cmd-path">
@@ -113,11 +75,11 @@ export function CommandLink() {
           <ul className="cmd-legend">
             <li>
               <span className="cmd-swatch cmd-swatch--up" aria-hidden="true" />
-              Uplink · command
+              {copy.command.uplinkLegend}
             </li>
             <li>
               <span className="cmd-swatch cmd-swatch--down" aria-hidden="true" />
-              Downlink · video and logs
+              {copy.command.downlinkLegend}
             </li>
           </ul>
         </div>
@@ -125,15 +87,13 @@ export function CommandLink() {
         <ol className="cmd-stage" aria-live={reduced ? 'off' : 'polite'}>
           {stages.map((s, i) => (
             <li key={s.title} className={i === active ? 'is-current' : undefined} aria-hidden={reduced ? undefined : i !== active}>
-              <p className="cmd-dir">{s.dir === 'up' ? 'Uplink' : 'Downlink'}</p>
+              <p className="cmd-dir">{s.dir === 'up' ? copy.command.uplink : copy.command.downlink}</p>
               <h4 className="cmd-stage__title">{s.title}</h4>
               <p>{s.text}</p>
             </li>
           ))}
         </ol>
-        <p className="figure-note">
-          The moving point traces the command path. It is not a record of the radio signal.
-        </p>
+        <p className="figure-note">{copy.command.note}</p>
       </div>
     </div>
   );

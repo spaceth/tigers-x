@@ -1,5 +1,6 @@
 import { useRef, type CSSProperties } from 'react';
 import { goalCards } from '../config/science';
+import { copy } from '../content';
 import { stickyProgress, useNarrow, useReducedMotion, useScrollFrame } from '../lib/hooks';
 import { Hero } from './Hero';
 import { PlatformComparison } from './PlatformComparison';
@@ -122,23 +123,14 @@ export function ScienceChapter() {
         </div>
         <div className="container science-grid">
           <Reveal className="science-copy">
-            <h2 className="science-heading">Emulsification without buoyancy</h2>
-            <p>
-              Lipid emulsions used in intravenous nutrition are made on Earth by high-shear mixing. Turbulence breaks
-              the oil into droplets, and buoyancy separates or stabilizes the phases. Neither mechanism is available
-              in microgravity, where interfacial tension and capillary forces dominate. TIGERS-X tested whether a
-              passive Tesla-valve mixer can still redistribute an immiscible oil–water pair under those conditions.
-              The flight measured mixing behavior. It did not manufacture a medicine.
-            </p>
+            <h2 className="science-heading">{copy.science.heading}</h2>
+            <p>{copy.science.intro}</p>
           </Reveal>
 
           <div className="science-aims">
             <Reveal delay={1}>
-              <h2 className="science-heading">What the flight was built to answer</h2>
-              <p>
-                The campaign links three results: a cube qualified for the station, a record of oil–water flow over
-                days rather than seconds, and a teleoperated platform later experiments can reuse.
-              </p>
+              <h2 className="science-heading">{copy.science.aimsHeading}</h2>
+              <p>{copy.science.aimsIntro}</p>
             </Reveal>
             <GoalCards />
           </div>

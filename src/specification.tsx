@@ -6,9 +6,11 @@ import '@fontsource/poppins/latin-500.css';
 import '@fontsource/poppins/latin-600.css';
 import './styles/global.css';
 import { applyBrandTokens } from './config/brand';
+import { applyDocumentLocale } from './content';
 import { SpecificationPage } from './components/SpecificationPage';
 
 applyBrandTokens();
+applyDocumentLocale();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -1,13 +1,14 @@
 /**
- * The scroll-driven payload story (chapters 2–4).
+ * Camera poses for the scroll-driven payload story. Copy for each beat lives
+ * in `src/content/en.json` under `story.beats`, keyed by the same id.
  *
- * Each beat is one block of copy in the page and one pose of the 3D stage. The
- * stage state is a pure function of the normalised story position `t`
+ * The stage state is a pure function of the normalised story position `t`
  * (beat index + progress through that beat), so scrolling backwards, resizing
  * and deep-linking always reproduce the same state.
  *
  * Coordinates are model millimetres, Y up, origin at the centre of the base plate.
  */
+import { copy } from '../content';
 import type { RigId, SubsystemId } from './modelMap';
 
 export type Vec3 = [number, number, number];
@@ -66,73 +67,64 @@ export interface LabelDef {
 
 const range = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, k) => a + k);
 
-export const labels: Record<LabelId, LabelDef> = {
-  structure: { text: 'Aluminium 7075 structure', parts: [21], at: [0.82, 1, 0.82], normal: [0, 1, 0], mobile: true },
-  pumps: { text: 'Eight peristaltic pumps', parts: [237], at: [0.62, 1, 0.9], normal: [0, 1, 0], mobile: true },
-  reservoir: { text: 'Reservoir · eight fluid bags', parts: [95, 96], at: [1, 0.55, 0.9], normal: [1, 0, 0] },
-  cameras: { text: 'Four cameras, 2 × 2', parts: [135, 157, 179, 201], at: [1, 1, 0.5], normal: [1, 0.4, 0], mobile: true },
-  chip: { text: 'Lab-on-chip', parts: [391], at: [1, 0.6, 0.35], normal: [1, 0, 0], mobile: true },
-  computer: { text: 'Orange Pi 5 Pro computer', parts: [93], at: [0.25, 1, 0.35], normal: [0, 1, 0], mobile: true },
-  mainBoard: { text: 'Main circuit board', parts: [41], at: [0.2, 1, 0.92], normal: [0, 1, 0] },
-  hub: { text: 'Hub enclosure', parts: [76], at: [0.3, 1, 0.6], normal: [0, 1, 0] },
-  channelLayers: { text: 'Tesla-valve channel layers', parts: [410], at: [0.97, 1, 0.12], normal: [0, 1, 0], mobile: true },
-  portLayer: { text: 'Port layer · 12 fluid ports', parts: [412], at: [1, 0.5, 0.8], normal: [1, 0, 0] },
-  connector: { text: 'Facility connector', parts: range(1, 14), at: [0.5, 0, 0], normal: [0, -0.4, -1] },
+const labelGeometry: Record<LabelId, Omit<LabelDef, 'text'>> = {
+  structure: { parts: [21], at: [0.82, 1, 0.82], normal: [0, 1, 0], mobile: true },
+  pumps: { parts: [237], at: [0.62, 1, 0.9], normal: [0, 1, 0], mobile: true },
+  reservoir: { parts: [95, 96], at: [1, 0.55, 0.9], normal: [1, 0, 0] },
+  cameras: { parts: [135, 157, 179, 201], at: [1, 1, 0.5], normal: [1, 0.4, 0], mobile: true },
+  chip: { parts: [391], at: [1, 0.6, 0.35], normal: [1, 0, 0], mobile: true },
+  computer: { parts: [93], at: [0.25, 1, 0.35], normal: [0, 1, 0], mobile: true },
+  mainBoard: { parts: [41], at: [0.2, 1, 0.92], normal: [0, 1, 0] },
+  hub: { parts: [76], at: [0.3, 1, 0.6], normal: [0, 1, 0] },
+  channelLayers: { parts: [410], at: [0.97, 1, 0.12], normal: [0, 1, 0], mobile: true },
+  portLayer: { parts: [412], at: [1, 0.5, 0.8], normal: [1, 0, 0] },
+  connector: { parts: range(1, 14), at: [0.5, 0, 0], normal: [0, -0.4, -1] },
 };
 
-export interface Beat {
-  id: string;
-  /** Chapter anchor this beat begins (first beat of each chapter only). */
-  chapter?: 'payload' | 'subsystems' | 'chip';
-  eyebrow?: string;
-  title: string;
-  /** Short explanatory paragraphs. */
-  body: string[];
-  /** Optional component rendered beneath the copy. */
-  extra?: 'envelope' | 'flow' | 'explore' | 'computing-roles';
-  /** Chapter headline beats use display type. */
+export const labels: Record<LabelId, LabelDef> = Object.fromEntries(
+  (Object.keys(labelGeometry) as LabelId[]).map((id) => [
+    id,
+    { ...labelGeometry[id], text: copy.story.labels[id] },
+  ]),
+) as Record<LabelId, LabelDef>;
+
+export type StoryChapter = 'payload' | 'subsystems' | 'chip';
+export type BeatExtra = 'envelope' | 'flow' | 'explore' | 'computing-roles';
+
+interface BeatLayout {
+  id: keyof typeof copy.story.beats;
+  chapter?: StoryChapter;
+  extra?: BeatExtra;
   headline?: boolean;
   pose: Pose;
 }
 
+export interface Beat extends BeatLayout {
+  eyebrow?: string;
+  title: string;
+  body: string[];
+}
+
 const HERO: CameraKey = { target: [0, 50, 0], dir: [1.05, 0.72, 1.28], radius: 175, mobileRadius: 200 };
 
-export const beats: Beat[] = [
-  /* --------------------------- Chapter 2: the payload --------------------------- */
+const layout: BeatLayout[] = [
   {
     id: 'inside-4u',
     chapter: 'payload',
-    eyebrow: 'The payload',
-    title: 'A laboratory in 4U.',
     headline: true,
-    body: [
-      'Eight pumps, eight fluid bags, two lab-on-chip devices, four cameras, and the computers that sequence them occupy a cube 200 mm across. The following views open that cube. Qualification and the flight come after.',
-    ],
     pose: { camera: HERO },
   },
   {
     id: 'envelope',
-    title: 'Compact in design',
-    body: [
-      'The cube follows the ICE Cubes interface: 200 × 200 × 100 mm, a 4U volume. Mass at pre-flight handover was 2.32 kg, or 2.52 kg with the launch bag. It draws power and data from the facility.',
-    ],
     extra: 'envelope',
     pose: {
       camera: { target: [0, 42, 0], dir: [1.0, 0.75, 1.25], radius: 150, mobileRadius: 172 },
       guides: 1,
     },
   },
-
-  /* ------------------------ Chapter 3: open the payload ------------------------ */
   {
     id: 'structure',
     chapter: 'subsystems',
-    eyebrow: 'Inside the payload',
-    title: 'One structure, two modules.',
-    body: [
-      'The frame is aluminium 7075. An internal panel separates the experiment module from the electronics module. Removing the panels shows how the parts are arranged.',
-      'This exploded view is an assembly diagram. The cube does not open this way in flight.',
-    ],
     pose: {
       camera: { target: [0, 66, 0], dir: [1.0, 0.85, 1.2], radius: 245, mobileRadius: 275 },
       rigs: { enclosure: 1 },
@@ -143,11 +135,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'fluidics',
-    title: 'Metered delivery, double containment.',
-    body: [
-      'Eight Takasago RP-QIII peristaltic pumps move fluid by compressing tubing. Each of the four channels has one pump for the oil phase and one for the aqueous phase.',
-      'Eight CryoStore bags share one reservoir: two oil-phase bags of 10 mL, two BFluid® bags of 15 mL, and four collection bags of up to 25 mL. The circuit is sealed and double-contained.',
-    ],
     pose: {
       camera: { target: [40, 58, 36], dir: [1.2, 0.72, 1.05], radius: 100, mobileRadius: 100 },
       rigs: { enclosure: 1, pumpsLift: 1 },
@@ -159,11 +146,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'observation',
-    title: 'Four cameras, one corrected view.',
-    body: [
-      'Four See3CAM cameras in a 2 × 2 array sit beneath the chip and image it under white LED illumination. Each camera covers part of a device, so synchronized pairs are stitched into one panorama. The chip is lifted here only to show the cameras.',
-      'A four-color reference swatch in every frame supplies the correction for illumination differences between sessions.',
-    ],
     pose: {
       camera: { target: [46, 86, -48], dir: [1.35, 0.5, -0.45], radius: 104, mobileRadius: 108 },
       rigs: { enclosure: 1, chipLift: 1 },
@@ -175,11 +157,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'computing',
-    title: 'Onboard control between contacts.',
-    body: [
-      'An Orange Pi 5 Pro decodes telecommands, sequences each run, and stores images and telemetry. An onboard YAMCS instance buffers data while the station is out of contact. Pump and lighting commands are passed to an STM32F746 microcontroller.',
-      'The facility provides a single 12 V supply, regulated onboard to 5 V and 3.3 V.',
-    ],
     extra: 'computing-roles',
     pose: {
       camera: { target: [-52, 40, 2], dir: [-1.15, 1.0, 0.7], radius: 108, mobileRadius: 112 },
@@ -192,10 +169,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'core',
-    title: 'Four channels on two devices.',
-    body: [
-      'Fluid handling, imaging, and computing exist to run the lab-on-chip: two Tesla-valve devices, CH1 and CH2, each with two parallel rows. That is four independent mixing channels.',
-    ],
     pose: {
       camera: { target: [46, 84, -50], dir: [0.85, 1.05, 0.75], radius: 95, mobileRadius: 100 },
       rigs: { enclosure: 1 },
@@ -205,18 +178,11 @@ export const beats: Beat[] = [
       labels: ['chip'],
     },
   },
-
-  /* -------------------------- Chapter 4: lab-on-a-chip -------------------------- */
   {
     id: 'deliver',
     chapter: 'chip',
-    eyebrow: 'The lab-on-a-chip',
-    title: 'Two immiscible, optically distinct phases.',
-    headline: true,
-    body: [
-      'Each channel receives Fluid A, an oil-phase mixture colored with oleoresin paprika, and Fluid B, BFluid® colored with a food-grade blue dye. On camera the oil reads orange and the aqueous phase teal. The dyes make the phases measurable by hue. They are not the mixture under study.',
-    ],
     extra: 'flow',
+    headline: true,
     pose: {
       camera: { target: [44, 78, -6], dir: [1.05, 1.2, 0.35], radius: 112, mobileRadius: 112 },
       rigs: { enclosure: 1, pumpsLift: 0.35 },
@@ -228,11 +194,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'mix',
-    title: 'The geometry does the mixing.',
-    body: [
-      'The Tesla-valve chain is a passive static mixer. There is no impeller and no high-shear homogenizer. The pumps maintain the flow; the channel shape redistributes the phases.',
-      'Twelve fittings on the underside connect the chip to the circuit: two inlets and one outlet for each of the four channels.',
-    ],
     pose: {
       camera: { target: [46, 94, -50], dir: [0.55, 1.25, 0.62], radius: 66, mobileRadius: 70 },
       rigs: { enclosure: 1, chipLayers: 1, chipLift: 0.25 },
@@ -245,11 +206,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'watch',
-    title: 'Hue as a measure of composition.',
-    body: [
-      'Video from each cycle is downlinked and examined the same day. Each frame is hue-corrected against its reference swatch.',
-      'A pixel is then scored from 1, a water hue, to 2, an oil hue. Interfacial and partly mixed regions take intermediate values, so the index does not impose a hard boundary between the phases.',
-    ],
     pose: {
       camera: { target: [46, 88, -48], dir: [1.4, 0.4, 0.25], radius: 100, mobileRadius: 104 },
       rigs: { enclosure: 1, chipLift: 1, chipLayers: 0.35 },
@@ -262,11 +218,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'time',
-    title: 'What changes when buoyancy is removed.',
-    body: [
-      'Microgravity suppresses buoyancy-driven separation. Viscosity and interfacial tension remain, and the two phases do not become miscible.',
-      'The on-orbit images show how that balance developed. Both devices began alike, then diverged. The sequence and the mixing index are reported with the science operations, after the cube is on the station.',
-    ],
     pose: {
       camera: { target: [46, 86, -50], dir: [0.7, 1.15, 0.85], radius: 84, mobileRadius: 90 },
       rigs: { enclosure: 1 },
@@ -279,10 +230,6 @@ export const beats: Beat[] = [
   },
   {
     id: 'explore',
-    title: 'Inspect the flight configuration.',
-    body: [
-      'Rotate the model and select a subsystem. Dimensions and part names match the flight cube described above.',
-    ],
     extra: 'explore',
     pose: {
       camera: { target: [0, 62, 0], dir: [1.05, 0.95, 1.2], radius: 235, mobileRadius: 270 },
@@ -291,6 +238,16 @@ export const beats: Beat[] = [
     },
   },
 ];
+
+export const beats: Beat[] = layout.map((beat) => {
+  const text: { title: string; body: readonly string[]; eyebrow?: string } = copy.story.beats[beat.id];
+  return {
+    ...beat,
+    eyebrow: text.eyebrow,
+    title: text.title,
+    body: [...text.body],
+  };
+});
 
 /** Pose used while the visitor explores the model with orbit controls. */
 export const explorePose: Pose = {

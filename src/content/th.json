@@ -1,0 +1,669 @@
+{
+  "meta": {
+    "siteName": "",
+    "fullName": "",
+    "title": "",
+    "description": "",
+    "ogImageAlt": ""
+  },
+  "nav": {
+    "skip": "",
+    "wordmark": "",
+    "homeAria": "",
+    "chaptersAria": "",
+    "openList": "",
+    "closeList": "",
+    "language": "",
+    "languageUnavailable": "",
+    "chapters": {
+      "question": "",
+      "payload": "",
+      "subsystems": "",
+      "chip": "",
+      "mission": "",
+      "launch": "",
+      "station": "",
+      "record": "",
+      "documentation": ""
+    }
+  },
+  "hero": {
+    "patchAlt": "",
+    "name": "",
+    "fullName": "",
+    "lead": "",
+    "explore": "",
+    "resources": ""
+  },
+  "science": {
+    "heading": "",
+    "intro": "",
+    "aimsHeading": "",
+    "aimsIntro": "",
+    "goals": {
+      "tpn": {
+        "title": "",
+        "body": ""
+      },
+      "food": {
+        "title": "",
+        "body": ""
+      },
+      "medicine": {
+        "title": "",
+        "body": ""
+      }
+    }
+  },
+  "platforms": {
+    "title": "",
+    "intro": "",
+    "caption": "",
+    "factor": "",
+    "pictures": "",
+    "parabolicLabel": "",
+    "issLabel": "",
+    "parabolicHead": "",
+    "parabolicSub": "",
+    "issHead": "",
+    "issSub": "",
+    "parabolicPatchAlt": "",
+    "issPatchAlt": "",
+    "note": "",
+    "rows": [
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      },
+      {
+        "factor": "",
+        "parabolic": "",
+        "iss": ""
+      }
+    ]
+  },
+  "story": {
+    "chapters": {
+      "payload": "",
+      "subsystems": "",
+      "chip": ""
+    },
+    "labels": {
+      "structure": "",
+      "pumps": "",
+      "reservoir": "",
+      "cameras": "",
+      "chip": "",
+      "computer": "",
+      "mainBoard": "",
+      "hub": "",
+      "channelLayers": "",
+      "portLayer": "",
+      "connector": ""
+    },
+    "beats": {
+      "inside-4u": {
+        "eyebrow": "",
+        "title": "",
+        "body": [
+          ""
+        ]
+      },
+      "envelope": {
+        "title": "",
+        "body": [
+          ""
+        ]
+      },
+      "structure": {
+        "eyebrow": "",
+        "title": "",
+        "body": [
+          "",
+          ""
+        ]
+      },
+      "fluidics": {
+        "title": "",
+        "body": [
+          "",
+          ""
+        ]
+      },
+      "observation": {
+        "title": "",
+        "body": [
+          "",
+          ""
+        ]
+      },
+      "computing": {
+        "title": "",
+        "body": [
+          "",
+          ""
+        ]
+      },
+      "core": {
+        "title": "",
+        "body": [
+          ""
+        ]
+      },
+      "deliver": {
+        "eyebrow": "",
+        "title": "",
+        "body": [
+          ""
+        ]
+      },
+      "mix": {
+        "title": "",
+        "body": [
+          "",
+          ""
+        ]
+      },
+      "watch": {
+        "title": "",
+        "body": [
+          "",
+          ""
+        ]
+      },
+      "time": {
+        "title": "",
+        "body": [
+          "",
+          ""
+        ]
+      },
+      "explore": {
+        "title": "",
+        "body": [
+          ""
+        ]
+      }
+    },
+    "envelope": {
+      "envelope": "",
+      "volume": "",
+      "mass": "",
+      "power": "",
+      "peakPower": ""
+    },
+    "computingRoles": {
+      "orangePi": {
+        "title": "",
+        "body": ""
+      },
+      "stm32": {
+        "title": "",
+        "body": ""
+      },
+      "power": {
+        "title": "",
+        "body": ""
+      },
+      "hub": {
+        "title": "",
+        "body": ""
+      },
+      "note": ""
+    }
+  },
+  "stage": {
+    "loading": "",
+    "fallbackAlt": "",
+    "fallbackAria": "",
+    "unsupported": "",
+    "error": "",
+    "exploreTitle": "",
+    "exploreHint": "",
+    "subsystemsAria": "",
+    "selectPrompt": "",
+    "close": "",
+    "exploreButton": "",
+    "explorePending": ""
+  },
+  "explorer": {
+    "chip": {
+      "title": "",
+      "description": ""
+    },
+    "pumps": {
+      "title": "",
+      "description": ""
+    },
+    "reservoir": {
+      "title": "",
+      "description": ""
+    },
+    "cameras": {
+      "title": "",
+      "description": ""
+    },
+    "computing": {
+      "title": "",
+      "description": ""
+    },
+    "structure": {
+      "title": "",
+      "description": ""
+    },
+    "connector": {
+      "title": "",
+      "description": ""
+    }
+  },
+  "flow": {
+    "kicker": "",
+    "svgTitle": "",
+    "svgDesc": "",
+    "legendAqueous": "",
+    "legendOil": "",
+    "legendMixed": "",
+    "caption": "",
+    "follow": "",
+    "stages": [
+      {
+        "title": "",
+        "text": ""
+      },
+      {
+        "title": "",
+        "text": ""
+      },
+      {
+        "title": "",
+        "text": ""
+      },
+      {
+        "title": "",
+        "text": ""
+      }
+    ]
+  },
+  "mission": {
+    "eyebrow": "",
+    "title": "",
+    "lead": "",
+    "qualifyTitle": "",
+    "qualifyIntro": "",
+    "structureTitle": "",
+    "structure": "",
+    "passed": "",
+    "emcTitle": "",
+    "emcCaption": "",
+    "emcTest": "",
+    "emcResult": "",
+    "pass": "",
+    "fail": "",
+    "chemTitle": "",
+    "chem": "",
+    "approved": ""
+  },
+  "launch": {
+    "title": "",
+    "transport": "",
+    "afterDocking": ""
+  },
+  "station": {
+    "eyebrow": "",
+    "pauseAria": "",
+    "columbus": "",
+    "iss": "",
+    "caption": "",
+    "fallback": "",
+    "steps": [
+      {
+        "title": "",
+        "body": [
+          ""
+        ]
+      },
+      {
+        "title": "",
+        "body": [
+          ""
+        ]
+      },
+      {
+        "title": "",
+        "body": [
+          ""
+        ]
+      },
+      {
+        "title": "",
+        "body": [
+          ""
+        ]
+      }
+    ]
+  },
+  "command": {
+    "title": "",
+    "lead": "",
+    "uplink": "",
+    "downlink": "",
+    "uplinkLegend": "",
+    "downlinkLegend": "",
+    "note": "",
+    "nodes": [
+      {
+        "title": "",
+        "sub": ""
+      },
+      {
+        "title": "",
+        "sub": ""
+      },
+      {
+        "title": "",
+        "sub": ""
+      },
+      {
+        "title": "",
+        "sub": ""
+      }
+    ],
+    "stages": [
+      {
+        "dir": "up",
+        "title": "",
+        "text": ""
+      },
+      {
+        "dir": "up",
+        "title": "",
+        "text": ""
+      },
+      {
+        "dir": "up",
+        "title": "",
+        "text": ""
+      },
+      {
+        "dir": "up",
+        "title": "",
+        "text": ""
+      },
+      {
+        "dir": "down",
+        "title": "",
+        "text": ""
+      },
+      {
+        "dir": "down",
+        "title": "",
+        "text": ""
+      }
+    ]
+  },
+  "operations": {
+    "eyebrow": "",
+    "title": "",
+    "lead": "",
+    "paragraphs": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "return": {
+    "title": "",
+    "body": ""
+  },
+  "record": {
+    "eyebrow": "",
+    "title": "",
+    "lead": "",
+    "kicker": "",
+    "days": "",
+    "hours": "",
+    "minutes": "",
+    "seconds": "",
+    "note": "",
+    "imagingTitle": "",
+    "videoFiles": "",
+    "dataRecorded": "",
+    "recordedValue": "",
+    "downlinked": "",
+    "downlinkedValue": "",
+    "barAria": "",
+    "legendDownlinked": "",
+    "legendRecorded": "",
+    "commandTitle": "",
+    "groundCommands": "",
+    "pumpOperations": "",
+    "pumpRuntime": "",
+    "pumpRuntimeValue": "",
+    "pumpNote": "",
+    "caveat": ""
+  },
+  "closing": {
+    "eyebrow": "",
+    "title": "",
+    "lead": "",
+    "caption": "",
+    "name": "",
+    "type": "",
+    "description": "",
+    "link": "",
+    "soon": "",
+    "note": "",
+    "partnersAria": "",
+    "footer": "",
+    "copyright": ""
+  },
+  "resources": {
+    "parabolic-paper": {
+      "name": "",
+      "type": "",
+      "description": "",
+      "linkLabel": ""
+    },
+    "iss-preprint": {
+      "name": "",
+      "type": "",
+      "description": "",
+      "linkLabel": ""
+    },
+    "dataset": {
+      "name": "",
+      "type": "",
+      "description": "",
+      "linkLabel": ""
+    },
+    "manual": {
+      "name": "",
+      "type": "",
+      "description": "",
+      "linkLabel": ""
+    }
+  },
+  "partners": {
+    "cra": "",
+    "mhesi": "",
+    "tsri": "",
+    "pim": "",
+    "gistda": "",
+    "tmec": ""
+  },
+  "media": {
+    "placeholderVideo": "",
+    "placeholderPhoto": "",
+    "placeholderAria": "",
+    "creditPending": "",
+    "slideshowAria": "",
+    "slots": {
+      "platform-parabolic": {
+        "placeholder": "",
+        "items": {
+          "platform-parabolic-photo": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "platform-iss": {
+        "placeholder": "",
+        "items": {
+          "platform-iss-photo": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "development-earth": {
+        "placeholder": "",
+        "items": {
+          "development-photo-1": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          },
+          "development-photo-2": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          },
+          "development-photo-3": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          },
+          "development-photo-4": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "launch": {
+        "placeholder": "",
+        "items": {
+          "launch-photo": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "dragon-docking": {
+        "placeholder": "",
+        "items": {
+          "docking-video": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "crew-installation": {
+        "placeholder": "",
+        "items": {
+          "crew-installation-video": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "payload-on-iss": {
+        "placeholder": "",
+        "items": {
+          "payload-on-iss-installed": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          },
+          "payload-on-iss-front": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          },
+          "payload-on-iss-floating": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          },
+          "payload-on-iss-back": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "science-operations": {
+        "placeholder": "",
+        "items": {
+          "lab-on-chip-run": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      },
+      "return-earth": {
+        "placeholder": "",
+        "items": {
+          "return-undock": {
+            "alt": "",
+            "caption": "",
+            "credit": ""
+          }
+        }
+      }
+    }
+  }
+}

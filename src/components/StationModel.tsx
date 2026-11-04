@@ -5,6 +5,7 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { assets } from '../config/site';
+import { copy } from '../content';
 import { stickyProgress, useReducedMotion, useScrollFrame } from '../lib/hooks';
 
 /** Columbus module in the NASA ISS model. */
@@ -209,7 +210,7 @@ function StationScene({
     }
     const caption = scale.current;
     if (caption) {
-      const next = zoom > 0.82 ? 'Columbus' : 'International Space Station';
+      const next = zoom > 0.82 ? copy.station.columbus : copy.station.iss;
       if (caption.textContent !== next) caption.textContent = next;
     }
   });
@@ -252,7 +253,7 @@ export function StationModel() {
     <figure ref={figure} className="station-figure">
       <div className="station-canvas" aria-hidden={failed ? undefined : true}>
         {failed ? (
-          <p className="station-fallback">The station model could not be loaded.</p>
+          <p className="station-fallback">{copy.station.fallback}</p>
         ) : (
           <Canvas
             frameloop="demand"
@@ -278,12 +279,12 @@ export function StationModel() {
         )}
         <span ref={dot} className="station-dot" hidden />
         <span ref={label} className="station-callout" hidden>
-          Columbus
+          {copy.station.columbus}
         </span>
       </div>
       <figcaption>
-        <span ref={scale} className="scale-tag">International Space Station</span>
-        <span className="figure-note">Columbus, the European laboratory, on the starboard side of Harmony.</span>
+        <span ref={scale} className="scale-tag">{copy.station.iss}</span>
+        <span className="figure-note">{copy.station.caption}</span>
       </figcaption>
     </figure>
   );
