@@ -40,12 +40,6 @@ html:has(.spec-page) {
   border-radius: 6px;
 }
 
-.spec-header-tools {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-
 .spec-back {
   color: var(--accent-deep);
   font-size: 0.9375rem;

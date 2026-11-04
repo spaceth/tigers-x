@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useState, type MouseEvent } from 'react';
 import { assets } from '../config/site';
 import { specCopy } from '../content';
-import { LanguageSwitch } from './LanguageSwitch';
 import '../styles/specification.css';
 
 const SpecModel = lazy(() => import('./SpecModel'));
@@ -83,12 +82,9 @@ export function SpecificationPage() {
             <img src={assets.patch} alt="" width={28} height={28} />
             <span>{page.chrome.wordmark}</span>
           </a>
-          <div className="spec-header-tools">
-            <a className="spec-back" href="/">
-              {page.chrome.back}
-            </a>
-            <LanguageSwitch label={page.chrome.language} unavailableLabel={page.chrome.languageUnavailable} />
-          </div>
+          <a className="spec-back" href="/">
+            {page.chrome.back}
+          </a>
         </header>
         <div className="spec-layout">
           <nav className="spec-toc" aria-label={page.chrome.tocLabel}>

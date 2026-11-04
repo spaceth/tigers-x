@@ -40,7 +40,7 @@ of every story beat and a console report), `inspect-step.mjs`, `raster-top.mjs`.
 | Specification copy | `src/content/spec.en.json` |
 | Part → subsystem mapping, explode rigs | `src/config/modelMap.ts` |
 | Chapters / nav | `src/content/en.json` (`nav.chapters`); ids stay in `src/config/site.ts` |
-| Enable Thai | Add `'th'` to `availableLocales` in `src/content/index.ts` after filling `th.json` and `spec.th.json` |
+| Enable Thai | Add `'th'` to `availableLocales` in `src/content/index.ts` after filling `th.json`. The specification stays in English. |
 | WebGL fallback image | Optional `public/media/payload-snapshot.webp` (`assets.modelSnapshot` in `site.ts`). Without it, an SVG outline is shown. Test with `?nowebgl`. |
 
 ## Known limitations

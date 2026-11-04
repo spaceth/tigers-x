@@ -86,7 +86,7 @@ The site should feel like a well-printed paper that happens to contain a machine
 | Change | File |
 | --- | --- |
 | Story, chapter, and specification copy | `src/content/en.json` and `src/content/spec.en.json` |
-| Enable Thai in the language switch | Add `'th'` to `availableLocales` in `src/content/index.ts` after filling `th.json` and `spec.th.json` |
+| Enable Thai in the language switch | Add `'th'` to `availableLocales` in `src/content/index.ts` after filling `th.json`. The specification stays in English. |
 | Camera poses for each story beat | `src/config/story.ts` |
 | Which mesh belongs to which subsystem | `src/config/modelMap.ts` |
 | Colours | `src/config/brand.ts` |

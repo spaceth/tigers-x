@@ -9,9 +9,7 @@
     "back": "Mission site",
     "tocLabel": "On this page",
     "modelLoading": "Loading the payload model…",
-    "modelHint": "Drag to rotate. Scroll or pinch to zoom.",
-    "language": "Language",
-    "languageUnavailable": "Thai is not available yet"
+    "modelHint": "Drag to rotate. Scroll or pinch to zoom."
   },
   "header": {
     "kicker": "Payload specification",

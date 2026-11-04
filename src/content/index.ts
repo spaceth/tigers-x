@@ -1,6 +1,7 @@
 /**
  * Locale copy for the public site. English is the live language. Thai files
  * exist so a translation can be filled in without touching the React tree.
+ * The specification page stays in English.
  *
  * Camera poses, mesh indices, numeric facts, and asset paths stay in
  * `src/config`. Those are not words.
@@ -10,7 +11,6 @@
 import en from './en.json';
 import specEn from './spec.en.json';
 import th from './th.json';
-import specTh from './spec.th.json';
 
 export const locales = ['en', 'th'] as const;
 export type Locale = (typeof locales)[number];
@@ -19,7 +19,7 @@ export const defaultLocale: Locale = 'en';
 
 /**
  * Languages a visitor can select. `'en'` is always on. Add `'th'` here when
- * `th.json` and `spec.th.json` have been translated.
+ * `th.json` has been translated. The specification page does not follow this.
  */
 export const availableLocales: Locale[] = ['en'];
 
@@ -32,7 +32,6 @@ export type Copy = typeof en;
 export type SpecCopy = typeof specEn;
 
 const copyByLocale: Record<Locale, Copy> = { en, th };
-const specByLocale: Record<Locale, SpecCopy> = { en: specEn, th: specTh };
 
 const STORAGE_KEY = 'tigers-x-locale';
 
@@ -54,7 +53,7 @@ function readStoredLocale(): Locale {
 
 export const locale: Locale = typeof document === 'undefined' ? defaultLocale : readStoredLocale();
 export const copy: Copy = copyByLocale[locale];
-export const specCopy: SpecCopy = specByLocale[locale];
+export const specCopy: SpecCopy = specEn;
 
 export function setLocale(next: Locale) {
   if (!isLocaleAvailable(next) || next === locale) return;
